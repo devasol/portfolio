@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import profileImage from "../../assets/profile-image/profile-image.png";
 
 const socials = [
@@ -133,15 +133,15 @@ export default function Hero() {
               <img
                 src={profileImage}
                 alt="Profile"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover hero-photo"
               />
-              <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
+              <div className="absolute inset-0 ring-1 ring-inset ring-white/10 hero-ring" />
             </div>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="mt-14 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div className="mt-14 sm:mt-20 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
           {[
             { value: "1+", label1: "Years of", label2: "experience" },
             { value: "5+", label1: "Projects", label2: "completed" },
