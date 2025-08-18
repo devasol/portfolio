@@ -5,7 +5,7 @@ import "./index.css";
 
 export default function App() {
   return (
-    <div className="min-h-dvh bg-[#0b0f14] text-gray-200 antialiased">
+    <div className="min-h-dvh antialiased">
       <NoiseBackground />
       <Navbar />
       <main className="pb-24">

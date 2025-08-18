@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from "react";
-import AnimatedCoderAvatar from "./AnimatedCoderAvatar";
+import profileImage from "../../assets/profile-image/profile-image.png";
 
 const socials = [
-  { href: "#", label: "Download CV", icon: "⬇" },
-  { href: "#", label: "GitHub", icon: "GH" },
-  { href: "#", label: "LinkedIn", icon: "in" },
-  { href: "#", label: "Twitter/X", icon: "X" },
-  { href: "#", label: "Email", icon: "@" },
+  { href: "#", label: "Download CV" },
+  { href: "#", label: "GitHub" },
+  { href: "#", label: "LinkedIn" },
+  { href: "#", label: "Twitter/X" },
+  { href: "#", label: "Email" },
 ];
 
 export default function Hero() {
@@ -34,12 +34,12 @@ export default function Hero() {
               Software Developer
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-              <span className="text-gray-200">Hello I’m</span>
+              <span className="text-ink">Hello I’m</span>
               <br />
               <span className="text-emerald-400">Dawit Solomon</span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-sm sm:text-base text-gray-300/90">
+            <p className="mt-5 max-w-xl text-sm sm:text-base text-ink/80">
               I excel at crafting elegant digital experiences and I am
               proficient in various programming languages and technologies.
             </p>
@@ -49,9 +49,14 @@ export default function Hero() {
                 href="#"
                 className="group inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
               >
-                <span className="transition-transform group-hover:-translate-y-0.5">
-                  ⬇
-                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-5 w-5 transition-transform group-hover:-translate-y-0.5"
+                >
+                  <path d="M12 16l4-5h-3V4h-2v7H8l4 5z" />
+                </svg>
                 Download CV
               </a>
 
@@ -60,9 +65,48 @@ export default function Hero() {
                   key={s.label}
                   aria-label={s.label}
                   href={s.href}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-gray-300 hover:text-white hover:border-white/20 hover:bg-white/5 transition"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color-mix(in_oklab,var(--color-ink),transparent_85%)] text-ink/80 hover:text-ink hover:border-[color-mix(in_oklab,var(--color-ink),transparent_70%)] hover:bg-[color-mix(in_oklab,var(--color-surface),transparent_80%)] transition"
                 >
-                  {s.icon}
+                  {s.label === "GitHub" && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path d="M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.57 0-.28-.01-1.02-.02-2-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.31-5.47-1.34-5.47-5.98 0-1.32.47-2.4 1.24-3.25-.12-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.3 1.24a11.5 11.5 0 016 0c2.29-1.56 3.3-1.24 3.3-1.24.66 1.7.24 2.96.12 3.27.77.85 1.24 1.93 1.24 3.25 0 4.65-2.81 5.66-5.49 5.97.43.37.81 1.1.81 2.22 0 1.61-.02 2.9-.02 3.3 0 .31.21.68.83.57A12 12 0 0012 .5z" />
+                    </svg>
+                  )}
+                  {s.label === "LinkedIn" && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path d="M4.98 3.5a2.5 2.5 0 110 5 2.5 2.5 0 010-5zM3 8.98h3.96V21H3V8.98zM9.5 8.98H13v1.64h.05c.48-.91 1.66-1.86 3.42-1.86 3.66 0 4.34 2.41 4.34 5.54V21h-3.96v-4.9c0-1.17-.02-2.67-1.63-2.67-1.64 0-1.89 1.28-1.89 2.6V21H9.5V8.98z" />
+                    </svg>
+                  )}
+                  {s.label === "Twitter/X" && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path d="M17.53 3H20l-7.09 8.11L21.5 21h-5.9l-4.61-5.55L5.7 21H3l7.67-8.78L2.5 3h6.02l4.17 5 4.84-5z" />
+                    </svg>
+                  )}
+                  {s.label === "Email" && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                  )}
                 </a>
               ))}
             </div>
@@ -84,9 +128,13 @@ export default function Hero() {
               />
             ))}
 
-            {/* animated avatar replaces image */}
+            {/* profile image */}
             <div className="absolute inset-6 sm:inset-8 rounded-full overflow-hidden ring-1 ring-white/10">
-              <AnimatedCoderAvatar />
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
               <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
             </div>
           </div>
@@ -102,14 +150,14 @@ export default function Hero() {
           ].map((s) => (
             <div
               key={s.label1}
-              className="rounded-2xl border border-white/5 bg-white/5 p-5 backdrop-blur"
+              className="rounded-2xl p-5 card flex items-center gap-3 sm:gap-4"
             >
-              <div className="text-3xl sm:text-4xl font-extrabold text-white">
+              <div className="text-3xl sm:text-4xl font-extrabold text-ink whitespace-nowrap">
                 {s.value}
               </div>
-              <div className="mt-1 text-[11px] sm:text-xs tracking-wide text-gray-300">
-                <span className="block">{s.label1}</span>
-                <span className="block">{s.label2}</span>
+              <div className="text-[11px] sm:text-xs tracking-wide text-ink/80">
+                <span className="inline-block mr-1">{s.label1}</span>
+                <span className="inline-block">{s.label2}</span>
               </div>
             </div>
           ))}
