@@ -1,0 +1,78 @@
+@theme {
+  --radius-hero: 28rem;
+}
+
+/* Keyframes for subtle floating of the hero image */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.hero-float {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* Morphing blob animation */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(10px, -12px) scale(1.07);
+  }
+  66% {
+    transform: translate(-14px, 6px) scale(0.95);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+.animate-blob {
+  animation: blob 12s ease-in-out infinite;
+}
+
+/* Slow rotation for highlights */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+
+/* Coder avatar: blinking eyes */
+@keyframes blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  92% {
+    transform: scaleY(0.1);
+  }
+}
+.eye-blink {
+  animation: blink 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: center;
+}
+
+/* Coder avatar: code-line pulse */
+@keyframes codePulse {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+.code-line {
+  animation: codePulse 2.4s ease-in-out infinite;
+}
