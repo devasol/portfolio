@@ -141,7 +141,7 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="mt-14 sm:mt-20 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+        <div className="mt-14 sm:mt-20 grid grid-cols-1 sm:grid-cols-4 gap-6">
           {[
             { value: "1+", label1: "Years of", label2: "experience" },
             { value: "5+", label1: "Projects", label2: "completed" },
