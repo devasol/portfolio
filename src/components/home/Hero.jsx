@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
+import FadeIn from "../common/FadeIn";
 import profileImage from "../../assets/profile-image/profile-image.png";
 
 const socials = [
@@ -12,28 +13,34 @@ const socials = [
 export default function Hero() {
   // Sparkling ring positions for the photo decoration
   const dashes = useMemo(() => Array.from({ length: 16 }, (_, i) => i), []);
+  const containerRef = useRef(null);
 
+  // Smooth scroll behavior for hash links (progressive enhance)
   // Smooth scroll behavior for hash links (progressive enhance)
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
   }, []);
 
   return (
-    <section id="home" className="relative isolate pt-28 sm:pt-32">
-      {/* Gradient background blobs */}
+    <section
+      id="home"
+      ref={containerRef}
+      className="relative isolate overflow-hidden pt-28 sm:pt-32"
+    >
+      {/* Soft gradient blobs (static for stability) */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -left-20 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" />
         <div className="absolute top-40 -right-10 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 items-center">
           {/* Left - text */}
-          <div>
+          <div className="min-w-0">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
               Software Developer
             </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+            <h1 className="display-font text-4xl sm:text-5xl lg:text-6xl leading-tight">
               <span className="text-ink">Hello I’m</span>
               <br />
               <span className="text-emerald-400">Dawit Solomon</span>
@@ -97,6 +104,7 @@ export default function Hero() {
                       <path d="M17.53 3H20l-7.09 8.11L21.5 21h-5.9l-4.61-5.55L5.7 21H3l7.67-8.78L2.5 3h6.02l4.17 5 4.84-5z" />
                     </svg>
                   )}
+
                   {s.label === "Email" && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +160,7 @@ export default function Hero() {
               key={s.label1}
               className="rounded-2xl p-5 card flex items-center gap-3 sm:gap-4"
             >
-              <div className="text-3xl sm:text-4xl font-extrabold text-ink whitespace-nowrap">
+              <div className="display-font text-3xl sm:text-4xl text-ink whitespace-nowrap">
                 {s.value}
               </div>
               <div className="text-[11px] sm:text-xs tracking-wide text-ink/80">

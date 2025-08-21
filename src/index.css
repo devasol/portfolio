@@ -58,6 +58,13 @@ body {
 }
 
 /* Smooth transitions for common elements */
+
+/* Clamp overflow to avoid layout shifts from hover effects */
+html,
+body {
+  overflow-x: hidden;
+}
+
 *,
 *::before,
 *::after {

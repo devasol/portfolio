@@ -98,3 +98,13 @@
 .hero-photo:hover + .hero-ring {
   animation: ringPulse 1200ms ease-out forwards;
 }
+
+/* Shimmer sweep for interactive card sheen */
+@keyframes shine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

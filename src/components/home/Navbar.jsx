@@ -1,17 +1,43 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const NAV_ITEMS = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Resume", href: "#resume" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Resume", href: "/resume" },
+  { label: "Work", href: "/work" },
+  { label: "Contact", href: "/contact" },
 ];
+
+function ThemeIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      className="h-4 w-4 sm:h-5 sm:w-5"
+    >
+      <path
+        className="theme-moon"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
+      />
+      <g className="theme-sun">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l-1.5-1.5M20.5 20.5L19 19M19 5l1.5-1.5M4.5 20.5L6 19" />
+      </g>
+    </svg>
+  );
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
-  const [activeHref, setActiveHref] = useState("#home");
+  const location = useLocation();
+  const activeHref = location.pathname || "/";
 
   const [theme, setTheme] = useState(
     typeof window !== "undefined" && window.localStorage.getItem("theme")
@@ -34,25 +60,7 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  // Track active section for nav highlight
-  useEffect(() => {
-    const sections = NAV_ITEMS.map((i) =>
-      document.querySelector(i.href)
-    ).filter(Boolean);
-    if (!sections.length) return;
-    const onIntersect = (entries) => {
-      const visible = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) setActiveHref(`#${visible.target.id}`);
-    };
-    const io = new IntersectionObserver(onIntersect, {
-      rootMargin: "-20% 0px -60% 0px",
-      threshold: [0.1, 0.25, 0.5, 0.75],
-    });
-    sections.forEach((sec) => io.observe(sec));
-    return () => io.disconnect();
-  }, []);
+  // No intersection observer needed with routes; highlight via location
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const headerStyle = {
@@ -65,6 +73,14 @@ export default function Navbar() {
     boxShadow: elevated ? "0 8px 24px rgba(0,0,0,0.08)" : "none",
   };
 
+  const isDark = theme === "dark";
+  // Desktop chips: subtle glass; Mobile chips: strong contrast and interaction
+  const desktopChipClasses = "bg-transparent text-ink/90 hover:text-ink";
+  const mobileChipClasses = isDark
+    ? "bg-white text-neutral-900 ring-1 ring-white/60 shadow-md hover:bg-white/95"
+    : "bg-neutral-900 text-white ring-1 ring-black/40 shadow-md hover:bg-neutral-800";
+  const mobileLinkClasses = `block w-full px-4 py-2 rounded-full font-medium transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 ${mobileChipClasses}`;
+
   return (
     <header
       className="fixed top-0 inset-x-0 z-50 transition-all duration-300"
@@ -72,108 +88,73 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Centered dynamic island */}
-        <div className="h-16 grid grid-cols-[1fr_auto_1fr] items-center">
+        <div className="h-16 grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center">
           <div className="justify-self-start">
-            <a
-              href="#home"
+            <Link
+              to="/"
               className="display-font font-semibold text-2xl sm:text-3xl tracking-tight"
             >
               <span className="text-ink">Dawit</span>
               <span className="text-emerald-500">.</span>
-            </a>
+            </Link>
           </div>
 
-          <div className="justify-self-center mt-3 sm:mt-4">
+          <div className="hidden lg:block justify-self-center mt-2">
             <div
-              className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-[999px] flex items-center gap-2 sm:gap-3"
+              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-[999px] flex items-center gap-2 sm:gap-3 max-w-full"
               style={islandStyle}
             >
               {/* Left: theme toggle */}
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
-                className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-white/10 hover:bg-white/5"
+                className="inline-flex items-center justify-center h-8 w-8 sm:h-9 sm:w-9 rounded-full border border-white/10 hover:bg-white/5 shrink-0"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    className="theme-moon"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.5"
-                    d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
-                  />
-                  <g className="theme-sun">
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l-1.5-1.5M20.5 20.5L19 19M19 5l1.5-1.5M4.5 20.5L6 19" />
-                  </g>
-                </svg>
+                <ThemeIcon />
               </button>
 
-              {/* Nav links centered inside island (md+) */}
-              <nav className="hidden md:flex items-center gap-4 lg:gap-6 text-sm text-ink/80">
-                {NAV_ITEMS.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setActiveHref(item.href)}
-                    aria-current={activeHref === item.href ? "page" : undefined}
-                    className={`px-2 py-1 rounded-full transition-colors ${
-                      activeHref === item.href
-                        ? "bg-white/10 text-ink"
-                        : "hover:text-ink"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                ))}
+              {/* Nav links centered inside island (lg+) */}
+              <nav className="hidden lg:flex items-center gap-2 text-sm">
+                {NAV_ITEMS.map((item) => {
+                  const active = activeHref === item.href;
+                  return (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={`px-3 py-1.5 rounded-full relative overflow-hidden transition-colors ${desktopChipClasses} ${
+                        active
+                          ? "underline decoration-2 underline-offset-4"
+                          : ""
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </nav>
 
               {/* Call to action */}
-              <a
-                href="#contact"
-                className="hidden sm:inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap shrink-0"
+              <Link
+                to="/contact"
+                className="hidden xl:inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap shrink-0"
               >
-                Hire me
-              </a>
+                <span>Hire me</span>
+              </Link>
             </div>
           </div>
 
           {/* Right: mobile actions (compact) */}
-          <div className="justify-self-end md:hidden flex items-center gap-2">
-            {/* Theme toggle */}
+          <div className="justify-self-end lg:hidden flex items-center gap-2">
+            {/* Theme toggle + Menu combined */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
               className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-white/10 hover:bg-white/5"
               title="Toggle theme"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  className="theme-moon"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                  d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
-                />
-                <g className="theme-sun">
-                  <circle cx="12" cy="12" r="4" />
-                  <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l-1.5-1.5M20.5 20.5L19 19M19 5l1.5-1.5M4.5 20.5L6 19" />
-                </g>
-              </svg>
+              <ThemeIcon />
             </button>
-            {/* Menu button (opens collapsible menu below) */}
             <button
               className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/10 hover:bg-white/5"
               aria-label="Toggle menu"
@@ -181,73 +162,19 @@ export default function Navbar() {
             >
               <div className="relative w-5 h-5">
                 <span
-                  className={`absolute left-0 top-1 block h-0.5 w-5 bg-white transition-transform ${
-                    open ? "translate-y-2 rotate-45" : ""
-                  }`}
+                  className={`absolute left-0 top-1 block h-0.5 w-5 transition-transform ${
+                    isDark ? "bg-white" : "bg-black"
+                  } ${open ? "translate-y-2 rotate-45" : ""}`}
                 />
                 <span
-                  className={`absolute left-0 top-2.5 block h-0.5 w-5 bg-white transition-opacity ${
-                    open ? "opacity-0" : ""
-                  }`}
+                  className={`absolute left-0 top-2.5 block h-0.5 w-5 transition-opacity ${
+                    isDark ? "bg-white" : "bg-black"
+                  } ${open ? "opacity-0" : ""}`}
                 />
                 <span
-                  className={`absolute left-0 top-4 block h-0.5 w-5 bg-white transition-transform ${
-                    open ? "-translate-y-2 -rotate-45" : ""
-                  }`}
-                />
-              </div>
-            </button>
-          </div>
-
-          {/* Mobile menu + theme toggle */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 hover:bg-white/5"
-              title="Toggle theme"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  className="theme-moon"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                  d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
-                />
-                <g className="theme-sun">
-                  <circle cx="12" cy="12" r="4" />
-                  <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l-1.5-1.5M20.5 20.5L19 19M19 5l1.5-1.5M4.5 20.5L6 19" />
-                </g>
-              </svg>
-            </button>
-
-            <button
-              className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/10 hover:bg-white/5"
-              aria-label="Toggle menu"
-              onClick={() => setOpen((v) => !v)}
-            >
-              <div className="relative w-5 h-5">
-                <span
-                  className={`absolute left-0 top-1 block h-0.5 w-5 bg-white transition-transform ${
-                    open ? "translate-y-2 rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`absolute left-0 top-2.5 block h-0.5 w-5 bg-white transition-opacity ${
-                    open ? "opacity-0" : ""
-                  }`}
-                />
-                <span
-                  className={`absolute left-0 top-4 block h-0.5 w-5 bg-white transition-transform ${
-                    open ? "-translate-y-2 -rotate-45" : ""
-                  }`}
+                  className={`absolute left-0 top-4 block h-0.5 w-5 transition-transform ${
+                    isDark ? "bg-white" : "bg-black"
+                  } ${open ? "-translate-y-2 -rotate-45" : ""}`}
                 />
               </div>
             </button>
@@ -258,29 +185,37 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         <div
-          className={`md:hidden grid transition-[grid-template-rows] duration-300 overflow-hidden ${
+          className={`lg:hidden grid transition-[grid-template-rows] duration-300 overflow-hidden ${
             open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >
-          <div className="min-h-0">
-            <nav className="px-2 pb-4 text-gray-300">
+          <div
+            className={`min-h-0 transition-all duration-300 ${
+              open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"
+            }`}
+          >
+            <nav className="px-2 pb-4 space-y-2">
               {NAV_ITEMS.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.href}
                   onClick={() => setOpen(false)}
-                  className="block px-3 py-2 rounded-lg hover:bg-white/5 hover:text-white"
+                  className={`${mobileLinkClasses} ${
+                    activeHref === item.href
+                      ? "underline decoration-2 underline-offset-4"
+                      : ""
+                  }`}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 onClick={() => setOpen(false)}
-                className="mt-2 inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300"
+                className="mt-2 inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300"
               >
                 Hire me
-              </a>
+              </Link>
             </nav>
           </div>
         </div>
