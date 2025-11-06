@@ -160,6 +160,7 @@ function useInView(ref, options = { threshold: 0.2 }) {
 function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
   const cardRef = useRef(null);
   const detailRef = useRef(null);
+  const inView = useInView(cardRef);
   const [transform, setTransform] = useState(
     "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)"
   );
