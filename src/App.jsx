@@ -8,6 +8,7 @@ import ServicesPage from "./pages/ServicesPage";
 import ResumePage from "./pages/ResumePage";
 import WorkPage from "./pages/WorkPage";
 import ContactPage from "./pages/ContactPage";
+import ErrorPage from "./pages/ErrorPage";
 import "./index.css";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/work" element={<WorkPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </BrowserRouter>
