@@ -119,7 +119,7 @@ export default function ResumePage() {
   );
 
   return (
-    <section className="relative isolate pt-28 sm:pt-32 pb-16" id="resume">
+    <section className="relative isolate pt-20 sm:pt-24 pb-8" id="resume">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
@@ -129,8 +129,8 @@ export default function ResumePage() {
               Experience & Skills
             </h1>
             <p className="mt-4 text-sm sm:text-base text-ink/80 max-w-xl">
-              A quick overview of my background, the tools I’m best with, and
-              what I’m focusing on.
+              A quick overview of my background, the tools I'm best with, and
+              what I'm focusing on.
             </p>
           </div>
 
@@ -215,3 +215,5 @@ export default function ResumePage() {
           </div>
         </div>
       </section>
+  );
+}

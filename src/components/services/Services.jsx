@@ -333,7 +333,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative isolate overflow-x-hidden pt-24 sm:pt-28 pb-16"
+      className="relative isolate overflow-x-hidden pt-16 sm:pt-20 pb-8"
       ref={containerRef}
     >
       {/* Ambient gradient blobs */}
