@@ -14,16 +14,18 @@ const ErrorPage = () => {
     <div className="min-h-dvh antialiased relative">
       <NoiseBackground />
       <BackgroundGrid />
-      <div className="min-h-dvh flex flex-col items-center justify-center text-white p-4 relative z-10">
+      <div className="min-h-dvh flex flex-col items-center justify-center p-4 relative z-10">
         <div className="text-center max-w-lg">
           <div className="mb-8">
             <h1 className="text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
               404
             </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mt-4">Page Not Found</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold mt-4 text-slate-900 dark:text-white">
+              Page Not Found
+            </h2>
           </div>
           
-          <p className="text-gray-300 mb-8 text-lg">
+          <p className="text-slate-700 dark:text-gray-300 mb-8 text-lg">
             Oops! The page you're looking for doesn't exist or has been moved.
           </p>
           
@@ -37,7 +39,7 @@ const ErrorPage = () => {
             
             <button
               onClick={() => window.history.back()}
-              className="px-6 py-3 border border-gray-600 text-gray-200 font-medium rounded-lg hover:bg-gray-800 transition-all duration-300"
+              className="px-6 py-3 border border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-200 font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-all duration-300"
             >
               Go Back
             </button>
