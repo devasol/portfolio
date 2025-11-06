@@ -20,12 +20,12 @@ const ErrorPage = () => {
             <h1 className="text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
               404
             </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mt-4 text-slate-900 dark:text-white">
+            <h2 className="text-2xl md:text-3xl font-semibold mt-4 text-ink">
               Page Not Found
             </h2>
           </div>
           
-          <p className="text-slate-800 dark:text-gray-300 mb-8 text-lg">
+          <p className="text-ink/80 mb-8 text-lg">
             Oops! The page you're looking for doesn't exist or has been moved.
           </p>
           
@@ -39,7 +39,7 @@ const ErrorPage = () => {
             
             <button
               onClick={() => window.history.back()}
-              className="px-6 py-3 border border-slate-400 dark:border-gray-600 text-slate-800 dark:text-gray-200 font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-all duration-300"
+              className="px-6 py-3 border border-[color-mix(in_oklab,var(--color-ink),transparent_75%)] text-ink font-medium rounded-lg hover:bg-[color-mix(in_oklab,var(--color-ink),transparent_95%)] transition-all duration-300"
             >
               Go Back
             </button>
