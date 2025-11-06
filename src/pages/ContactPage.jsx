@@ -51,7 +51,7 @@ export default function ContactPage() {
 
   return (
     <main className="pb-24">
-      <section className="relative isolate pt-28 sm:pt-32" id="contact">
+      <section className="relative isolate pt-28 sm:pt-32 pb-16" id="contact">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
@@ -98,12 +98,7 @@ export default function ContactPage() {
                       ? "Sending…"
                       : status === "sent"
                       ? "Sent!"
-                      : "Send message"}
-                  </button>
-                  {status === "sent" && (
-                    <span className="text-sm text-ink/70">
-                      Thanks! I’ll reply soon.
-                    </span>
+      </section>
                   )}
                 </div>
               </form>

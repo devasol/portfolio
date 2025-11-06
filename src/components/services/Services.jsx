@@ -333,7 +333,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative isolate overflow-x-hidden pt-24 sm:pt-28"
+      className="relative isolate overflow-x-hidden pt-24 sm:pt-28 pb-16"
       ref={containerRef}
     >
       {/* Ambient gradient blobs */}
@@ -386,19 +386,6 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Subtle moving grid background */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-20 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-          backgroundSize: "28px 28px, 28px 28px",
-          color: "var(--color-ink)",
-          transform: "translate(var(--parx,0), var(--pary,0))",
-          transition: "transform 120ms ease-out",
-        }}
-      />
     </section>
   );
 }

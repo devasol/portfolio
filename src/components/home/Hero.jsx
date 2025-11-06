@@ -28,7 +28,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative isolate overflow-hidden pt-28 sm:pt-32"
+      className="relative isolate overflow-hidden pt-28 sm:pt-32 pb-16"
     >
       {/* Soft gradient blobs (static for stability) */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
