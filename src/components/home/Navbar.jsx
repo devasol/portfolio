@@ -83,7 +83,7 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Centered dynamic island */}
-        <div className="h-16 grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center">
+        <div className="h-16 grid grid-cols-[1fr_auto_1fr] items-center">
           <div className="justify-self-start">
             <Link
               to="/"
@@ -96,20 +96,11 @@ export default function Navbar() {
 
           <div className="justify-self-center mt-2">
             <div
-              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-[999px] flex items-center gap-2 sm:gap-3 max-w-full"
+              className="px-3 py-2 rounded-[999px] flex items-center gap-2 max-w-full overflow-x-auto hide-scrollbar"
               style={islandStyle}
             >
-              {/* Left: theme toggle */}
-              <button
-                onClick={toggleTheme}
-                aria-label="Toggle theme"
-                className="inline-flex items-center justify-center h-8 w-8 sm:h-9 sm:w-9 rounded-full border border-white/10 hover:bg-white/5 shrink-0"
-              >
-                <ThemeIcon />
-              </button>
-
-              {/* Nav links always visible */}
-              <nav className="flex items-center gap-2 text-sm">
+              {/* Nav links - with unique styling */}
+              <nav className="flex flex-wrap justify-center items-center gap-1 xs:gap-2">
                 {NAV_ITEMS.map((item) => {
                   const active = activeHref === item.href;
                   return (
@@ -117,10 +108,10 @@ export default function Navbar() {
                       key={item.label}
                       to={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`px-3 py-1.5 rounded-full relative overflow-hidden transition-colors ${desktopChipClasses} ${
+                      className={`px-3 py-1.5 text-xs xs:text-sm rounded-full relative transition-all duration-300 ${desktopChipClasses} ${
                         active
-                          ? "underline decoration-2 underline-offset-4"
-                          : ""
+                          ? "bg-emerald-500/15 text-emerald-400 font-medium"
+                          : "hover:bg-white/5"
                       }`}
                     >
                       {item.label}
@@ -129,10 +120,13 @@ export default function Navbar() {
                 })}
               </nav>
 
+              {/* Vertical divider */}
+              <div className="hidden xs:block h-6 w-px bg-[color-mix(in_oklab,var(--color-ink),transparent_75%)]"></div>
+
               {/* Call to action */}
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap shrink-0"
+                className="hidden xs:inline-flex items-center gap-1.5 xs:gap-2 rounded-full px-3 py-1.5 text-xs xs:text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap"
               >
                 <span>Hire me</span>
               </Link>

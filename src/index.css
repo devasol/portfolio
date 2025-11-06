@@ -114,6 +114,15 @@ body {
   transform: translateY(0);
 }
 
+/* Hide scrollbars for horizontal scrolling nav */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
 /* nicer scrollbars */
 *::-webkit-scrollbar {
   height: 10px;
