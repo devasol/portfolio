@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const SERVICES = [
   {
@@ -278,7 +279,7 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
               {item.details}
               <div className="mt-3 flex items-center gap-3">
                 <a
-                  href="/contact"
+                  href="#contact"
                   className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
                 >
                   Start a project
@@ -371,13 +372,13 @@ export default function Services() {
         {/* CTA */}
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center gap-3">
           <a
-            href="/contact"
+            href="#contact"
             className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
           >
             Let’s build something great
           </a>
           <a
-            href="/work"
+            href="#work"
             className="text-sm text-ink/80 hover:text-ink transition-colors"
           >
             See my work

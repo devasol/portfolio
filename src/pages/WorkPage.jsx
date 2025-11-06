@@ -75,15 +75,15 @@ function ProjectCard({ p, i }) {
           ))}
         </div>
         <div className="mt-4 flex items-center gap-3">
-          <a
+          {/* <a
             href="#"
             className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
           >
             View case study
-          </a>
+          </a> */}
           <a
             href="#"
-            className="inline-flex items-center gap-1 text-xs text-ink/80 hover:text-ink transition-colors"
+            className="inline-flex items-center gap-1 text-xs text-ink/80 hover:text-emerald-400 hover:bg-white/5 rounded-full px-2 py-1 transition-colors duration-150 transform hover:-translate-y-1"
           >
             <svg
               viewBox="0 0 24 24"
@@ -99,6 +99,21 @@ function ProjectCard({ p, i }) {
               />
             </svg>
             Live demo
+          </a>
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 text-xs text-ink/80 hover:text-emerald-400 hover:bg-white/5 rounded-full px-2 py-1 transition-colors duration-150 transform hover:-translate-y-1"
+            aria-label="GitHub repository"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.084 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.47-2.38 1.236-3.22-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23.957-.266 1.98-.399 3-.405 1.02.006 2.043.139 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.803 5.625-5.475 5.92.43.372.814 1.102.814 2.222 0 1.606-.015 2.896-.015 3.293 0 .32.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+            </svg>
+            GitHub
           </a>
         </div>
       </div>
@@ -121,7 +136,7 @@ export default function WorkPage() {
   const projects = useMemo(() => PROJECTS, []);
   return (
     <main className="pb-24">
-      <section className="relative isolate pt-28 sm:pt-32">
+      <section className="relative isolate pt-28 sm:pt-32" id="work">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">

@@ -4,10 +4,13 @@ import profileImage from "../../assets/profile-image/profile-image.png";
 
 const socials = [
   { href: "#", label: "Download CV" },
-  { href: "#", label: "GitHub" },
-  { href: "#", label: "LinkedIn" },
-  { href: "#", label: "Twitter/X" },
-  { href: "#", label: "Email" },
+  { href: "https://github.com/devasol", label: "GitHub" },
+  {
+    href: "https://www.linkedin.com/in/dawit-solomon-0450602a0/",
+    label: "LinkedIn",
+  },
+  // { href: "#", label: "Twitter/X" },
+  { href: "mailto:dawit8908@gmail.com", label: "Email" },
 ];
 
 export default function Hero() {
@@ -38,7 +41,7 @@ export default function Hero() {
           {/* Left - text */}
           <div className="min-w-0">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
-              Software Developer
+              Web Developer
             </p>
             <h1 className="display-font text-4xl sm:text-5xl lg:text-6xl leading-tight">
               <span className="text-ink">Hello I’m</span>
@@ -53,9 +56,11 @@ export default function Hero() {
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
-                href="#"
-                className="group inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
-              >
+                  href="#contact"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition transform duration-150 hover:-translate-y-1"
+                >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -67,12 +72,14 @@ export default function Hero() {
                 Download CV
               </a>
 
-              {socials.slice(1).map((s) => (
+                {socials.slice(1).map((s) => (
                 <a
                   key={s.label}
                   aria-label={s.label}
                   href={s.href}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color-mix(in_oklab,var(--color-ink),transparent_85%)] text-ink/80 hover:text-ink hover:border-[color-mix(in_oklab,var(--color-ink),transparent_70%)] hover:bg-[color-mix(in_oklab,var(--color-surface),transparent_80%)] transition"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color-mix(in_oklab,var(--color-ink),transparent_85%)] text-ink/80 hover:text-ink hover:border-[color-mix(in_oklab,var(--color-ink),transparent_70%)] hover:bg-[color-mix(in_oklab,var(--color-surface),transparent_80%)] transition transform duration-150 hover:-translate-y-1 hover:shadow-sm"
                 >
                   {s.label === "GitHub" && (
                     <svg

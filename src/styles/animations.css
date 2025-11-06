@@ -108,3 +108,33 @@
     background-position: 200% 0;
   }
 }
+
+/* Global loader styles */
+.global-loader .loader-backdrop {
+  opacity: 1;
+}
+.loader-ring {
+  border-radius: 9999px;
+  box-shadow: 0 10px 40px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+.animate-loader-spin {
+  animation: loaderSpin 1s linear infinite;
+}
+
+/* gentle ping for the center dot */
+.animate-ping {
+  animation: ping 1.25s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+/* subtle text flicker */
+@keyframes textPulse {
+  0% { opacity: 0.85; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 0.85; transform: translateY(0); }
+}
+.global-loader .text-ink\/80 {
+  animation: textPulse 1400ms ease-in-out infinite;
+}
