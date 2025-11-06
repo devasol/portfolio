@@ -123,6 +123,22 @@ body {
   display: none;  /* Chrome, Safari, Opera */
 }
 
+/* Pulse animation for active nav item */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* nicer scrollbars */
 *::-webkit-scrollbar {
   height: 10px;

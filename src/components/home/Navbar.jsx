@@ -96,39 +96,50 @@ export default function Navbar() {
 
           <div className="justify-self-center mt-2">
             <div
-              className="px-3 py-2 rounded-[999px] flex items-center gap-2 max-w-full overflow-x-auto hide-scrollbar"
+              className="px-4 py-2.5 rounded-[999px] flex items-center gap-3 max-w-full overflow-x-auto hide-scrollbar"
               style={islandStyle}
             >
-              {/* Nav links - with unique styling */}
-              <nav className="flex flex-wrap justify-center items-center gap-1 xs:gap-2">
-                {NAV_ITEMS.map((item) => {
-                  const active = activeHref === item.href;
-                  return (
-                    <Link
-                      key={item.label}
-                      to={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={`px-3 py-1.5 text-xs xs:text-sm rounded-full relative transition-all duration-300 ${desktopChipClasses} ${
-                        active
-                          ? "bg-emerald-500/15 text-emerald-400 font-medium"
-                          : "hover:bg-white/5"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </nav>
+              {/* Navigation with animated active indicator */}
+              <div className="relative">
+                <nav className="relative flex items-center justify-center gap-1 xs:gap-2">
+                  {NAV_ITEMS.map((item) => {
+                    const active = activeHref === item.href;
+                    return (
+                      <div key={item.label} className="relative">
+                        <Link
+                          to={item.href}
+                          aria-current={active ? "page" : undefined}
+                          className={`px-3.5 py-2 text-sm rounded-full relative z-10 transition-all duration-300 ${desktopChipClasses} ${
+                            active
+                              ? "text-emerald-400 font-medium"
+                              : "hover:text-ink/100"
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                        {active && (
+                          <>
+                            {/* Animated active indicator with glow */}
+                            <div className="absolute inset-0 bg-emerald-500/10 rounded-full -z-10 animate-pulse-slow"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-full -z-10 blur-sm"></div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </nav>
+              </div>
 
-              {/* Vertical divider */}
-              <div className="hidden xs:block h-6 w-px bg-[color-mix(in_oklab,var(--color-ink),transparent_75%)]"></div>
+              {/* Vertical divider with gradient */}
+              <div className="hidden xs:block h-7 w-px bg-gradient-to-b from-transparent via-[color-mix(in_oklab,var(--color-ink),transparent_50%)] to-transparent"></div>
 
-              {/* Call to action */}
+              {/* Enhanced call to action */}
               <Link
                 to="/contact"
-                className="hidden xs:inline-flex items-center gap-1.5 xs:gap-2 rounded-full px-3 py-1.5 text-xs xs:text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap"
+                className="hidden xs:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-base-900 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 whitespace-nowrap group relative overflow-hidden"
               >
-                <span>Hire me</span>
+                <span className="relative z-10 font-medium">Hire me</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300 -z-10"></div>
               </Link>
             </div>
           </div>
