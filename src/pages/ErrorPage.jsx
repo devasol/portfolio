@@ -25,7 +25,7 @@ const ErrorPage = () => {
             </h2>
           </div>
           
-          <p className="text-slate-700 dark:text-gray-300 mb-8 text-lg">
+          <p className="text-slate-800 dark:text-gray-300 mb-8 text-lg">
             Oops! The page you're looking for doesn't exist or has been moved.
           </p>
           
@@ -39,7 +39,7 @@ const ErrorPage = () => {
             
             <button
               onClick={() => window.history.back()}
-              className="px-6 py-3 border border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-200 font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-all duration-300"
+              className="px-6 py-3 border border-slate-400 dark:border-gray-600 text-slate-800 dark:text-gray-200 font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-all duration-300"
             >
               Go Back
             </button>
