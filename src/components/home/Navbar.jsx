@@ -34,7 +34,6 @@ function ThemeIcon() {
 }
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
   const location = useLocation();
   const activeHref = location.pathname || "/";
@@ -74,12 +73,8 @@ export default function Navbar() {
   };
 
   const isDark = theme === "dark";
-  // Desktop chips: subtle glass; Mobile chips: strong contrast and interaction
+  // Desktop chips: subtle glass
   const desktopChipClasses = "bg-transparent text-ink/90 hover:text-ink";
-  const mobileChipClasses = isDark
-    ? "bg-white text-neutral-900 ring-1 ring-white/60 shadow-md hover:bg-white/95"
-    : "bg-neutral-900 text-white ring-1 ring-black/40 shadow-md hover:bg-neutral-800";
-  const mobileLinkClasses = `block w-full px-4 py-2 rounded-full font-medium transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 ${mobileChipClasses}`;
 
   return (
     <header
@@ -99,7 +94,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden lg:block justify-self-center mt-2">
+          <div className="justify-self-center mt-2">
             <div
               className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-[999px] flex items-center gap-2 sm:gap-3 max-w-full"
               style={islandStyle}
@@ -113,8 +108,8 @@ export default function Navbar() {
                 <ThemeIcon />
               </button>
 
-              {/* Nav links centered inside island (lg+) */}
-              <nav className="hidden lg:flex items-center gap-2 text-sm">
+              {/* Nav links always visible */}
+              <nav className="flex items-center gap-2 text-sm">
                 {NAV_ITEMS.map((item) => {
                   const active = activeHref === item.href;
                   return (
@@ -137,16 +132,16 @@ export default function Navbar() {
               {/* Call to action */}
               <Link
                 to="/contact"
-                className="hidden xl:inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap shrink-0"
               >
                 <span>Hire me</span>
               </Link>
             </div>
           </div>
 
-          {/* Right: mobile actions (compact) */}
-          <div className="justify-self-end lg:hidden flex items-center gap-2">
-            {/* Theme toggle + Menu combined */}
+          {/* Right: theme toggle */}
+          <div className="justify-self-end flex items-center gap-2">
+            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
@@ -155,69 +150,9 @@ export default function Navbar() {
             >
               <ThemeIcon />
             </button>
-            <button
-              className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/10 hover:bg-white/5"
-              aria-label="Toggle menu"
-              onClick={() => setOpen((v) => !v)}
-            >
-              <div className="relative w-5 h-5">
-                <span
-                  className={`absolute left-0 top-1 block h-0.5 w-5 transition-transform ${
-                    isDark ? "bg-white" : "bg-black"
-                  } ${open ? "translate-y-2 rotate-45" : ""}`}
-                />
-                <span
-                  className={`absolute left-0 top-2.5 block h-0.5 w-5 transition-opacity ${
-                    isDark ? "bg-white" : "bg-black"
-                  } ${open ? "opacity-0" : ""}`}
-                />
-                <span
-                  className={`absolute left-0 top-4 block h-0.5 w-5 transition-transform ${
-                    isDark ? "bg-white" : "bg-black"
-                  } ${open ? "-translate-y-2 -rotate-45" : ""}`}
-                />
-              </div>
-            </button>
           </div>
 
           {/* end of top bar */}
-        </div>
-
-        {/* Mobile menu */}
-        <div
-          className={`lg:hidden grid transition-[grid-template-rows] duration-300 overflow-hidden ${
-            open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-          }`}
-        >
-          <div
-            className={`min-h-0 transition-all duration-300 ${
-              open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"
-            }`}
-          >
-            <nav className="px-2 pb-4 space-y-2">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  onClick={() => setOpen(false)}
-                  className={`${mobileLinkClasses} ${
-                    activeHref === item.href
-                      ? "underline decoration-2 underline-offset-4"
-                      : ""
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link
-                to="/contact"
-                onClick={() => setOpen(false)}
-                className="mt-2 inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300"
-              >
-                Hire me
-              </Link>
-            </nav>
-          </div>
         </div>
       </div>
     </header>
