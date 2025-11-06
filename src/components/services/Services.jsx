@@ -164,9 +164,6 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
     "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)"
   );
   const [hovered, setHovered] = useState(false);
-  const inView = useInView(cardRef);
-
-  // Mouse tilt
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
@@ -279,7 +276,7 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
               {item.details}
               <div className="mt-3 flex items-center gap-3">
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
                 >
                   Start a project
@@ -333,7 +330,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative isolate overflow-x-hidden pt-16 sm:pt-20 pb-8"
+      className="relative isolate overflow-x-hidden pt-24 sm:pt-28"
       ref={containerRef}
     >
       {/* Ambient gradient blobs */}
@@ -372,20 +369,33 @@ export default function Services() {
         {/* CTA */}
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center gap-3">
           <a
-            href="#contact"
+            href="/contact"
             className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
           >
-            Let’s build something great
+            Let's build something great
           </a>
-          <a
-            href="#work"
+          <Link
+            to="/work"
             className="text-sm text-ink/80 hover:text-ink transition-colors"
           >
             See my work
-          </a>
+          </Link>
         </div>
       </div>
 
+      {/* Subtle moving grid background */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-20 opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+          backgroundSize: "28px 28px, 28px 28px",
+          color: "var(--color-ink)",
+          transform: "translate(var(--parx,0), var(--pary,0))",
+          transition: "transform 120ms ease-out",
+        }}
+      />
     </section>
   );
 }

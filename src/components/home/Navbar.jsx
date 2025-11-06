@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation, Link as RouterLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const NAV_ITEMS = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Resume", href: "#resume" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Resume", href: "/resume" },
+  { label: "Work", href: "/work" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function ThemeIcon() {
@@ -37,7 +37,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
   const location = useLocation();
-  const currentPath = location.pathname;
+  const activeHref = location.pathname || "/";
 
   const [theme, setTheme] = useState(
     typeof window !== "undefined" && window.localStorage.getItem("theme")
@@ -60,22 +60,7 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Function to handle navigation
-  const handleNavigation = (href) => {
-    if (currentPath !== "/") {
-      // If not on the main page, go to the main page first
-      window.location.href = "/";
-    }
-    
-    // Then scroll to the section
-    setTimeout(() => {
-      const element = document.getElementById(href.substring(1)); // Remove the '#'
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
+  // No intersection observer needed with routes; highlight via location
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const headerStyle = {
@@ -105,13 +90,13 @@ export default function Navbar() {
         {/* Centered dynamic island */}
         <div className="h-16 grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center">
           <div className="justify-self-start">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="display-font font-semibold text-2xl sm:text-3xl tracking-tight"
             >
               <span className="text-ink">Dawit</span>
               <span className="text-emerald-500">.</span>
-            </a>
+            </Link>
           </div>
 
           <div className="hidden lg:block justify-self-center mt-2">
@@ -131,33 +116,31 @@ export default function Navbar() {
               {/* Nav links centered inside island (lg+) */}
               <nav className="hidden lg:flex items-center gap-2 text-sm">
                 {NAV_ITEMS.map((item) => {
+                  const active = activeHref === item.href;
                   return (
-                    <a
+                    <Link
                       key={item.label}
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavigation(item.href);
-                      }}
-                      className={`px-3 py-1.5 rounded-full relative overflow-hidden transition-colors ${desktopChipClasses}`}
+                      to={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={`px-3 py-1.5 rounded-full relative overflow-hidden transition-colors ${desktopChipClasses} ${
+                        active
+                          ? "underline decoration-2 underline-offset-4"
+                          : ""
+                      }`}
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   );
                 })}
               </nav>
 
               {/* Call to action */}
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavigation("#contact");
-                }}
+              <Link
+                to="/contact"
                 className="hidden xl:inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-colors whitespace-nowrap shrink-0"
               >
                 <span>Hire me</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -213,30 +196,26 @@ export default function Navbar() {
           >
             <nav className="px-2 pb-4 space-y-2">
               {NAV_ITEMS.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavigation(item.href);
-                    setOpen(false);
-                  }}
-                  className={`${mobileLinkClasses}`}
+                  to={item.href}
+                  onClick={() => setOpen(false)}
+                  className={`${mobileLinkClasses} ${
+                    activeHref === item.href
+                      ? "underline decoration-2 underline-offset-4"
+                      : ""
+                  }`}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavigation("#contact");
-                  setOpen(false);
-                }}
+              <Link
+                to="/contact"
+                onClick={() => setOpen(false)}
                 className="mt-2 inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-base-900 bg-emerald-400 hover:bg-emerald-300"
               >
                 Hire me
-              </a>
+              </Link>
             </nav>
           </div>
         </div>
