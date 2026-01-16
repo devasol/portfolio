@@ -19,6 +19,7 @@ export default function BackgroundGrid() {
     let width = 0;
     let height = 0;
 
+    // Use consistent constants for all screen sizes as requested
     const spacing = 28; 
     const mouseRadius = 200; 
     const mouseStrength = 0.8; 
@@ -34,22 +35,31 @@ export default function BackgroundGrid() {
     };
 
     const initPoints = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
       
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * dpr;
       canvas.height = height * dpr;
+      
+      // Reset transform before scaling to prevent accumulation on resize
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
       
       points = [];
-      const cols = Math.ceil(width / spacing) + 1;
-      const rows = Math.ceil(height / spacing) + 1;
+      const spacing = 28;
+      
+      const cols = Math.ceil(width / spacing) + 2;
+      const rows = Math.ceil(height / spacing) + 2;
+      
+      const offsetX = (width - (cols - 1) * spacing) / 2;
+      const offsetY = (height - (rows - 1) * spacing) / 2;
 
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-          const px = x * spacing;
-          const py = y * spacing;
+          const px = offsetX + x * spacing;
+          const py = offsetY + y * spacing;
           points.push({
             x: px,
             y: py,
@@ -68,6 +78,10 @@ export default function BackgroundGrid() {
       timeRef.current += 0.005;
       ctx.clearRect(0, 0, width, height);
       const colors = getColors();
+      
+      // Constants consistent for all screens
+      const mouseRadius = 200;
+      const mouseStrength = 0.8;
 
       for (let i = 0; i < points.length; i++) {
         const p = points[i];
@@ -76,8 +90,6 @@ export default function BackgroundGrid() {
         const dy = mouseRef.current.y - p.y;
         const distSq = dx * dx + dy * dy;
         const dist = Math.sqrt(distSq);
-
-        ctx.globalAlpha = 1.0;
 
         if (dist < mouseRadius) {
           const force = (mouseRadius - dist) / mouseRadius;
@@ -125,17 +137,28 @@ export default function BackgroundGrid() {
       mouseRef.current = { x: e.clientX, y: e.clientY };
     };
 
+    const handleTouch = (e) => {
+      if (e.touches && e.touches[0]) {
+        // Stop default browser behavior to prevent scroll jumping while interacting
+        mouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+
     const handleResize = () => {
       initPoints();
     };
 
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchstart", handleTouch, { passive: true });
+    window.addEventListener("touchmove", handleTouch, { passive: true });
     window.addEventListener("resize", handleResize);
     initPoints();
     animate();
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleTouch);
+      window.removeEventListener("touchmove", handleTouch);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };
@@ -145,8 +168,16 @@ export default function BackgroundGrid() {
     <canvas
       ref={canvasRef}
       aria-hidden
-      style={{ zIndex: -5 }}
-      className="pointer-events-none fixed inset-0 h-full w-full" 
+      style={{ 
+        zIndex: -5,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        display: "block"
+      }}
+      className="pointer-events-none" 
     />
   );
 }

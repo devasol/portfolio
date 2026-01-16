@@ -50,7 +50,7 @@ export default function ContactPage() {
   };
 
   return (
-    <section className="relative isolate pt-20 sm:pt-24 pb-8" id="contact">
+    <section className="relative isolate py-12 sm:py-24" id="contact">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">

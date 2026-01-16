@@ -11,6 +11,9 @@ import ContactPage from "./pages/ContactPage";
 import ErrorPage from "./pages/ErrorPage";
 import "./index.css";
 
+// Flexible application structure: 
+// On desktop, it acts as a multi-page site.
+// On mobile, the HomePage consolidates content for easier navigation.
 export default function App() {
   return (
     <BrowserRouter>

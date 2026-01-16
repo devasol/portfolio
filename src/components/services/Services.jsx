@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const SERVICES = [
   {
@@ -157,7 +157,7 @@ function useInView(ref, options = { threshold: 0.2 }) {
   return inView;
 }
 
-function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
+function TiltCard({ item, index, expandedIndex, setExpandedIndex, isMobile, location }) {
   const cardRef = useRef(null);
   const detailRef = useRef(null);
   const inView = useInView(cardRef);
@@ -276,12 +276,25 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
             <div className="pt-2 text-sm text-ink/80">
               {item.details}
               <div className="mt-3 flex items-center gap-3">
-                <a
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
-                >
-                  Start a project
-                </a>
+                {isMobile && location.pathname === "/" ? (
+                  <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
+                  >
+                    Start a project
+                  </a>
+                ) : (
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
+                  >
+                    Start a project
+                  </Link>
+                )}
                 <button className="inline-flex items-center gap-1 text-xs text-ink/80 hover:text-ink transition-colors">
                   <svg
                     viewBox="0 0 24 24"
@@ -322,7 +335,15 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex }) {
 export default function Services() {
   const containerRef = useRef(null);
 
-  // Static background to avoid scroll/hover jitter
+  const location = useLocation();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const [expandedIndex, setExpandedIndex] = useState(null);
 
@@ -331,15 +352,9 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative isolate overflow-x-hidden pt-24 sm:pt-28"
+      className="relative isolate overflow-x-hidden py-12 sm:py-24"
       ref={containerRef}
     >
-      {/* Ambient gradient blobs */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-emerald-500/15 blur-3xl" />
-        <div className="absolute bottom-0 -right-16 h-80 w-80 rounded-full bg-cyan-500/15 blur-3xl" />
-      </div>
-
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
@@ -363,40 +378,55 @@ export default function Services() {
               index={i}
               expandedIndex={expandedIndex}
               setExpandedIndex={setExpandedIndex}
+              isMobile={isMobile}
+              location={location}
             />
           ))}
         </div>
 
-        {/* CTA */}
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center gap-3">
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
-          >
-            Let's build something great
-          </a>
-          <Link
-            to="/work"
-            className="text-sm text-ink/80 hover:text-ink transition-colors"
-          >
-            See my work
-          </Link>
+          {isMobile && location.pathname === "/" ? (
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
+            >
+              Let's build something great
+            </a>
+          ) : (
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
+            >
+              Let's build something great
+            </Link>
+          )}
+
+          {isMobile && location.pathname === "/" ? (
+            <a
+              href="#work"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="text-sm text-ink/80 hover:text-ink transition-colors"
+            >
+              See my work
+            </a>
+          ) : (
+            <Link
+              to="/work"
+              className="text-sm text-ink/80 hover:text-ink transition-colors"
+            >
+              See my work
+            </Link>
+          )}
         </div>
       </div>
 
-      {/* Subtle moving grid background */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-20 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-          backgroundSize: "28px 28px, 28px 28px",
-          color: "var(--color-ink)",
-          transform: "translate(var(--parx,0), var(--pary,0))",
-          transition: "transform 120ms ease-out",
-        }}
-      />
     </section>
   );
 }

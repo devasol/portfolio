@@ -28,13 +28,8 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative isolate overflow-hidden pt-28 sm:pt-32"
+      className="relative overflow-hidden pt-20 sm:pt-28"
     >
-      {/* Soft gradient blobs (static for stability) */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -left-20 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" />
-        <div className="absolute top-40 -right-10 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-      </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 items-center">
