@@ -72,10 +72,6 @@ export default function Navbar() {
     boxShadow: elevated ? "0 8px 24px rgba(0,0,0,0.08)" : "none",
   };
 
-  const isDark = theme === "dark";
-  // Desktop chips: subtle glass
-  const desktopChipClasses = "bg-transparent text-ink/90 hover:text-ink";
-
   return (
     <header
       className="fixed top-0 inset-x-0 z-50 transition-all duration-300"
@@ -105,25 +101,32 @@ export default function Navbar() {
                   {NAV_ITEMS.map((item) => {
                     const active = activeHref === item.href;
                     return (
-                      <div key={item.label} className="relative">
+                      <div key={item.label} className="relative group">
                         <Link
                           to={item.href}
                           aria-current={active ? "page" : undefined}
-                          className={`px-3.5 py-2 text-sm rounded-full relative z-10 transition-all duration-300 ${desktopChipClasses} ${
-                            active
-                              ? "text-emerald-400 font-medium"
-                              : "hover:text-ink/100"
+                          className={`px-4 py-2 text-sm font-medium relative z-10 transition-colors duration-300 ${
+                            active ? "text-emerald-400" : "text-ink/60 hover:text-ink"
                           }`}
                         >
                           {item.label}
+                          
+                          {active ? (
+                            <div className="absolute -bottom-1 left-0 right-0 flex justify-center pointer-events-none">
+                              <div className="relative">
+                                {/* Simple, modern dash */}
+                                <div className="h-[2px] w-6 bg-emerald-400 rounded-full animate-nav-underline" />
+                                {/* Subtle soft glow */}
+                                <div className="absolute inset-0 h-[2px] w-6 bg-emerald-400 blur-[4px] opacity-30 animate-nav-underline -z-10" />
+                              </div>
+                            </div>
+                          ) : (
+                            /* Minimal hover dot */
+                            <div className="absolute -bottom-1 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                              <div className="h-1 w-1 bg-ink/30 rounded-full" />
+                            </div>
+                          )}
                         </Link>
-                        {active && (
-                          <>
-                            {/* Animated active indicator with glow */}
-                            <div className="absolute inset-0 bg-emerald-500/10 rounded-full -z-10 animate-pulse-slow"></div>
-                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-full -z-10 blur-sm"></div>
-                          </>
-                        )}
                       </div>
                     );
                   })}

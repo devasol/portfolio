@@ -138,3 +138,39 @@
 .global-loader .text-ink\/80 {
   animation: textPulse 1400ms ease-in-out infinite;
 }
+
+
+/* Navbar Underline Animation - Simple & Modern */
+@keyframes nav-underline-in {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scaleX(1.1);
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.animate-nav-underline {
+  animation: nav-underline-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+}
+
+@keyframes nav-dot-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.8;
+  }
+}
+
+.animate-dot-pulse {
+  animation: nav-dot-pulse 2s ease-in-out infinite;
+}
