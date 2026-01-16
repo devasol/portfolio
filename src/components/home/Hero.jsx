@@ -127,31 +127,57 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right - photo */}
-          <div className="relative mx-auto w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem] hero-float">
-            {/* outer dashed ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-emerald-400/40" />
-            {/* animated dash segments */}
-            {dashes.map((i) => (
-              <span
-                key={i}
-                className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400/70 rotate-[var(--r)]"
-                style={{
-                  clipPath: "polygon(50% 0, 100% 0, 100% 20%, 50% 20%)",
-                  transform: `rotate(${(360 / dashes.length) * i}deg)`,
-                }}
-              />
-            ))}
+          {/* Right - photo with 3D Reactivity */}
+          <div className="relative mx-auto w-64 h-64 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] hero-perspective flex items-center justify-center">
+            {/* 3D Reactive Container */}
+            <div 
+              className="relative w-full h-full hero-card-reactive flex items-center justify-center z-10"
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (-(y - centerY) / 25).toFixed(2); // Slightly softer tilt for larger card
+                const rotateY = ((x - centerX) / 25).toFixed(2);
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = `rotateX(0deg) rotateY(0deg)`;
+              }}
+            >
+              {/* Modern Morphing Frame */}
+              <div className="relative w-[85%] h-[85%] modern-frame animate-blob-morph ring-1 ring-white/10">
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+                {/* Internal Glow Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-emerald-400/20 to-transparent pointer-events-none" />
+              </div>
 
-            {/* profile image */}
-            <div className="absolute inset-6 sm:inset-8 rounded-full overflow-hidden ring-1 ring-white/10">
-              <img
-                src={profileImage}
-                alt="Profile"
-                className="w-full h-full object-cover hero-photo"
-              />
-              <div className="absolute inset-0 ring-1 ring-inset ring-white/10 hero-ring" />
+              {/* Reactive Halo */}
+              <div className="hero-halo opacity-0 group-hover:opacity-100" />
+              
+              {/* Decorative dashes - scaled slightly to avoid clipping */}
+              <div className="absolute inset-0 pointer-events-none opacity-30 select-none">
+                {dashes.map((i) => (
+                  <span
+                    key={i}
+                    className="absolute inset-0 border-[1px] border-transparent border-t-emerald-400/40"
+                    style={{
+                      borderRadius: "38% 62% 63% 37% / 41% 44% 56% 59%",
+                      transform: `rotate(${(360 / dashes.length) * i}deg) scale(1.1)`,
+                    }}
+                  />
+                ))}
+              </div>
             </div>
+            
+            {/* Ambient Bloom - Fixed position behind the tilt */}
+            <div className="absolute inset-4 -z-10 bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none" />
           </div>
         </div>
 
