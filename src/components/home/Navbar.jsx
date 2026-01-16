@@ -105,7 +105,7 @@ export default function Navbar() {
                         <Link
                           to={item.href}
                           aria-current={active ? "page" : undefined}
-                          className={`px-4 py-2 text-sm font-medium relative z-10 transition-colors duration-300 ${
+                          className={`nav-link-premium px-4 py-2 text-sm font-medium relative z-10 transition-colors duration-300 ${
                             active ? "text-emerald-400" : "text-ink/60 hover:text-ink"
                           }`}
                         >
@@ -139,7 +139,7 @@ export default function Navbar() {
               {/* Enhanced call to action */}
               <Link
                 to="/contact"
-                className="hidden xs:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-base-900 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 whitespace-nowrap group relative overflow-hidden"
+                className="btn-premium-interactive hidden xs:inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-base-900 bg-gradient-to-r from-emerald-400 to-cyan-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition-all duration-300 shadow-lg shadow-emerald-500/20 whitespace-nowrap group relative overflow-hidden"
               >
                 <span className="relative z-10 font-medium">Hire me</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300 -z-10"></div>
@@ -153,7 +153,7 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-white/10 hover:bg-white/5"
+              className="theme-btn-premium inline-flex items-center justify-center h-10 w-10 rounded-full"
               title="Toggle theme"
             >
               <ThemeIcon />

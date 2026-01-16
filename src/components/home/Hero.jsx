@@ -59,7 +59,7 @@ export default function Hero() {
                   href="#contact"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 transition transform duration-150 hover:-translate-y-1"
+                  className="group btn-premium-interactive inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
                 >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default function Hero() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color-mix(in_oklab,var(--color-ink),transparent_85%)] text-ink/80 hover:text-ink hover:border-[color-mix(in_oklab,var(--color-ink),transparent_70%)] hover:bg-[color-mix(in_oklab,var(--color-surface),transparent_80%)] transition transform duration-150 hover:-translate-y-1 hover:shadow-sm"
+                  className="social-icon-premium inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color-mix(in_oklab,var(--color-ink),transparent_85%)] text-ink/80"
                 >
                   {s.label === "GitHub" && (
                     <svg
