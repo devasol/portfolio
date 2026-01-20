@@ -18,14 +18,12 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 40px; /* Further reduced space for the sticky navbar */
 }
 
-html,
-body,
-#root {
-  height: 100%;
+body {
+  min-height: 100vh;
 }
+
 body {
   font-family: var(--font-ui);
   background: var(--color-bg);
