@@ -28,7 +28,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative overflow-hidden pt-20 sm:pt-28"
+      className="relative overflow-hidden pt-4 sm:pt-6"
     >
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

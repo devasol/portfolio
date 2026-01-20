@@ -119,6 +119,7 @@ export default function ResumePage() {
   );
 
   return (
+    <main className="w-full flex justify-center">
       <div className="relative isolate py-12 sm:py-24" id="resume">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
@@ -215,5 +216,6 @@ export default function ResumePage() {
           </div>
         </div>
       </div>
+    </main>
   );
 }

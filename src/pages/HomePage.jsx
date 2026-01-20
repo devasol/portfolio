@@ -20,28 +20,28 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-0">
+    <main className="flex flex-col gap-0 w-full max-w-7xl">
       {/* Home Section - Always visible */}
-      <section id="home" className="min-h-screen flex items-center">
+      <section id="home" className="min-h-screen flex items-center justify-center w-full">
         <Hero />
       </section>
 
       {/* Conditionally reveal all sections with zero gap logic */}
       {isMobile && (
-        <div className="flex flex-col gap-0 -mt-10">
-          <section id="services">
+        <div className="flex flex-col gap-0 -mt-10 w-full max-w-7xl">
+          <section id="services" className="w-full">
             <Services />
           </section>
 
-          <section id="work" className="-mt-16 sm:-mt-24">
+          <section id="work" className="-mt-16 sm:-mt-24 w-full">
             <WorkPage />
           </section>
 
-          <section id="resume" className="-mt-16 sm:-mt-24">
+          <section id="resume" className="-mt-16 sm:-mt-24 w-full">
             <ResumePage />
           </section>
 
-          <section id="contact" className="-mt-16 sm:-mt-24">
+          <section id="contact" className="-mt-16 sm:-mt-24 w-full">
             <ContactPage />
           </section>
         </div>

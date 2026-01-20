@@ -135,6 +135,7 @@ function ProjectCard({ p, i }) {
 export default function WorkPage() {
   const projects = useMemo(() => PROJECTS, []);
   return (
+    <main className="w-full flex justify-center">
       <div className="relative isolate py-12 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
@@ -158,5 +159,6 @@ export default function WorkPage() {
           </div>
         </div>
       </div>
+    </main>
   );
 }

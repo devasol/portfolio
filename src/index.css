@@ -18,7 +18,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px; /* Space for the sticky navbar */
+  scroll-padding-top: 40px; /* Further reduced space for the sticky navbar */
 }
 
 html,
