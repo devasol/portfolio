@@ -352,3 +352,63 @@
   opacity: 0.15;
   transform: scale(1.1);
 }
+/* --- Scroll Reveal Animations --- */
+
+.reveal-base {
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity, filter;
+}
+
+.reveal-fade-up {
+  transform: translateY(40px);
+}
+
+.reveal-scale-in {
+  transform: scale(0.92);
+}
+
+.reveal-blur {
+  filter: blur(10px);
+}
+
+.reveal-left {
+  transform: translateX(-40px);
+}
+
+.reveal-right {
+  transform: translateX(40px);
+}
+
+/* Triggered classes */
+.reveal-base.is-visible {
+  opacity: 1;
+  transform: translate(0) scale(1);
+  filter: blur(0);
+}
+
+/* Delay utilities */
+.reveal-delay-100 { transition-delay: 100ms; }
+.reveal-delay-200 { transition-delay: 200ms; }
+.reveal-delay-300 { transition-delay: 300ms; }
+.reveal-delay-400 { transition-delay: 400ms; }
+.reveal-delay-500 { transition-delay: 500ms; }
+
+/* Staggered animation for children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 100ms; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 200ms; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 300ms; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 400ms; }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 500ms; }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 600ms; }

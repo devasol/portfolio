@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import FadeIn from "../common/FadeIn";
+
 
 const SERVICES = [
   {
@@ -350,39 +352,46 @@ export default function Services() {
   const cards = useMemo(() => SERVICES, []);
 
   return (
-    <section
-      id="services"
-      className="relative isolate overflow-x-hidden py-12 sm:py-24"
+    <div
+      className="w-full"
       ref={containerRef}
     >
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
-            Services
-          </p>
-          <h2 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink">
-            What I can do for you
-          </h2>
-          <p className="mt-4 text-sm sm:text-base text-ink/80 max-w-xl">
-            Highly interactive, performance‑minded experiences with tasteful
-            motion and a focus on outcomes.
-          </p>
-        </div>
+
+
+        <FadeIn variant="blur">
+          <div className="max-w-2xl">
+            <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
+              Services
+            </p>
+            <h2 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink">
+              What I can do for you
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-ink/80 max-w-xl">
+              Highly interactive, performance‑minded experiences with tasteful
+              motion and a focus on outcomes.
+            </p>
+          </div>
+        </FadeIn>
 
         {/* Services grid */}
-        <div className="mt-10 sm:mt-12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {cards.map((item, i) => (
-            <TiltCard
-              key={item.title}
-              item={item}
-              index={i}
-              expandedIndex={expandedIndex}
-              setExpandedIndex={setExpandedIndex}
-              isMobile={isMobile}
-              location={location}
-            />
-          ))}
-        </div>
+        <FadeIn stagger={true} variant="fade-up" delay={200}>
+          <div className="mt-10 sm:mt-12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {cards.map((item, i) => (
+              <TiltCard
+                key={item.title}
+                item={item}
+                index={i}
+                expandedIndex={expandedIndex}
+                setExpandedIndex={setExpandedIndex}
+                isMobile={isMobile}
+                location={location}
+              />
+            ))}
+          </div>
+        </FadeIn>
+
 
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center gap-3">
           {isMobile && location.pathname === "/" ? (
@@ -427,6 +436,6 @@ export default function Services() {
         </div>
       </div>
 
-    </section>
+    </div>
   );
 }

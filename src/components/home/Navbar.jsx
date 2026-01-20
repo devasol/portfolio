@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const NAV_ITEMS = [
-  { label: "Home", href: "/", id: "home" },
-  { label: "Services", href: "/services", id: "services" },
-  { label: "Work", href: "/work", id: "work" },
-  { label: "Resume", href: "/resume", id: "resume" },
-  { label: "Contact", href: "/contact", id: "contact" },
+  { label: "Home", href: "#home", id: "home" },
+  { label: "Services", href: "#services", id: "services" },
+  { label: "Work", href: "#work", id: "work" },
+  { label: "Resume", href: "#resume", id: "resume" },
+  { label: "Contact", href: "#contact", id: "contact" },
 ];
 
 function ThemeIcon() {
@@ -36,9 +36,7 @@ function ThemeIcon() {
 export default function Navbar() {
   const [elevated, setElevated] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMobileDisplay, setIsMobileDisplay] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState("home");
   
   const [theme, setTheme] = useState(
     typeof window !== "undefined" && window.localStorage.getItem("theme")
@@ -47,129 +45,142 @@ export default function Navbar() {
   );
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobileDisplay(window.innerWidth < 1024);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
     const root = document.documentElement;
     root.dataset.theme = theme;
     window.localStorage.setItem("theme", theme);
   }, [theme]);
 
+  // Handle Elevation on Scroll
   useEffect(() => {
-    const onScroll = () => setElevated(window.scrollY > 8);
+    const onScroll = () => setElevated(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Intersection Observer for Active Section Tracking
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-15% 0px -70% 0px", // Trigger when section is near the top
+      threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    NAV_ITEMS.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const handleNavClick = (e, item) => {
-    // If we are on mobile display and on the home page, scroll instead of navigate
-    if (isMobileDisplay && location.pathname === "/") {
-      const element = document.getElementById(item.id);
-      if (element) {
-        e.preventDefault();
-        const offset = 80;
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = element.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
+    e.preventDefault();
+    const element = document.getElementById(item.id);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - offset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-        setMobileMenuOpen(false);
-        return;
-      }
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      setMobileMenuOpen(false);
+      window.history.pushState(null, "", item.href);
     }
-    
-    // Default behavior: navigate to the page and close mobile menu
-    setMobileMenuOpen(false);
   };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 transition-all duration-300 pointer-events-none">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pointer-events-auto">
-        <div className="h-20 flex items-center justify-between gap-4">
+    <header className={`fixed top-0 inset-x-0 z-[100] transition-all duration-500 ${
+      elevated ? "py-4" : "py-6"
+    }`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
               to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="display-font font-semibold text-2xl tracking-tight cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                setMobileMenuOpen(false);
+              }}
+              className="display-font font-bold text-2xl tracking-tight cursor-pointer"
             >
               <span className="text-ink">Dawit</span>
               <span className="text-emerald-500">.</span>
             </Link>
           </div>
 
-          {/* Desktop Navigation (Island Style) */}
-          <div className={`hidden lg:flex items-center px-4 py-2.5 rounded-full backdrop-blur-xl border border-white/10 shadow-lg ring-1 ring-white/5 transition-all duration-300 ${
-            elevated ? "bg-surface/80 shadow-black/20" : "bg-surface/40 shadow-black/5"
+          {/* Desktop Navigation (Floating Island) */}
+          <div className={`hidden lg:flex items-center px-2 py-1.5 rounded-full backdrop-blur-2xl border border-white/10 shadow-2xl transition-all duration-500 ${
+            elevated ? "bg-black/40 shadow-black/40 scale-95" : "bg-white/5 shadow-black/10 scale-100"
           }`}>
             <nav className="flex items-center gap-1">
               {NAV_ITEMS.map((item) => {
-                const active = location.pathname === item.href;
+                const active = activeSection === item.id;
                 return (
-                  <Link
+                  <a
                     key={item.label}
-                    to={item.href}
-                    className={`nav-link-premium px-4 py-2 text-sm font-medium relative z-10 transition-colors ${
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item)}
+                    className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 relative group ${
                       active ? "text-emerald-400" : "text-ink/60 hover:text-ink"
                     }`}
                   >
                     {item.label}
                     {active && (
-                      <div className="absolute -bottom-1 left-0 right-0 flex justify-center pointer-events-none">
-                        <div className="relative">
-                          <div className="h-[2px] w-6 bg-emerald-400 rounded-full animate-nav-underline" />
-                          <div className="absolute inset-0 h-[2px] w-6 bg-emerald-400 blur-[4px] opacity-30 animate-nav-underline -z-10" />
-                        </div>
-                      </div>
+                      <div className="absolute inset-0 bg-emerald-400/10 rounded-full -z-10 animate-pulse-subtle" />
                     )}
-                  </Link>
+                  </a>
                 );
               })}
             </nav>
             <div className="mx-3 h-6 w-px bg-white/10" />
-            <Link
-              to="/contact"
-              className="btn-premium-interactive inline-flex items-center rounded-full bg-emerald-400 px-5 py-2 text-xs font-bold text-gray-900 overflow-hidden"
+            <a
+              href="#contact"
+              onClick={(e) => handleNavClick(e, { id: "contact", href: "#contact" })}
+              className="btn-premium-interactive inline-flex items-center rounded-full bg-emerald-400 px-6 py-2.5 text-xs font-black text-gray-900 shadow-lg shadow-emerald-400/20"
             >
               <span className="relative z-10">HIRE ME</span>
-            </Link>
+            </a>
           </div>
 
           {/* Right: Theme & Mobile Toggle */}
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="theme-btn-premium cursor-pointer flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-ink hover:bg-white/10 transition-colors shadow-lg"
               aria-label="Toggle theme"
             >
               <ThemeIcon />
             </button>
 
-            {/* Mobile Menu Button - Shown only on small screens */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full bg-surface/80 backdrop-blur-xl border border-white/15 text-ink cursor-pointer shadow-lg ring-1 ring-white/10"
+              className="lg:hidden flex h-11 w-11 items-center justify-center rounded-full bg-emerald-400/10 border border-emerald-400/30 text-ink shadow-lg backdrop-blur-lg"
               aria-label="Toggle menu"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 stroke="currentColor"
-                className={`h-5 w-5 transition-all duration-300 ${mobileMenuOpen ? "rotate-90 text-emerald-400" : ""}`}
+                className={`h-5 w-5 transition-all duration-500 ${mobileMenuOpen ? "rotate-180 text-emerald-400" : ""}`}
               >
                 {mobileMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -183,39 +194,39 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Navigation */}
         <div 
-          className={`lg:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-            mobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+          className={`lg:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+            mobileMenuOpen ? "mt-6 opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none mt-0"
           }`}
-          style={{ maxHeight: mobileMenuOpen ? "500px" : "0" }}
+          style={{ maxHeight: mobileMenuOpen ? "1000px" : "0" }}
         >
-          <div className="mb-6 p-4 rounded-3xl bg-surface/90 backdrop-blur-2xl border border-white/15 shadow-2xl space-y-2">
-            <nav className="flex flex-col gap-1">
+          <div className="p-4 rounded-[32px] bg-black/80 backdrop-blur-3xl border border-white/10 shadow-2xl space-y-2 ring-1 ring-white/5">
+            <nav className="flex flex-col gap-1.5">
               {NAV_ITEMS.map((item) => {
-                const active = location.pathname === item.href;
+                const active = activeSection === item.id;
                 return (
-                  <Link
+                  <a
                     key={item.label}
-                    to={item.href}
+                    href={item.href}
                     onClick={(e) => handleNavClick(e, item)}
-                    className={`flex items-center px-5 py-3.5 rounded-2xl text-base font-semibold transition-all duration-300 ${
+                    className={`flex items-center px-6 py-4 rounded-2xl text-lg font-bold transition-all duration-300 ${
                       active 
-                        ? "bg-emerald-400/15 text-emerald-400 ring-1 ring-emerald-400/20" 
-                        : "text-ink/60 hover:text-ink hover:bg-white/5"
+                        ? "bg-emerald-400 text-gray-900 shadow-xl shadow-emerald-400/20" 
+                        : "text-white/60 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     {item.label}
-                    {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgb(52,211,153)]" />}
-                  </Link>
+                    {active && <div className="ml-auto w-2 h-2 rounded-full bg-gray-900" />}
+                  </a>
                 );
               })}
-              <div className="h-px bg-white/5 my-2" />
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn-premium-interactive flex items-center justify-center py-4 rounded-2xl bg-emerald-400 text-gray-900 font-bold text-sm tracking-[0.1em] shadow-lg shadow-emerald-500/20"
+              <div className="h-px bg-white/10 my-3" />
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, { id: "contact", href: "#contact" })}
+                className="btn-premium-interactive flex items-center justify-center py-5 rounded-2xl bg-white text-gray-900 font-black text-sm tracking-[0.2em] shadow-xl"
               >
                 HIRE ME NOW
-              </Link>
+              </a>
             </nav>
           </div>
         </div>
@@ -223,3 +234,5 @@ export default function Navbar() {
     </header>
   );
 }
+
+

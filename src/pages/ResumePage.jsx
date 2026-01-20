@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import FadeIn from "../components/common/FadeIn";
+
 
 const EXPERIENCE = [
   {
@@ -106,6 +108,7 @@ function ExperienceItem({ item, i, expandedIndex, setExpandedIndex }) {
   );
 }
 
+
 export default function ResumePage() {
   const [expandedIndex, setExpandedIndex] = useState(0);
   const groups = useMemo(
@@ -119,9 +122,9 @@ export default function ResumePage() {
   );
 
   return (
-    <main className="w-full flex justify-center">
-      <div className="relative isolate py-12 sm:py-24" id="resume">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn variant="blur">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
               Resume
@@ -134,10 +137,12 @@ export default function ResumePage() {
               what I'm focusing on.
             </p>
           </div>
+        </FadeIn>
 
-          {/* Experience timeline */}
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="min-w-0 lg:col-span-2">
+        {/* Experience timeline */}
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <FadeIn className="lg:col-span-2" variant="fade-up" delay={200}>
+            <div>
               <h2 className="text-sm font-semibold tracking-widest uppercase text-ink/70 mb-3">
                 Experience
               </h2>
@@ -153,8 +158,10 @@ export default function ResumePage() {
                 ))}
               </ol>
             </div>
+          </FadeIn>
 
-            {/* Skills */}
+          {/* Skills */}
+          <FadeIn variant="fade-up" delay={400}>
             <div>
               <h2 className="text-sm font-semibold tracking-widest uppercase text-ink/70 mb-3">
                 Skills
@@ -213,9 +220,9 @@ export default function ResumePage() {
                 Download CV
               </a>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

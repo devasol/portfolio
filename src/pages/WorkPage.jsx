@@ -1,4 +1,6 @@
 import { useMemo, useRef, useState, useEffect } from "react";
+import FadeIn from "../components/common/FadeIn";
+
 
 const PROJECTS = [
   {
@@ -132,12 +134,13 @@ function ProjectCard({ p, i }) {
   );
 }
 
+
 export default function WorkPage() {
   const projects = useMemo(() => PROJECTS, []);
   return (
-    <main className="w-full flex justify-center">
-      <div className="relative isolate py-12 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn variant="blur">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
               Work
@@ -149,7 +152,9 @@ export default function WorkPage() {
               Interactive and performance‑minded builds that ship.
             </p>
           </div>
+        </FadeIn>
 
+        <FadeIn stagger={true} variant="fade-up" delay={200}>
           <div className="mt-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {projects.map((p, i) => (
               <div key={p.title} className="min-w-0">
@@ -157,8 +162,9 @@ export default function WorkPage() {
               </div>
             ))}
           </div>
-        </div>
+        </FadeIn>
       </div>
-    </main>
+    </div>
   );
 }
+

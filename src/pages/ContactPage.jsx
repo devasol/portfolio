@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import FadeIn from "../components/common/FadeIn";
+
 
 function Input({ label, type = "text", name, placeholder }) {
   return (
@@ -36,6 +38,7 @@ function Chip({ children }) {
   );
 }
 
+
 export default function ContactPage() {
   const [status, setStatus] = useState("idle");
   const formRef = useRef(null);
@@ -50,9 +53,9 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="w-full flex justify-center">
-      <section className="relative isolate py-12 sm:py-24" id="contact">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn variant="blur">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
               Contact
@@ -64,10 +67,11 @@ export default function ContactPage() {
               Reach out for collaborations, freelance work, or just to say hi.
             </p>
           </div>
+        </FadeIn>
 
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Form */}
-            <div className="lg:col-span-2">
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <FadeIn className="lg:col-span-2" variant="fade-up" delay={200}>
+            <div>
               <form
                 ref={formRef}
                 onSubmit={onSubmit}
@@ -108,8 +112,9 @@ export default function ContactPage() {
                 </div>
               </form>
             </div>
+          </FadeIn>
 
-            {/* Sidebar */}
+          <FadeIn variant="fade-up" delay={400}>
             <div>
               <div className="rounded-2xl border border-white/10 p-4">
                 <h2 className="text-sm font-semibold tracking-widest uppercase text-ink/70 mb-3">
@@ -140,9 +145,11 @@ export default function ContactPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
+
+

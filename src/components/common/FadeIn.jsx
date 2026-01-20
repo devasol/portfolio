@@ -1,40 +1,43 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function FadeIn({ children, delay = 0, className = "" }) {
+export default function FadeIn({ 
+  children, 
+  delay = 0, 
+  className = "", 
+  variant = "fade-up",
+  stagger = false
+}) {
   const ref = useRef(null);
-  const [shown, setShown] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
     const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            setShown(true);
-            break;
-          }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Once visible, we can stop observing if we don't want to re-animate
+          io.unobserve(node);
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
     io.observe(node);
     return () => io.disconnect();
   }, []);
 
+  const variantClass = stagger ? "reveal-stagger" : `reveal-${variant}`;
+
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        transition: "opacity 600ms ease, transform 600ms ease",
-        transitionDelay: `${delay}ms`,
-        opacity: shown ? 1 : 0,
-        transform: shown ? "none" : "translateY(12px)",
-      }}
+      className={`reveal-base ${variantClass} ${isVisible ? "is-visible" : ""} ${className}`}
+      style={{ transitionDelay: delay ? `${delay}ms` : undefined }}
     >
       {children}
     </div>
   );
 }
+
 

@@ -24,13 +24,11 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/resume" element={<ResumePage />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          {/* All other sections are handled via scrolling on the HomePage */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
+
