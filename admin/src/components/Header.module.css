@@ -1,0 +1,219 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 40;
+  background-color: var(--color-bg-secondary);
+  box-shadow: var(--color-shadow-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .header {
+    left: 16rem; /* 64px equivalent to md:left-64 */
+  }
+}
+
+.headerContainer {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .headerContainer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .headerContainer {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.mobileMenuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-center: center;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: #6b7280; /* gray-500 */
+  transition: color 0.2s, background-color 0.2s;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.mobileMenuButton:hover {
+  color: #374151; /* gray-700 */
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+.dark .mobileMenuButton:hover {
+  color: #d1d5db; /* gray-300 */
+  background-color: #374151; /* gray-700 */
+}
+
+.headerCenter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .headerCenter {
+    justify-content: flex-start;
+  }
+}
+
+.headerLogo {
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.iconButton {
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--color-text-secondary);
+  transition: color 0.2s, background-color 0.2s;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  color: #374151; /* gray-700 */
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+.dark .iconButton:hover {
+  color: #d1d5db; /* gray-300 */
+  background-color: #374151; /* gray-700 */
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: #ef4444; /* red-500 */
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userInfo {
+  text-align: right;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .userInfo {
+    display: block;
+  }
+}
+
+.userName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.userRole {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.logoutButton {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-radius: 0.375rem;
+  border: none;
+  background: none;
+  transition: color 0.2s, background-color 0.2s;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  color: var(--color-text-primary);
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+.dark .logoutButton:hover {
+  color: var(--color-text-primary);
+  background-color: #374151; /* gray-700 */
+}
+
+.mobileMenu {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
+}
+
+.mobileMenuContent {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mobileMenuItem {
+  display: block;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.mobileMenuItem:hover {
+  color: var(--color-text-primary);
+  background-color: #f9fafb; /* gray-50 */
+}
+
+.dark .mobileMenuItem:hover {
+  color: var(--color-text-primary);
+  background-color: #374151; /* gray-700 */
+}
