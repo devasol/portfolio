@@ -20,6 +20,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Custom Text Highlight (Selection) */
+::selection {
+  background-color: rgba(52, 211, 153, 0.9); /* Emerald 400 */
+  color: #000; /* Dark text for contrast */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+::-moz-selection {
+  background-color: rgba(52, 211, 153, 0.9);
+  color: #000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
 body {
   min-height: 100vh;
 }

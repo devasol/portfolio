@@ -25,12 +25,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative"
-    >
-
-
+    <div ref={containerRef} className="relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 items-center">
           {/* Left - text */}
@@ -46,15 +41,18 @@ export default function Hero() {
               </h1>
 
               <p className="mt-5 max-w-xl text-sm sm:text-base text-ink/80">
-                I excel at crafting elegant digital experiences and I am
-                proficient in various programming languages and technologies.
+                I’m a passionate developer who enjoys turning ideas into clean,
+                efficient, and user-friendly digital experiences. I love solving
+                real problems with code, learning new technologies, and building
+                applications that are purposeful, scalable, and impactful—all
+                driven by curiosity and continuous growth.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
-                    href="#contact"
-                    className="group btn-premium-interactive inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
-                  >
+                  href="#contact"
+                  className="group btn-premium-interactive inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -66,7 +64,7 @@ export default function Hero() {
                   Download CV
                 </a>
 
-                  {socials.slice(1).map((s) => (
+                {socials.slice(1).map((s) => (
                   <a
                     key={s.label}
                     aria-label={s.label}
@@ -156,7 +154,7 @@ export default function Hero() {
 
                 {/* Reactive Halo */}
                 <div className="hero-halo opacity-0 group-hover:opacity-100" />
-                
+
                 {/* Decorative dashes - scaled slightly to avoid clipping */}
                 <div className="absolute inset-0 pointer-events-none opacity-30 select-none">
                   {dashes.map((i) => (
@@ -171,7 +169,7 @@ export default function Hero() {
                   ))}
                 </div>
               </div>
-              
+
               {/* Ambient Bloom - Fixed position behind the tilt */}
               <div className="absolute inset-4 -z-10 bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none" />
             </div>
@@ -203,8 +201,6 @@ export default function Hero() {
           </div>
         </FadeIn>
       </div>
-
     </div>
   );
 }
-

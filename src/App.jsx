@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/home/Navbar";
 import NoiseBackground from "./components/home/NoiseBackground";
+import ScrollProgress from "./components/common/ScrollProgress";
 import BackgroundGrid from "./components/common/BackgroundGrid";
 import GlobalLoader from "./components/common/GlobalLoader";
 import HomePage from "./pages/HomePage";
@@ -19,6 +20,7 @@ export default function App() {
     <BrowserRouter>
       <div className="min-h-dvh antialiased flex flex-col items-center">
         <GlobalLoader />
+        <ScrollProgress />
         <NoiseBackground />
         <BackgroundGrid />
         <Navbar />
