@@ -50,7 +50,8 @@ export default function Hero() {
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
-                  href="#contact"
+                  href="/resume/Dawit_Solomon_Resume.pdf"
+                  target="_blank"
                   className="group btn-premium-interactive inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
                 >
                   <svg

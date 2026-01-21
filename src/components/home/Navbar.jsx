@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home", id: "home" },
+  { label: "About", href: "#about", id: "about" },
   { label: "Services", href: "#services", id: "services" },
   { label: "Work", href: "#work", id: "work" },
-  { label: "Resume", href: "#resume", id: "resume" },
   { label: "Contact", href: "#contact", id: "contact" },
 ];
 
@@ -162,6 +162,24 @@ export default function Navbar() {
               className="btn-premium-interactive inline-flex items-center rounded-full bg-emerald-400 px-6 py-2.5 text-xs font-black text-gray-900 shadow-lg shadow-emerald-400/20"
             >
               <span className="relative z-10">HIRE ME</span>
+            </a>
+            <a
+              href="/resume/Dawit_Solomon_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-premium-interactive inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-ink/5 px-5 py-2.5 text-xs font-bold text-ink backdrop-blur-md hover:bg-ink/10 transition-all shadow-sm"
+              title="View Resume"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="currentColor" 
+                className="w-4 h-4"
+              >
+                <path fillRule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm6 16.5c.66 0 1.277-.19 1.797-.518l1.048 1.048a.75.75 0 001.06-1.06l-1.047-1.048A3.375 3.375 0 1011.625 18z" clipRule="evenodd" />
+                <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
+              </svg>
+              <span className="relative z-10">RESUME</span>
             </a>
           </div>
 

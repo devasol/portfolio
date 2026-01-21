@@ -4,42 +4,44 @@ import FadeIn from "../components/common/FadeIn";
 
 const EXPERIENCE = [
   {
-    role: "Frontend Engineer",
-    company: "Acme Corp",
-    period: "2023 — Present",
+    role: "Software Development Intern",
+    company: "Prodigy InfoTech",
+    period: "Oct 2024 — Present",
     summary:
-      "Building interactive UIs and design systems. Led performance initiatives and accessibility improvements.",
+      "Contributing to the development of scalable web applications. Gaining hands-on experience in full-stack development and modern agile workflows.",
     bullets: [
-      "Shipped reusable component library and tokens",
-      "Improved Lighthouse scores to 95+ across key pages",
-      "Partnered with design to deliver polished micro-interactions",
+      "Building responsive frontend interfaces using React.js and Tailwind CSS",
+      "Collaborating with senior engineers to implement new features and fix bugs",
+      "Participating in code reviews and learning best practices for software architecture",
     ],
   },
   {
-    role: "Full‑stack Developer",
-    company: "Studio Next",
-    period: "2022 — 2023",
+    role: "Frontend Developer",
+    company: "Freelance",
+    period: "2022 — 2024",
     summary:
-      "Delivered end‑to‑end features, from API to UI. Built robust workflows and testing pipelines.",
+      "Developed custom websites and web applications for various clients, delivering high-performance and user-centric solutions.",
     bullets: [
-      "Designed scalable REST/GraphQL endpoints",
-      "Introduced CI with linting and E2E tests",
-      "Mentored juniors on modern React patterns",
+      "Designed and deployed a modern License Management System using MERN stack principles",
+      "Created pixel-perfect landing pages from Figma designs",
+      "Optimized website performance and SEO for improved visibility and user engagement",
     ],
   },
 ];
 
 const SKILLS = [
-  { name: "React", group: "Frontend" },
+  { name: "React.js", group: "Frontend" },
+  { name: "JavaScript", group: "Frontend" },
   { name: "TypeScript", group: "Frontend" },
-  { name: "Tailwind", group: "Frontend" },
+  { name: "Tailwind CSS", group: "Frontend" },
+  { name: "HTML5 & CSS3", group: "Frontend" },
   { name: "Node.js", group: "Backend" },
-  { name: "GraphQL", group: "Backend" },
-  { name: "REST", group: "Backend" },
-  { name: "Vite", group: "Tooling" },
-  { name: "ESLint", group: "Tooling" },
-  { name: "Playwright", group: "Testing" },
-  { name: "Vitest", group: "Testing" },
+  { name: "Python", group: "Backend" },
+  { name: "Git & GitHub", group: "Tools" },
+  { name: "VS Code", group: "Tools" },
+  { name: "Postman", group: "Tools" },
+  { name: "Figma", group: "Design" },
+  { name: "UI/UX", group: "Design" },
 ];
 
 function useInView(ref, options = { threshold: 0.12 }) {
@@ -206,18 +208,30 @@ export default function ResumePage() {
                       B.Sc. in Computer Science
                     </div>
                     <div className="text-ink/70 text-sm">
-                      University of Technology
+                      Unity University
                     </div>
                   </div>
-                  <div className="text-ink/60 text-sm">2018 — 2022</div>
+                  <div className="text-ink/60 text-sm">2021 — Present</div>
                 </div>
               </div>
 
               <a
-                href="#"
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-400 px-4 py-2 text-gray-900 text-sm font-medium hover:bg-emerald-300"
+                href="/resume/Dawit_Solomon_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-ink/5 px-5 py-2.5 text-sm font-bold text-ink backdrop-blur-md hover:bg-ink/10 transition-all shadow-sm"
+                title="Download Resume"
               >
-                Download CV
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor" 
+                  className="w-4 h-4"
+                >
+                  <path fillRule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm6 16.5c.66 0 1.277-.19 1.797-.518l1.048 1.048a.75.75 0 001.06-1.06l-1.047-1.048A3.375 3.375 0 1011.625 18z" clipRule="evenodd" />
+                  <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
+                </svg>
+                Download Resume
               </a>
             </div>
           </FadeIn>

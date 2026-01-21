@@ -5,139 +5,91 @@ import FadeIn from "../common/FadeIn";
 
 const SERVICES = [
   {
-    title: "Web Applications",
-    blurb:
-      "High-performance React/Next.js apps with clean architecture and delightful UX.",
-    details:
-      "From idea to production: component systems, state management, routing, and CI-ready builds.",
-    tags: ["React", "Next.js", "TypeScript", "Vite"],
+    title: "Full-Stack Web Development",
+    blurb: "Building complete, scalable web applications from front to back.",
+    details: "I deliver end-to-end solutions, seamlessly integrating robust backends with dynamic frontends using modern frameworks like React, Next.js, and Node.js.",
+    tags: ["React", "Node.js", "Next.js", "Full-Stack"],
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          d="M3 5h18M3 9h18M7 9v10m10-10v10M3 19h18"
-        />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
       </svg>
     ),
   },
   {
-    title: "UI/UX & Design Systems",
-    blurb:
-      "Polished interfaces with accessibility, micro‑interactions, and motion that feels alive.",
-    details:
-      "Design tokens, responsive grids, and interactive components that scale across your product.",
-    tags: ["Tailwind", "A11y", "Motion", "Design Tokens"],
+    title: "Frontend Development",
+    blurb: "Crafting beautiful, responsive, and interactive user interfaces.",
+    details: "I specialize in creating pixel-perfect, accessible, and high-performance UIs that provide delightful user experiences across all devices.",
+    tags: ["React", "Tailwind CSS", "JavaScript", "UI/UX"],
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          d="M12 3l3.09 6.26L22 10.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 15.14l-5-4.87 6.91-1.01L12 3z"
-        />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
   },
   {
-    title: "APIs & Integrations",
-    blurb:
-      "Robust REST/GraphQL services, 3rd‑party integrations, and automation that saves time.",
-    details:
-      "Well-documented endpoints, error handling, and monitoring to keep things reliable.",
-    tags: ["Node", "GraphQL", "REST", "Automations"],
+    title: "Backend Development & APIs",
+    blurb: "Architecting secure and efficient server-side logic and APIs.",
+    details: "I design and build scalable RESTful and GraphQL APIs, ensuring meaningful data exchange, security, and high availability for your applications.",
+    tags: ["Node.js", "Express", "GraphQL", "REST"],
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          d="M4 7h16M4 12h10M4 17h7"
-        />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14M12 5l7 7-7 7" />
       </svg>
     ),
   },
   {
-    title: "Performance & SEO",
-    blurb:
-      "Lighthouse‑green performance with image, bundle, and runtime optimizations.",
-    details:
-      "Measure what matters, then tune: code‑splitting, caching, and Core Web Vitals.",
-    tags: ["Lighthouse", "CWV", "Caching", "Images"],
+    title: "Database Design & Management",
+    blurb: "Organizing your data for speed, reliability, and scalability.",
+    details: "I implement efficient database schemas and management strategies using SQL and NoSQL technologies like PostgreSQL, MySQL, and MongoDB.",
+    tags: ["SQL", "NoSQL", "MongoDB", "PostgreSQL"],
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          d="M13 2L3 14h7v8l11-14h-8z"
-        />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
       </svg>
     ),
   },
   {
-    title: "E2E Quality",
-    blurb: "Tested flows with CI, linting, and visual regression safeguards.",
-    details:
-      "Ship with confidence using unit, integration, and E2E tests hooked into CI.",
-    tags: ["CI", "Playwright", "Vitest", "ESLint"],
+    title: "Authentication & Authorization",
+    blurb: "Securing your applications with robust user management systems.",
+    details: "I implement secure login flows, role-based access control, and protect sensitive data using industry standards like OAuth, JWT, and Auth0.",
+    tags: ["OAuth", "JWT", "Security", "Auth0"],
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
       </svg>
     ),
   },
   {
-    title: "Consulting",
-    blurb:
-      "Roadmaps, audits, and coaching to accelerate your engineering outcomes.",
-    details:
-      "From quick wins to long‑term strategy: I meet you where you are and level you up.",
-    tags: ["Audits", "Roadmaps", "Coaching"],
+    title: "Performance Optimization",
+    blurb: "Speeding up your web apps for better engagement and SEO.",
+    details: "I analyze and optimize code, assets, and delivery pipelines to achieve lightning-fast load times and smooth interactions.",
+    tags: ["Web Vitals", "Optimization", "Speed", "SEO"],
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-          d="M8 7V3m8 4V3M5 11h14M5 19h14M7 11v8m10-8v8"
-        />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Maintenance & Feature Enhancements",
+    blurb: "Keeping your digital products up-to-date and evolving.",
+    details: "I provide ongoing support, bug fixes, and feature additions to ensure your application remains modern, secure, and competitive.",
+    tags: ["Support", "Refactoring", "Updates", "CI/CD"],
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Responsive & Cross-Browser Design",
+    blurb: "Ensuring your site looks perfect on every screen and browser.",
+    details: "I utilize responsive design principles and testing strategies to guarantee a consistent and high-quality experience for all users, regardless of their device.",
+    tags: ["Responsive", "Mobile-First", "CSS", "Testing"],
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
+         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
       </svg>
     ),
   },

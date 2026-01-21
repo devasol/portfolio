@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Hero from "../components/home/Hero";
+import About from "../components/about/About";
 import Services from "../components/services/Services";
 import WorkPage from "./WorkPage";
 import ResumePage from "./ResumePage";
@@ -12,6 +13,15 @@ export default function HomePage() {
       {/* Home Section - Always visible */}
       <section id="home" className="min-h-screen pt-24 flex items-center justify-center relative z-10">
         <Hero />
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-12 sm:py-20 w-full flex justify-center relative z-20">
+        <div className="w-full max-w-7xl">
+          <FadeIn variant="fade-up">
+            <About />
+          </FadeIn>
+        </div>
       </section>
 
       {/* Services Section */}

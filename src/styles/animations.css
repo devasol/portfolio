@@ -414,3 +414,15 @@
 .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 400ms; }
 .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 500ms; }
 .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 600ms; }
+
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: white !important;
+  }
+}
