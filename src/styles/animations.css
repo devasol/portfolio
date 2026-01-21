@@ -204,12 +204,14 @@
 }
 
 .modern-frame img {
-  transform: scale(1.1);
+  transform: scale(1);
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  image-rendering: -webkit-optimize-contrast; /* Better image rendering */
+  image-rendering: crisp-edges;
 }
 
 .modern-frame:hover img {
-  transform: scale(1.15);
+  transform: scale(1.05);
 }
 
 .hero-halo {

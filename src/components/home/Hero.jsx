@@ -124,9 +124,9 @@ export default function Hero() {
 
           {/* Right - photo with 3D Reactivity */}
           <FadeIn variant="scale-in" delay={300}>
-            <div className="relative mx-auto w-64 h-64 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] hero-perspective flex items-center justify-center">
+            <div className="relative mx-auto w-64 h-64 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] hero-perspective flex items-center justify-center group">
               {/* 3D Reactive Container */}
-              <div 
+              <div
                 className="relative w-full h-full hero-card-reactive flex items-center justify-center z-10"
                 onMouseMove={(e) => {
                   const card = e.currentTarget;
@@ -150,8 +150,8 @@ export default function Hero() {
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
-                  {/* Internal Glow Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-emerald-400/20 to-transparent pointer-events-none" />
+                  {/* Internal Glow Overlay - Reduced opacity for better image clarity on all devices */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-emerald-400/10 to-transparent pointer-events-none" />
                 </div>
 
                 {/* Reactive Halo */}
