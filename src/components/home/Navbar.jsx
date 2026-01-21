@@ -104,7 +104,7 @@ export default function Navbar() {
 
   return (
     <header className={`fixed top-0 inset-x-0 z-[100] transition-all duration-500 ${
-      elevated ? "py-4" : "py-6"
+      elevated ? "py-4 elevated-header" : "py-6"
     }`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
@@ -125,9 +125,16 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation (Floating Island) */}
-          <div className={`hidden lg:flex items-center px-2 py-1.5 rounded-full backdrop-blur-2xl border border-white/10 shadow-2xl transition-all duration-500 ${
-            elevated ? "bg-black/40 shadow-black/40 scale-95" : "bg-white/5 shadow-black/10 scale-100"
-          }`}>
+          <div 
+            className={`hidden lg:flex items-center px-2 py-1.5 rounded-full backdrop-blur-2xl border shadow-2xl transition-all duration-500 ${
+              elevated ? "scale-95 amazing-island-light" : "scale-100"
+            }`}
+            style={{
+              backgroundColor: "var(--nav-island-bg)",
+              borderColor: "var(--nav-island-border)",
+              boxShadow: elevated ? "0 20px 40px var(--nav-island-shadow)" : "0 10px 20px rgba(0,0,0,0.1)"
+            }}
+          >
             <nav className="flex items-center gap-1">
               {NAV_ITEMS.map((item) => {
                 const active = activeSection === item.id;
@@ -148,7 +155,7 @@ export default function Navbar() {
                 );
               })}
             </nav>
-            <div className="mx-3 h-6 w-px bg-white/10" />
+            <div className="mx-3 h-6 w-px" style={{ backgroundColor: "var(--nav-island-border)" }} />
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, { id: "contact", href: "#contact" })}
@@ -162,7 +169,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-ink hover:bg-white/10 transition-colors shadow-lg"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-ink/5 backdrop-blur-md text-ink hover:bg-ink/10 transition-colors shadow-lg"
               aria-label="Toggle theme"
             >
               <ThemeIcon />

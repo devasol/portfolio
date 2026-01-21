@@ -42,6 +42,9 @@ body {
   --color-ink: rgb(229 231 235);
   --modal-backdrop-brightness: 0.9;
   --modal-backdrop-overlay: rgba(0, 0, 0, 0.3);
+  --nav-island-bg: rgba(0, 0, 0, 0.4);
+  --nav-island-border: rgba(255, 255, 255, 0.1);
+  --nav-island-shadow: rgba(0, 0, 0, 0.4);
 }
 [data-theme="light"] {
   color-scheme: light;
@@ -50,6 +53,9 @@ body {
   --color-ink: #0b1220;
   --modal-backdrop-brightness: 1.1;
   --modal-backdrop-overlay: rgba(255, 255, 255, 0.4);
+  --nav-island-bg: rgba(255, 255, 255, 0.7);
+  --nav-island-border: rgba(0, 0, 0, 0.05);
+  --nav-island-shadow: rgba(0, 0, 0, 0.05);
 }
 
 /* Semantic aliases for Tailwind-like usage via CSS vars */
@@ -61,6 +67,12 @@ body {
 }
 .text-ink\/80 {
   color: color-mix(in oklab, var(--color-ink), transparent 20%);
+}
+.bg-ink\/5 {
+  background-color: color-mix(in oklab, var(--color-ink), transparent 95%);
+}
+.border-ink\/10 {
+  border-color: color-mix(in oklab, var(--color-ink), transparent 90%);
 }
 
 /* Smooth transitions for common elements */
@@ -91,6 +103,38 @@ body {
 }
 [data-theme="light"] .theme-moon {
   display: none;
+}
+
+/* --- Amazing Scrolled Island for Light Mode --- */
+[data-theme="light"] .amazing-island-light {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(240, 253, 244, 0.9) 50%,
+    rgba(239, 246, 255, 0.9) 100%
+  ) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.01), 
+    0 10px 15px -3px rgba(16, 185, 129, 0.1),
+    0 20px 25px -5px rgba(16, 185, 129, 0.1) !important;
+}
+
+[data-theme="light"] header.elevated-header {
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+[data-theme="dark"] header.elevated-header {
+  /* Keep transparent in dark mode as requested */
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 /* Themed card helper */

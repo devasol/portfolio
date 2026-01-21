@@ -2,11 +2,11 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import FadeIn from "../components/common/FadeIn";
 
 // Image Imports
-import pinquestImg from "../assets/projects/pinquest.png";
-import dlmsImg from "../assets/projects/dlms.png";
-import furniImg from "../assets/projects/furni.png";
-import neeonImg from "../assets/projects/neeon.png";
-import ethioEcommerceImg from "../assets/projects/ethio-ecommerce.png";
+const pinquestImg = "/Project_Images/PinQuest.png";
+const dlmsImg = "/Project_Images/DLMS.png";
+const furniImg = "/Project_Images/Furni.png";
+const neeonImg = "/Project_Images/Neeon.png";
+const ethioEcommerceImg = "/Project_Images/E-Commerce.png";
 
 const PROJECTS = [
   {
