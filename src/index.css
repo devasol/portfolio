@@ -35,18 +35,21 @@ body {
 }
 
 /* Theme tokens */
-:root,
 [data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #0b0f14;
   --color-surface: #0e141b;
   --color-ink: rgb(229 231 235);
+  --modal-backdrop-brightness: 0.9;
+  --modal-backdrop-overlay: rgba(0, 0, 0, 0.3);
 }
 [data-theme="light"] {
   color-scheme: light;
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
   --color-ink: #0b1220;
+  --modal-backdrop-brightness: 1.1;
+  --modal-backdrop-overlay: rgba(255, 255, 255, 0.4);
 }
 
 /* Semantic aliases for Tailwind-like usage via CSS vars */
@@ -144,6 +147,29 @@ body {
 
 .animate-pulse-slow {
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Global Backdrop State for Modals */
+body.modal-open #root {
+  transform: scale(0.98);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8;
+}
+
+#root {
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Modal Animations */
+@keyframes zoom-in-modal {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.animate-modal-entry {
+  animation: zoom-in-modal 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* nicer scrollbars */
