@@ -43,13 +43,35 @@ export default function ContactPage() {
   const [status, setStatus] = useState("idle");
   const formRef = useRef(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    setTimeout(() => {
-      setStatus("sent");
-      formRef.current?.reset();
-    }, 900);
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("sent");
+        formRef.current?.reset();
+      } else {
+        setStatus("error");
+        console.error("Error result:", result.message);
+      }
+    } catch (err) {
+      setStatus("error");
+      console.error("Submission error:", err);
+    }
   };
 
   return (
@@ -102,11 +124,18 @@ export default function ContactPage() {
                       ? "Sending…"
                       : status === "sent"
                       ? "Sent!"
+                      : status === "error"
+                      ? "Try Again"
                       : "Send message"}
                   </button>
                   {status === "sent" && (
-                    <span className="text-sm text-ink/70">
+                    <span className="text-sm text-emerald-400 font-medium">
                       Thanks! I'll reply soon.
+                    </span>
+                  )}
+                  {status === "error" && (
+                    <span className="text-sm text-rose-400 font-medium">
+                      Something went wrong. Please try again.
                     </span>
                   )}
                 </div>

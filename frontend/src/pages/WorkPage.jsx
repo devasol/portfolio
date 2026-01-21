@@ -85,20 +85,22 @@ function ProjectCard({ p, i, onOpen }) {
       onMouseLeave={() => setHovered(false)}
     >
       {/* Image Section */}
-      <div className="relative aspect-[16/10] overflow-hidden">
-        {/* Skeleton/Placeholder background */}
-        <div className="absolute inset-0 bg-emerald-400/5 animate-pulse" />
+      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-orange-400/20 via-amber-500/15 to-rose-500/10">
+        {/* Vibrant Gradient Background - Similar to Reference */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-amber-600/20 to-pink-500/15 blur-2xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(251,146,60,0.25),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.2),transparent_50%)]" />
         
         <img
           src={p.image}
           alt={p.title}
-          className={`h-full w-full object-cover transition-transform duration-700 ease-out z-10 relative ${
+          className={`h-full w-full object-cover transition-transform duration-700 ease-out z-10 relative drop-shadow-[0_20px_60px_rgba(0,0,0,0.4)] ${
             hovered ? "scale-110" : "scale-100"
           }`}
         />
         
         {/* Glass Overlay on Hover */}
-        <div className={`absolute inset-0 bg-emerald-950/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center`}>
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center`}>
            <div className="px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white text-xs font-bold tracking-widest uppercase transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
              View Details
            </div>
@@ -235,14 +237,16 @@ function ProjectModal({ p, onClose }) {
         </button>
 
         {/* Cinematic Preview Section (Left) */}
-        <div className="lg:w-[65%] h-64 sm:h-72 lg:h-auto relative bg-ink/5 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-ink/5">
-           {/* Abstract Light Elements */}
-          <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_30%,#10b98115,transparent_50%)]" />
+        <div className="lg:w-[65%] h-64 sm:h-72 lg:h-auto relative bg-gradient-to-br from-orange-400/20 via-amber-500/15 to-rose-500/10 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-ink/5">
+           {/* Vibrant Gradient Background - Same as Cards */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-amber-600/20 to-pink-500/15 blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(251,146,60,0.25),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.2),transparent_50%)]" />
           
           <img 
             src={p.image} 
             alt={p.title} 
-            className="w-full h-full object-cover lg:object-contain transform scale-100 lg:scale-[0.85] hover:scale-[0.9] transition-transform duration-1000 p-4 lg:p-0 relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            className="w-full h-full object-cover lg:object-contain transform scale-100 lg:scale-[0.85] hover:scale-[0.9] transition-transform duration-1000 p-4 lg:p-0 relative z-10 drop-shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
           />
         </div>
 
