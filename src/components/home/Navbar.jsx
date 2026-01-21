@@ -126,7 +126,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation (Floating Island) */}
           <div 
-            className={`hidden lg:flex items-center px-2 py-1.5 rounded-full backdrop-blur-2xl border shadow-2xl transition-all duration-500 ${
+            className={`hidden xl:flex items-center px-2 py-1.5 rounded-full backdrop-blur-2xl border shadow-2xl transition-all duration-500 ${
               elevated ? "scale-95 amazing-island-light" : "scale-100"
             }`}
             style={{
@@ -178,7 +178,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex h-11 w-11 items-center justify-center rounded-full bg-emerald-400/10 border border-emerald-400/30 text-ink shadow-lg backdrop-blur-lg"
+              className="xl:hidden flex h-11 w-11 items-center justify-center rounded-full bg-emerald-400/10 border border-emerald-400/30 text-ink shadow-lg backdrop-blur-lg"
               aria-label="Toggle menu"
             >
               <svg
@@ -201,12 +201,12 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Navigation */}
         <div 
-          className={`lg:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+          className={`xl:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
             mobileMenuOpen ? "mt-6 opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none mt-0"
           }`}
           style={{ maxHeight: mobileMenuOpen ? "1000px" : "0" }}
         >
-          <div className="p-4 rounded-[32px] bg-black/80 backdrop-blur-3xl border border-white/10 shadow-2xl space-y-2 ring-1 ring-white/5">
+          <div className="p-4 rounded-[32px] bg-black/80 backdrop-blur-3xl border border-white/10 shadow-2xl space-y-2 ring-1 ring-white/5 max-h-[85vh] overflow-y-auto">
             <nav className="flex flex-col gap-1.5">
               {NAV_ITEMS.map((item) => {
                 const active = activeSection === item.id;

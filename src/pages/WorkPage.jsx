@@ -247,7 +247,7 @@ function ProjectModal({ p, onClose }) {
         </div>
 
         {/* Project Intelligence Sidebar (Right) */}
-        <div className="lg:w-[40%] p-8 lg:p-16 overflow-y-auto max-h-[calc(90vh-2rem)] lg:max-h-none flex flex-col bg-surface/30">
+        <div className="lg:w-[40%] flex-1 min-h-0 p-8 lg:p-16 overflow-y-auto bg-surface/30 flex flex-col">
           <div className="flex-1">
             <div className="flex items-center gap-4 mb-10">
               <div className="h-[1px] w-12 bg-emerald-400/50" />

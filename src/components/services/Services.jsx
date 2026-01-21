@@ -159,7 +159,7 @@ function useInView(ref, options = { threshold: 0.2 }) {
   return inView;
 }
 
-function TiltCard({ item, index, expandedIndex, setExpandedIndex, isMobile, location }) {
+function TiltCard({ item, index, expandedIndex, setExpandedIndex, onScrollTo }) {
   const cardRef = useRef(null);
   const detailRef = useRef(null);
   const inView = useInView(cardRef);
@@ -278,25 +278,13 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex, isMobile, loca
             <div className="pt-2 text-sm text-ink/80">
               {item.details}
               <div className="mt-3 flex items-center gap-3">
-                {isMobile && location.pathname === "/" ? (
-                  <a
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
-                  >
-                    Start a project
-                  </a>
-                ) : (
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
-                  >
-                    Start a project
-                  </Link>
-                )}
+                <a
+                  href="#contact"
+                  onClick={(e) => onScrollTo(e, 'contact')}
+                  className="inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
+                >
+                  Start a project
+                </a>
                 <button className="inline-flex items-center gap-1 text-xs text-ink/80 hover:text-ink transition-colors">
                   <svg
                     viewBox="0 0 24 24"
@@ -336,20 +324,22 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex, isMobile, loca
 
 export default function Services() {
   const containerRef = useRef(null);
-
-  const location = useLocation();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const location = useLocation(); // Keep for safety if used elsewhere or remove if unused. It was used in tiltcard but we removed it. 
+  // actually TiltCard no longer needs location. Services passes it? 
+  // let's just keep containerRef as it is used in ref={containerRef}
 
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   const cards = useMemo(() => SERVICES, []);
+
+  // Helper for smooth scroll
+  const handleScrollTo = (e, id) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div
@@ -385,8 +375,9 @@ export default function Services() {
                 index={i}
                 expandedIndex={expandedIndex}
                 setExpandedIndex={setExpandedIndex}
-                isMobile={isMobile}
+                isMobile={false} // No longer needed
                 location={location}
+                onScrollTo={handleScrollTo}
               />
             ))}
           </div>
@@ -394,45 +385,21 @@ export default function Services() {
 
 
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center gap-3">
-          {isMobile && location.pathname === "/" ? (
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
-            >
-              Let's build something great
-            </a>
-          ) : (
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
-            >
-              Let's build something great
-            </Link>
-          )}
+          <a
+            href="#contact"
+            onClick={(e) => handleScrollTo(e, 'contact')}
+            className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-gray-900 bg-emerald-400 hover:bg-emerald-300 transition-colors"
+          >
+            Let's build something great
+          </a>
 
-          {isMobile && location.pathname === "/" ? (
-            <a
-              href="#work"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="text-sm text-ink/80 hover:text-ink transition-colors"
-            >
-              See my work
-            </a>
-          ) : (
-            <Link
-              to="/work"
-              className="text-sm text-ink/80 hover:text-ink transition-colors"
-            >
-              See my work
-            </Link>
-          )}
+          <a
+            href="#work"
+            onClick={(e) => handleScrollTo(e, 'work')}
+            className="text-sm text-ink/80 hover:text-ink transition-colors"
+          >
+            See my work
+          </a>
         </div>
       </div>
 
