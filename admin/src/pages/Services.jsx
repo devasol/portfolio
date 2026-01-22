@@ -105,99 +105,96 @@ const Services = () => {
   );
 
   return (
-    <div className="space-y-8 p-1">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white/50 dark:bg-gray-800/40 p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 backdrop-blur-md">
-        <div>
-          <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Services & Offerings</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Define and refine your professional value proposition</p>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm gap-4 transition-all">
+        <div className="max-w-full overflow-hidden">
+          <h1 className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent truncate">
+            Services & Offerings
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Define and refine your professional value proposition</p>
         </div>
         <button
           onClick={() => { resetForm(); setIsModalOpen(true); }}
-          className="btn-primary flex items-center gap-2 group"
+          className="btn-primary flex items-center gap-2 group w-full sm:w-auto justify-center"
         >
           <PlusIcon className="h-5 w-5 group-hover:rotate-90 transition-transform" />
           Add New Service
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatePresence>
-          {services.map((service, idx) => (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              key={service._id}
-              className="card group hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <div className="flex justify-between items-start mb-6">
-                <div className="p-3 bg-primary-500/10 text-primary-600 dark:text-primary-400 rounded-xl">
-                  <CommandLineIcon className="h-6 w-6" />
-                </div>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => handleEdit(service)}
-                    className="p-2 text-gray-400 hover:text-primary-500 transition-colors"
-                  >
-                    <PencilIcon className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(service._id)}
-                    className="p-2 text-gray-400 hover:text-rose-500 transition-colors"
-                  >
-                    <TrashIcon className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">{service.title}</h3>
-              <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3 mb-6 min-h-[60px]">{service.blurb}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {service.tags.map((tag, i) => (
-                  <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 font-bold uppercase tracking-wider">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {/* Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-gray-900/60 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden"
-            >
-              <div className="flex justify-between items-center p-8 border-b border-gray-100 dark:border-gray-800">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-primary-600 rounded-lg">
-                    <SparklesIcon className="h-5 w-5 text-white" />
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Services List Sidebar */}
+        <div className="md:w-64 lg:w-80 flex-shrink-0 space-y-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-4 shadow-sm md:sticky md:top-24 max-h-[calc(100vh-160px)] overflow-y-auto custom-scrollbar">
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest px-2 mb-4">Catalog</h3>
+            <div className="space-y-2">
+              {services.map((service) => (
+                <button
+                  key={service._id}
+                  onClick={() => handleEdit(service)}
+                  className={`w-full text-left p-3 rounded-xl transition-all border flex flex-col gap-1 group ${
+                    editingService?._id === service._id
+                      ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800 shadow-sm'
+                      : 'bg-transparent border-transparent hover:bg-gray-50 dark:hover:bg-gray-900/50 hover:border-gray-100 dark:hover:border-gray-800'
+                  }`}
+                >
+                  <div className="font-bold text-gray-900 dark:text-white text-sm truncate">{service.title}</div>
+                  <div className="text-[10px] text-gray-500 line-clamp-1">{service.blurb}</div>
+                  <div className="flex gap-1 mt-1 overflow-hidden">
+                    {service.tags.slice(0, 2).map((tag, i) => (
+                      <span key={i} className="text-[9px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-bold uppercase">
+                        {tag}
+                      </span>
+                    ))}
+                    {service.tags.length > 2 && <span className="text-[9px] text-gray-400">+{service.tags.length - 2}</span>}
                   </div>
-                  <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
-                    {editingService ? 'Refine Service' : 'Catalog New Service'}
-                  </h2>
-                </div>
-                <button onClick={() => setIsModalOpen(false)} className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors">
-                  <XMarkIcon className="h-6 w-6" />
                 </button>
-              </div>
+              ))}
+              {services.length === 0 && (
+                <p className="text-sm text-gray-400 text-center py-8">No services cataloged</p>
+              )}
+            </div>
+          </div>
+        </div>
 
-              <form onSubmit={handleSubmit} className="p-8 space-y-6 max-h-[75vh] overflow-y-auto custom-scrollbar">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="md:col-span-2 space-y-2">
+        {/* Editor Area */}
+        <div className="flex-1 min-w-0">
+          <AnimatePresence mode="wait">
+            {isModalOpen ? (
+              <motion.div 
+                key="form"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 shadow-sm"
+              >
+                <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+                      <SparklesIcon className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                      {editingService ? 'Refine Service' : 'Catalog New Service'}
+                    </h2>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {editingService && (
+                      <button 
+                        onClick={() => handleDelete(editingService._id)}
+                        className="p-2 text-gray-400 hover:text-rose-500 transition-colors"
+                        title="Delete Service"
+                      >
+                        <TrashIcon className="h-5 w-5" />
+                      </button>
+                    )}
+                    <button onClick={() => { resetForm(); setIsModalOpen(false); }} className="text-gray-400 hover:text-emerald-500 transition-colors">
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  </div>
+                </div>
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
                     <label className="label-style">Service Title</label>
                     <input
                       required
@@ -208,64 +205,90 @@ const Services = () => {
                       onChange={(e) => setFormData({...formData, title: e.target.value})}
                     />
                   </div>
-                  <div className="md:col-span-2 space-y-2">
+                  
+                  <div className="space-y-2">
                     <label className="label-style">Market Blurb</label>
                     <textarea
                       required
                       placeholder="A short elevator pitch for this service..."
-                      className="input-field min-h-[100px] py-4"
+                      className="input-field min-h-[80px]"
                       value={formData.blurb}
                       onChange={(e) => setFormData({...formData, blurb: e.target.value})}
                     />
                   </div>
-                  <div className="md:col-span-2 space-y-2">
-                    <label className="label-style">Technical Details</label>
+                  
+                  <div className="space-y-2">
+                    <label className="label-style">Detailed Breakdown</label>
                     <textarea
                       required
-                      placeholder="Detailed breakdown of what's included..."
-                      className="input-field min-h-[140px] py-4"
+                      placeholder="List exactly what you offer in this service..."
+                      className="input-field min-h-[120px]"
                       value={formData.details}
                       onChange={(e) => setFormData({...formData, details: e.target.value})}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="label-style">Tech Tags (comma separated)</label>
-                    <input
-                      type="text"
-                      placeholder="React, Tailwind, Node.js"
-                      className="input-field"
-                      value={formData.tags}
-                      onChange={(e) => setFormData({...formData, tags: e.target.value})}
-                    />
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="label-style">Stack Tags (comma separated)</label>
+                      <input
+                        type="text"
+                        placeholder="React, Node.js, Cloud"
+                        className="input-field"
+                        value={formData.tags}
+                        onChange={(e) => setFormData({...formData, tags: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="label-style">Display Priority</label>
+                      <input
+                        type="number"
+                        className="input-field"
+                        value={formData.order}
+                        onChange={(e) => setFormData({...formData, order: parseInt(e.target.value)})}
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="label-style">Priority Index</label>
-                    <input
-                      type="number"
-                      className="input-field"
-                      value={formData.order}
-                      onChange={(e) => setFormData({...formData, order: parseInt(e.target.value)})}
-                    />
+                  
+                  <div className="flex gap-4 pt-4">
+                    <button type="submit" className="btn-primary flex-1">
+                      {editingService ? 'Update Service' : 'Save Service'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { resetForm(); setIsModalOpen(false); }}
+                      className="btn-secondary px-8"
+                    >
+                      Discard
+                    </button>
                   </div>
+                </form>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="placeholder"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="bg-gray-50/50 dark:bg-gray-900/30 rounded-[2.5rem] border border-dashed border-gray-200 dark:border-gray-700 h-[500px] flex flex-col items-center justify-center text-center p-8 transition-all"
+              >
+                <div className="p-6 bg-white dark:bg-gray-800 rounded-[2rem] shadow-xl shadow-gray-200/50 dark:shadow-none mb-6 text-emerald-500">
+                  <CommandLineIcon className="h-12 w-12 animate-pulse" />
                 </div>
-
-                <div className="flex gap-4 pt-4">
-                  <button type="submit" className="btn-primary flex-1 py-4">
-                    {editingService ? 'Deploy Updates' : 'Launch Service'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="btn-secondary px-8 py-4"
-                  >
-                    Discard
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Package your value</h3>
+                <p className="max-w-xs text-gray-500 dark:text-gray-400">
+                  Select a service to refine your offering or create a brand new one to showcase your skills.
+                </p>
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="mt-8 px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-500/20"
+                >
+                  Create Service
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 };

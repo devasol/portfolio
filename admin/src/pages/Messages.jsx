@@ -94,23 +94,23 @@ const Messages = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Messages</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage contact form submissions</p>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm transition-all">
+        <div className="max-w-full overflow-hidden">
+          <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent truncate">Messages</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage contact form submissions</p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 w-full sm:w-auto">
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+            className="flex-1 sm:flex-none px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm font-bold"
           >
             <option value="all">All Messages</option>
             <option value="unread">Unread</option>
             <option value="read">Read</option>
           </select>
-          <button className="px-4 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-card hover:shadow-lg">
+          <button className="flex-1 sm:flex-none px-6 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 font-bold text-sm">
             Export
           </button>
         </div>

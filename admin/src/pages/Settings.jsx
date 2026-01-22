@@ -82,17 +82,17 @@ const Settings = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm transition-all">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
             Site Settings
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">Manage everything visible on your portfolio</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Manage everything visible on your portfolio</p>
         </div>
         <button
           onClick={handleSubmit}
           disabled={saving}
-          className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all ${
+          className={`flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl font-bold transition-all justify-center w-full sm:w-auto ${
             saving 
             ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
             : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 active:scale-95'
@@ -103,9 +103,9 @@ const Settings = () => {
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar Nav */}
-        <div className="lg:w-64 flex-shrink-0">
+        <div className="md:w-60 lg:w-64 flex-shrink-0">
           <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-2 shadow-sm sticky top-6">
             {tabs.map((tab) => (
               <button
@@ -133,11 +133,11 @@ const Settings = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-8 shadow-sm"
+              className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-8 shadow-sm"
             >
               {activeTab === 'hero' && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">Hero Section Content</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-6">Hero Section Content</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-2">
                       <label className="label-style">Full Name</label>

@@ -145,9 +145,9 @@ const settingsData = {
 };
 
 const adminUser = {
-  name: "Admin User",
-  email: "admin@portfolio.com",
-  password: "admin123",
+  name: "Dawit Solomon",
+  email: "dawit8908@gmail.com",
+  password: "devasol@123",
   role: "admin",
   isActive: true
 };

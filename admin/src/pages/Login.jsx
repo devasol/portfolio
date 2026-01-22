@@ -115,11 +115,6 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700/50 text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Demo: admin@portfolio.com / admin123
-            </p>
-          </div>
         </div>
       </div>
     </div>

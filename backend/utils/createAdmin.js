@@ -3,25 +3,34 @@ import bcrypt from 'bcryptjs';
 
 const createAdminUser = async () => {
   try {
-    // Check if THIS specific admin user already exists
-    const existingAdmin = await User.findOne({ email: 'admin@portfolio.com' });
+    // 1. CLEAR the demo admin if it exists
+    await User.deleteOne({ email: 'admin@portfolio.com' });
+    console.log('🧹 Demo credentials cleared');
+
+    // 2. UPSERT the real admin user
+    const adminEmail = 'dawit8908@gmail.com';
+    const adminPassword = 'devasol@123';
     
-    if (existingAdmin) {
-      console.log('✅ Admin user "admin@portfolio.com" verified');
-      return;
+    let admin = await User.findOne({ email: adminEmail });
+    
+    if (!admin) {
+      admin = await User.create({
+        name: 'Dawit Solomon',
+        email: adminEmail,
+        password: adminPassword,
+        role: 'admin'
+      });
+      console.log('🎉 Real admin user created successfully!');
+    } else {
+      // Force update the password and name to ensure sync
+      admin.name = 'Dawit Solomon';
+      admin.password = adminPassword;
+      await admin.save();
+      console.log('✅ Real admin user credentials updated and verified');
     }
 
-    // Create the admin user (password will be hashed by User model pre-save hook)
-    await User.create({
-      name: 'Admin User',
-      email: 'admin@portfolio.com',
-      password: 'admin123',
-      role: 'admin'
-    });
-
-    console.log('🎉 Admin user created successfully!');
   } catch (error) {
-    console.error('❌ Error creating admin user:', error);
+    console.error('❌ Error in admin user management:', error);
   }
 };
 

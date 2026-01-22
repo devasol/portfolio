@@ -98,4 +98,9 @@
   td {
     @apply py-4 px-6 text-gray-700 dark:text-gray-300 border-b border-gray-50 dark:border-gray-800/50;
   }
+
+  /* Responsive Table Helper */
+  .overflow-x-auto {
+    @apply w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0;
+  }
 }

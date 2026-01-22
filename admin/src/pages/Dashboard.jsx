@@ -87,17 +87,17 @@ const Dashboard = () => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="space-y-8 pb-12"
+      className="max-w-6xl mx-auto space-y-8 pb-12"
     >
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm gap-4 transition-all">
+        <div className="max-w-full overflow-hidden">
+          <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent truncate">
             System Overview
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Real-time performance and portfolio analytics</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Real-time performance and portfolio analytics</p>
         </div>
-        <div className="flex gap-2">
-           <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full flex items-center gap-1">
+        <div className="flex gap-2 flex-shrink-0">
+           <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-[10px] sm:text-xs font-bold rounded-full flex items-center gap-1">
              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
              Live System
            </span>
@@ -105,7 +105,7 @@ const Dashboard = () => {
       </div>
       
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {statCards.map((stat, idx) => {
           const colorClasses = {
             emerald: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',
@@ -306,16 +306,16 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Launch Section */}
-      <motion.div variants={item} className="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl shadow-emerald-500/20">
-        <SparklesIcon className="absolute -right-4 -top-4 h-32 w-32 opacity-10 animate-pulse" />
+      <motion.div variants={item} className="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden shadow-2xl shadow-emerald-500/20">
+        <SparklesIcon className="absolute -right-4 -top-4 h-24 w-24 sm:h-32 sm:w-32 opacity-10 animate-pulse" />
         <div className="relative z-10 max-w-xl">
-          <h2 className="text-2xl font-bold mb-2">Welcome to your refined control center</h2>
-          <p className="text-emerald-50 opacity-80 mb-6">Your portfolio is currently performing optimally. Manage your professional presence with these quick actions.</p>
-          <div className="flex flex-wrap gap-4">
-            <button className="px-6 py-2 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-colors active:scale-95">
+          <h2 className="text-xl sm:text-2xl font-bold mb-2">Welcome to your refined control center</h2>
+          <p className="text-sm sm:text-base text-emerald-50 opacity-80 mb-6">Your portfolio is currently performing optimally. Manage your professional presence with these quick actions.</p>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <button className="w-full sm:w-auto px-6 py-2.5 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-colors active:scale-95 text-sm sm:text-base">
               Add New Work
             </button>
-            <button className="px-6 py-2 bg-emerald-500/30 text-white font-bold rounded-xl border border-white/20 hover:bg-emerald-500/40 transition-colors active:scale-95">
+            <button className="w-full sm:w-auto px-6 py-2.5 bg-emerald-500/30 text-white font-bold rounded-xl border border-white/20 hover:bg-emerald-500/40 transition-colors active:scale-95 text-sm sm:text-base">
               Update Skills
             </button>
           </div>
