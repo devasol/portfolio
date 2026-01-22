@@ -23,19 +23,24 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:3000',
-  process.env.ADMIN_URL || 'http://localhost:5173'
+  (process.env.FRONTEND_URL || 'http://localhost:3000').trim(),
+  (process.env.ADMIN_URL || 'http://localhost:5173').trim()
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    
+    // Exact match check
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
-    return callback(null, true);
+    
+    console.log('🛑 Blocked Origin:', origin);
+    console.log('✅ Allowed Origins:', allowedOrigins);
+    
+    const msg = `CORS Error: Origin ${origin} is not allowed.`;
+    return callback(new Error(msg), false);
   },
   credentials: true
 }));
