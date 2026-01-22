@@ -1,55 +1,8 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import FadeIn from "../components/common/FadeIn";
+import { api } from "../api";
 
-// Image Imports
-const pinquestImg = "/Project_Images/PinQuest.png";
-const dlmsImg = "/Project_Images/DLMS.png";
-const furniImg = "/Project_Images/Furni.png";
-const neeonImg = "/Project_Images/Neeon.png";
-const ethioEcommerceImg = "/Project_Images/E-Commerce.png";
-
-const PROJECTS = [
-  {
-    title: "PinQuest",
-    image: pinquestImg,
-    blurb: "A free, high-performance social mapping platform for explorers. Allows users to discover hidden gems, share local landmarks, and connect in real-time on a beautifully designed interactive map.",
-    tags: ["React", "Tailwind", "MongoDB", "Express", "Socket.io"],
-    demoUrl: "https://pinquest-app.onrender.com/",
-    githubUrl: "https://github.com/devasol/PinQuest"
-  },
-  {
-    title: "DLMS - Driving License Management System",
-    image: dlmsImg,
-    blurb: "A comprehensive digital platform for managing driving license applications, renewals, examinations, and verifications with admin dashboards and traffic police integration.",
-    tags: ["React", "Material-UI", "Node.js", "MongoDB", "JWT"],
-    demoUrl: "https://get-dlms.onrender.com/",
-    githubUrl: "https://github.com/devasol/DLMS--Driving-license-management-system"
-  },
-  {
-    title: "Furni",
-    image: furniImg,
-    blurb: "Modern Furniture E-commerce Platform that transforms living spaces with premium quality furniture, sleek design, and an exceptional shopping experience.",
-    tags: ["React", "Vite", "Tailwind", "GSAP", "Framer Motion"],
-    demoUrl: "https://get-furni.onrender.com/",
-    githubUrl: "https://github.com/devasol/Furni"
-  },
-  {
-    title: "NEEON",
-    image: neeonImg,
-    blurb: "A modern, full-stack blog platform with user-facing and admin interfaces, featuring content management, analytics, and responsive design.",
-    tags: ["React", "Node.js", "Express", "MongoDB", "JWT"],
-    demoUrl: "https://neeon-1.onrender.com/",
-    githubUrl: "https://github.com/devasol/NEEON"
-  },
-  {
-    title: "Ethio E-Commerce",
-    image: ethioEcommerceImg,
-    blurb: "A modern full-stack e-commerce platform with TeleBirr payment integration, admin dashboard, and responsive mobile-first interface tailored for Ethiopian market.",
-    tags: ["React", "TypeScript", "Node.js", "MongoDB", "TeleBirr"],
-    demoUrl: "https://e-shop-shop.onrender.com/",
-    githubUrl: "https://github.com/devasol/E-Commerce__C-2-C"
-  },
-];
+const PROJECTS = [];
 
 function useInView(ref, options = { threshold: 0.12 }) {
   const [inView, setInView] = useState(false);
@@ -322,8 +275,41 @@ function ProjectModal({ p, onClose }) {
 
 
 export default function WorkPage() {
-  const projects = useMemo(() => PROJECTS, []);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await api.getProjects();
+        // Map the API response to match the expected format
+        const mappedProjects = data.map(project => ({
+          title: project.title,
+          image: project.image,
+          blurb: project.description,
+          tags: project.technologies,
+          demoUrl: project.liveLink,
+          githubUrl: project.githubLink
+        }));
+        setProjects(mappedProjects);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-400"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -353,9 +339,9 @@ export default function WorkPage() {
         </FadeIn>
       </div>
 
-      <ProjectModal 
-        p={selectedProject} 
-        onClose={() => setSelectedProject(null)} 
+      <ProjectModal
+        p={selectedProject}
+        onClose={() => setSelectedProject(null)}
       />
     </div>
   );

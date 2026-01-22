@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSettings } from "../../context/SettingsContext";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home", id: "home" },
@@ -34,6 +35,7 @@ function ThemeIcon() {
 }
 
 export default function Navbar() {
+  const { settings, loading } = useSettings();
   const [elevated, setElevated] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -119,7 +121,7 @@ export default function Navbar() {
               }}
               className="display-font font-bold text-2xl tracking-tight cursor-pointer"
             >
-              <span className="text-ink">Dawit</span>
+              <span className="text-ink">{loading || !settings ? "Dawit" : settings.site.logoText}</span>
               <span className="text-emerald-500">.</span>
             </Link>
           </div>
@@ -164,7 +166,7 @@ export default function Navbar() {
               <span className="relative z-10">HIRE ME</span>
             </a>
             <a
-              href="/resume/Dawit_Solomon_Resume.pdf"
+              href={loading || !settings ? "/resume/Dawit_Solomon_Resume.pdf" : settings.site.resumeLink}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-premium-interactive inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-ink/5 px-5 py-2.5 text-xs font-bold text-ink backdrop-blur-md hover:bg-ink/10 transition-all shadow-sm"

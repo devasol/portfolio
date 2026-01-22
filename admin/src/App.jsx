@@ -9,6 +9,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 import Skills from './pages/Skills';
 import Experience from './pages/Experience';
+import Services from './pages/Services';
+import Settings from './pages/Settings';
 
 const AppRoutes = () => {
     const { isAuthenticated, loading } = useAuth();
@@ -26,18 +28,24 @@ const AppRoutes = () => {
             }>
                 <Route index element={<Dashboard />} />
                 <Route path="projects" element={<Projects />} />
+                <Route path="services" element={<Services />} />
                 <Route path="skills" element={<Skills />} />
                 <Route path="experience" element={<Experience />} />
+                <Route path="settings" element={<Settings />} />
             </Route>
         </Routes>
     );
 };
 
+import { ThemeProvider } from './context/ThemeContext';
+
 const App = () => {
   return (
     <Router>
       <AuthProvider>
-        <AppRoutes />
+        <ThemeProvider>
+          <AppRoutes />
+        </ThemeProvider>
       </AuthProvider>
     </Router>
   );

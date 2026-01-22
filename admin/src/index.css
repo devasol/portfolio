@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --font-sans: 'Inter', 'system-ui', 'sans-serif';
+  --font-sans: 'Plus Jakarta Sans', 'system-ui', 'sans-serif';
+  --font-display: 'Russo One', 'system-ui', 'sans-serif';
 
   --color-primary-50: #f0f9ff;
   --color-primary-100: #e0f2fe;
@@ -47,28 +50,52 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-[#0f172a] dark:text-gray-100;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium shadow-sm hover:shadow-md;
+    @apply px-5 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 font-semibold shadow-lg shadow-primary-600/20 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
   }
   
   .btn-secondary {
-    @apply px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium shadow-sm;
+    @apply px-5 py-2.5 bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 font-semibold shadow-sm active:scale-95 backdrop-blur-md;
   }
   
   .input-field {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all duration-200;
+    @apply w-full px-4 py-3 bg-white/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none transition-all duration-300 dark:text-white dark:placeholder-gray-500 backdrop-blur-sm;
+  }
+
+  .label-style {
+    @apply block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 px-1;
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+    @apply bg-white/70 dark:bg-gray-800/40 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700/50 p-6 transition-all duration-500 backdrop-blur-xl;
+  }
+
+  .stat-card {
+    @apply relative overflow-hidden bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
 
   .glass-panel {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+    @apply bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl border border-white/20 dark:border-gray-800/30 shadow-2xl;
+  }
+
+  table {
+    @apply w-full border-separate border-spacing-0;
+  }
+
+  th {
+    @apply bg-gray-50/50 dark:bg-gray-900/50 py-4 px-6 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest first:rounded-tl-xl last:rounded-tr-xl border-b border-gray-100 dark:border-gray-800;
+  }
+
+  tr {
+    @apply transition-all duration-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/30;
+  }
+
+  td {
+    @apply py-4 px-6 text-gray-700 dark:text-gray-300 border-b border-gray-50 dark:border-gray-800/50;
   }
 }

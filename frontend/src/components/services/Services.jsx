@@ -1,99 +1,26 @@
-import { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import FadeIn from "../common/FadeIn";
+import { 
+  CommandLineIcon, 
+  PaintBrushIcon, 
+  ServerIcon, 
+  CircleStackIcon, 
+  LockClosedIcon, 
+  RocketLaunchIcon, 
+  WrenchScrewdriverIcon, 
+  ComputerDesktopIcon 
+} from "@heroicons/react/24/outline";
 
-
-const SERVICES = [
-  {
-    title: "Full-Stack Web Development",
-    blurb: "Building complete, scalable web applications from front to back.",
-    details: "I deliver end-to-end solutions, seamlessly integrating robust backends with dynamic frontends using modern frameworks like React, Next.js, and Node.js.",
-    tags: ["React", "Node.js", "Next.js", "Full-Stack"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-      </svg>
-    ),
-  },
-  {
-    title: "Frontend Development",
-    blurb: "Crafting beautiful, responsive, and interactive user interfaces.",
-    details: "I specialize in creating pixel-perfect, accessible, and high-performance UIs that provide delightful user experiences across all devices.",
-    tags: ["React", "Tailwind CSS", "JavaScript", "UI/UX"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Backend Development & APIs",
-    blurb: "Architecting secure and efficient server-side logic and APIs.",
-    details: "I design and build scalable RESTful and GraphQL APIs, ensuring meaningful data exchange, security, and high availability for your applications.",
-    tags: ["Node.js", "Express", "GraphQL", "REST"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 12h14M12 5l7 7-7 7" />
-      </svg>
-    ),
-  },
-  {
-    title: "Database Design & Management",
-    blurb: "Organizing your data for speed, reliability, and scalability.",
-    details: "I implement efficient database schemas and management strategies using SQL and NoSQL technologies like PostgreSQL, MySQL, and MongoDB.",
-    tags: ["SQL", "NoSQL", "MongoDB", "PostgreSQL"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
-      </svg>
-    ),
-  },
-  {
-    title: "Authentication & Authorization",
-    blurb: "Securing your applications with robust user management systems.",
-    details: "I implement secure login flows, role-based access control, and protect sensitive data using industry standards like OAuth, JWT, and Auth0.",
-    tags: ["OAuth", "JWT", "Security", "Auth0"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Performance Optimization",
-    blurb: "Speeding up your web apps for better engagement and SEO.",
-    details: "I analyze and optimize code, assets, and delivery pipelines to achieve lightning-fast load times and smooth interactions.",
-    tags: ["Web Vitals", "Optimization", "Speed", "SEO"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Maintenance & Feature Enhancements",
-    blurb: "Keeping your digital products up-to-date and evolving.",
-    details: "I provide ongoing support, bug fixes, and feature additions to ensure your application remains modern, secure, and competitive.",
-    tags: ["Support", "Refactoring", "Updates", "CI/CD"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Responsive & Cross-Browser Design",
-    blurb: "Ensuring your site looks perfect on every screen and browser.",
-    details: "I utilize responsive design principles and testing strategies to guarantee a consistent and high-quality experience for all users, regardless of their device.",
-    tags: ["Responsive", "Mobile-First", "CSS", "Testing"],
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor">
-         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-      </svg>
-    ),
-  },
-];
+const ICON_MAP = {
+  CommandLineIcon,
+  PaintBrushIcon,
+  ServerIcon,
+  CircleStackIcon,
+  LockClosedIcon,
+  RocketLaunchIcon,
+  WrenchScrewdriverIcon,
+  ComputerDesktopIcon
+};
 
 function useInView(ref, options = { threshold: 0.2 }) {
   const [inView, setInView] = useState(false);
@@ -113,12 +40,14 @@ function useInView(ref, options = { threshold: 0.2 }) {
 
 function TiltCard({ item, index, expandedIndex, setExpandedIndex, onScrollTo }) {
   const cardRef = useRef(null);
-  const detailRef = useRef(null);
   const inView = useInView(cardRef);
   const [transform, setTransform] = useState(
     "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)"
   );
   const [hovered, setHovered] = useState(false);
+  
+  const IconComponent = ICON_MAP[item.iconName] || CommandLineIcon;
+
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
@@ -161,10 +90,6 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex, onScrollTo }) 
       role="button"
       tabIndex={0}
       onClick={() => setExpandedIndex(expanded ? null : index)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ")
-          setExpandedIndex(expanded ? null : index);
-      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`group relative rounded-2xl border overflow-hidden transition-all duration-300 cursor-pointer select-none
@@ -183,22 +108,10 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex, onScrollTo }) 
           "linear-gradient(180deg, color-mix(in oklab, var(--color-surface), transparent 10%), color-mix(in oklab, var(--color-surface), transparent 0%))",
       }}
     >
-      {/* Shimmer overlay */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background:
-            "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 70%, transparent 100%)",
-          backgroundSize: "200% 100%",
-          animation: hovered ? "shine 1.2s ease-out" : "none",
-        }}
-      />
-
-      {/* Card content */}
       <div className="relative p-5 sm:p-6">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl grid place-items-center bg-emerald-500/15 text-emerald-400 border border-emerald-400/30">
-            {item.icon}
+            <IconComponent className="h-6 w-6" />
           </div>
           <h3 className="display-font text-lg sm:text-xl text-ink">
             {item.title}
@@ -219,17 +132,14 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex, onScrollTo }) 
           ))}
         </div>
 
-        {/* Expandable details */}
         <div
-          ref={detailRef}
           className="grid transition-[grid-template-rows] duration-500 ease-out mt-3"
           style={{ gridTemplateRows: expanded ? "1fr" : "0fr" }}
-          aria-hidden={!expanded}
         >
           <div className="min-h-0 overflow-hidden">
             <div className="pt-2 text-sm text-ink/80">
               {item.details}
-              <div className="mt-3 flex items-center gap-3">
+              <div className="mt-3">
                 <a
                   href="#contact"
                   onClick={(e) => onScrollTo(e, 'contact')}
@@ -237,71 +147,53 @@ function TiltCard({ item, index, expandedIndex, setExpandedIndex, onScrollTo }) 
                 >
                   Start a project
                 </a>
-                <button className="inline-flex items-center gap-1 text-xs text-ink/80 hover:text-ink transition-colors">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M5 12h14M12 5l7 7-7 7"
-                    />
-                  </svg>
-                  Learn more
-                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Glow ring */}
-      <div
-        className={`pointer-events-none absolute -inset-px rounded-2xl opacity-0 ${
-          hovered || expanded ? "opacity-100" : ""
-        }`}
-        style={{
-          background:
-            "radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(16,185,129,0.15), transparent 40%)",
-          transition: "opacity 300ms ease",
-        }}
-      />
     </div>
   );
 }
 
 export default function Services() {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
-  const location = useLocation(); // Keep for safety if used elsewhere or remove if unused. It was used in tiltcard but we removed it. 
-  // actually TiltCard no longer needs location. Services passes it? 
-  // let's just keep containerRef as it is used in ref={containerRef}
-
   const [expandedIndex, setExpandedIndex] = useState(null);
 
-  const cards = useMemo(() => SERVICES, []);
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/services');
+        const data = await response.json();
+        if (data.success) {
+          setServices(data.data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch services:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
 
-  // Helper for smooth scroll
   const handleScrollTo = (e, id) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: elementPosition - offset, behavior: "smooth" });
     }
   };
 
+  if (loading) return null;
+
   return (
-    <div
-      className="w-full"
-      ref={containerRef}
-    >
-
+    <div className="w-full" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-
         <FadeIn variant="blur">
           <div className="max-w-2xl">
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
@@ -317,24 +209,20 @@ export default function Services() {
           </div>
         </FadeIn>
 
-        {/* Services grid */}
         <FadeIn stagger={true} variant="fade-up" delay={200}>
           <div className="mt-10 sm:mt-12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {cards.map((item, i) => (
+            {services.map((item, i) => (
               <TiltCard
-                key={item.title}
+                key={item._id}
                 item={item}
                 index={i}
                 expandedIndex={expandedIndex}
                 setExpandedIndex={setExpandedIndex}
-                isMobile={false} // No longer needed
-                location={location}
                 onScrollTo={handleScrollTo}
               />
             ))}
           </div>
         </FadeIn>
-
 
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center gap-3">
           <a
@@ -354,7 +242,6 @@ export default function Services() {
           </a>
         </div>
       </div>
-
     </div>
   );
 }

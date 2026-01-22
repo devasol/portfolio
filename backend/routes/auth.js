@@ -11,7 +11,8 @@ const router = express.Router();
 // @access  Public
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    if (email) email = email.trim();
 
     // Validation
     if (!email || !password) {
@@ -25,8 +26,18 @@ router.post('/login', async (req, res) => {
       // Try to authenticate with database first
       // Check for user
       const user = await User.findOne({ email }).select('+password');
+      console.log(`Login attempt: ${email}`);
+      
+      if (!user) {
+        console.log('User not found in database');
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid credentials'
+        });
+      }
 
-      if (!user || !user.isActive) {
+      if (!user.isActive) {
+        console.log('User is inactive');
         return res.status(401).json({
           success: false,
           message: 'Invalid credentials'
@@ -34,7 +45,10 @@ router.post('/login', async (req, res) => {
       }
 
       // Check password
-      if (!(await user.matchPassword(password))) {
+      const isMatch = await user.matchPassword(password);
+      console.log(`Password match result: ${isMatch}`);
+
+      if (!isMatch) {
         return res.status(401).json({
           success: false,
           message: 'Invalid credentials'

@@ -11,6 +11,7 @@ import WorkPage from "./pages/WorkPage";
 import ContactPage from "./pages/ContactPage";
 import ErrorPage from "./pages/ErrorPage";
 import PrintableResume from "./pages/PrintableResume";
+import { SettingsProvider } from "./context/SettingsContext";
 import "./index.css";
 
 function AppContent() {
@@ -37,8 +38,9 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <SettingsProvider>
+        <AppContent />
+      </SettingsProvider>
     </BrowserRouter>
   );
 }
-

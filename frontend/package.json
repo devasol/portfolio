@@ -11,6 +11,7 @@
     "generate-resume-pdf": "node scripts/generate-resume-pdf.js"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.12",
     "puppeteer": "^23.11.1",
     "react": "^19.1.1",

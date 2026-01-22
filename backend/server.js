@@ -9,6 +9,8 @@ import createAdminUser from './utils/createAdmin.js';
 import projectRoutes from './routes/projects.js';
 import skillRoutes from './routes/skills.js';
 import experienceRoutes from './routes/experience.js';
+import settingRoutes from './routes/settings.js';
+import serviceRoutes from './routes/services.js';
 
 // Load environment variables
 dotenv.config();
@@ -30,6 +32,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/experience', experienceRoutes);
+app.use('/api/settings', settingRoutes);
+app.use('/api/services', serviceRoutes);
 
 // Create nodemailer transporter
 const transporter = nodemailer.createTransport(

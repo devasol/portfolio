@@ -1,28 +1,28 @@
 import { useEffect, useMemo, useRef } from "react";
 import FadeIn from "../common/FadeIn";
-import profileImage from "../../assets/profile-image/profile-image.png";
-
-const socials = [
-  { href: "#", label: "Download CV" },
-  { href: "https://github.com/devasol", label: "GitHub" },
-  {
-    href: "https://www.linkedin.com/in/dawit-solomon-0450602a0/",
-    label: "LinkedIn",
-  },
-  // { href: "#", label: "Twitter/X" },
-  { href: "mailto:dawit8908@gmail.com", label: "Email" },
-];
+import profileImageDefault from "../../assets/profile-image/profile-image.png";
+import { useSettings } from "../../context/SettingsContext";
 
 export default function Hero() {
-  // Sparkling ring positions for the photo decoration
+  const { settings, loading } = useSettings();
   const dashes = useMemo(() => Array.from({ length: 16 }, (_, i) => i), []);
   const containerRef = useRef(null);
 
-  // Smooth scroll behavior for hash links (progressive enhance)
-  // Smooth scroll behavior for hash links (progressive enhance)
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
   }, []);
+
+  if (loading || !settings) return <div className="min-h-[60vh]" />;
+
+  const { hero, site, socials } = settings;
+  const profileImg = site.profileImage.startsWith('/') ? site.profileImage : profileImageDefault;
+
+  const socialLinks = [
+    { href: site.resumeLink, label: "Download CV" },
+    { href: socials.github, label: "GitHub" },
+    { href: socials.linkedin, label: "LinkedIn" },
+    { href: `mailto:${socials.email}`, label: "Email" },
+  ];
 
   return (
     <div ref={containerRef} className="relative">
@@ -31,28 +31,24 @@ export default function Hero() {
           {/* Left - text */}
           <FadeIn variant="fade-up" delay={100}>
             <div className="min-w-0">
-              <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
-                Web Developer
+              <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3 text-balance">
+                {hero.role}
               </p>
               <h1 className="display-font text-4xl sm:text-5xl lg:text-6xl leading-tight">
-                <span className="text-ink">Hello I’m</span>
+                <span className="text-ink">{hero.welcomeText}</span>
                 <br />
-                <span className="text-emerald-400">Dawit Solomon</span>
+                <span className="text-emerald-400">{hero.name}</span>
               </h1>
 
-              <p className="mt-5 max-w-xl text-sm sm:text-base text-ink/80">
-                I’m a passionate developer who enjoys turning ideas into clean,
-                efficient, and user-friendly digital experiences. I love solving
-                real problems with code, learning new technologies, and building
-                applications that are purposeful, scalable, and impactful—all
-                driven by curiosity and continuous growth.
+              <p className="mt-5 max-w-xl text-sm sm:text-base text-ink/80 leading-relaxed">
+                {hero.bio}
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
-                  href="/resume/Dawit_Solomon_Resume.pdf"
+                  href={site.resumeLink}
                   target="_blank"
-                  className="group btn-premium-interactive inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+                  className="group btn-premium-interactive inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-2 text-gray-900 font-medium hover:bg-emerald-300 transition-all shadow-lg shadow-emerald-400/20"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +61,7 @@ export default function Hero() {
                   Download CV
                 </a>
 
-                {socials.slice(1).map((s) => (
+                {socialLinks.slice(1).map((s) => (
                   <a
                     key={s.label}
                     aria-label={s.label}
@@ -124,7 +120,6 @@ export default function Hero() {
           {/* Right - photo with 3D Reactivity */}
           <FadeIn variant="scale-in" delay={300}>
             <div className="relative mx-auto w-64 h-64 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] hero-perspective flex items-center justify-center group">
-              {/* 3D Reactive Container */}
               <div
                 className="relative w-full h-full hero-card-reactive flex items-center justify-center z-10"
                 onMouseMove={(e) => {
@@ -134,7 +129,7 @@ export default function Hero() {
                   const y = e.clientY - rect.top;
                   const centerX = rect.width / 2;
                   const centerY = rect.height / 2;
-                  const rotateX = (-(y - centerY) / 25).toFixed(2); // Slightly softer tilt for larger card
+                  const rotateX = (-(y - centerY) / 25).toFixed(2);
                   const rotateY = ((x - centerX) / 25).toFixed(2);
                   card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
                 }}
@@ -142,21 +137,16 @@ export default function Hero() {
                   e.currentTarget.style.transform = `rotateX(0deg) rotateY(0deg)`;
                 }}
               >
-                {/* Modern Morphing Frame */}
                 <div className="relative w-[85%] h-[85%] modern-frame animate-blob-morph ring-1 ring-white/10">
                   <img
-                    src={profileImage}
-                    alt="Profile"
+                    src={profileImg}
+                    alt={hero.name}
                     className="w-full h-full object-cover"
+                    onError={(e) => { e.target.src = profileImageDefault; }}
                   />
-                  {/* Internal Glow Overlay - Reduced opacity for better image clarity on all devices */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-emerald-400/10 to-transparent pointer-events-none" />
                 </div>
-
-                {/* Reactive Halo */}
                 <div className="hero-halo opacity-0 group-hover:opacity-100" />
-
-                {/* Decorative dashes - scaled slightly to avoid clipping */}
                 <div className="absolute inset-0 pointer-events-none opacity-30 select-none">
                   {dashes.map((i) => (
                     <span
@@ -170,8 +160,6 @@ export default function Hero() {
                   ))}
                 </div>
               </div>
-
-              {/* Ambient Bloom - Fixed position behind the tilt */}
               <div className="absolute inset-4 -z-10 bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none" />
             </div>
           </FadeIn>
@@ -180,14 +168,9 @@ export default function Hero() {
         {/* Stats */}
         <FadeIn variant="blur" delay={600}>
           <div className="mt-14 sm:mt-20 grid grid-cols-1 sm:grid-cols-4 gap-6">
-            {[
-              { value: "1+", label1: "Years of", label2: "experience" },
-              { value: "5+", label1: "Projects", label2: "completed" },
-              { value: "15+", label1: "Technologies", label2: "mastered" },
-              { value: "100+", label1: "Code", label2: "commits" },
-            ].map((s) => (
+            {hero.stats.map((s, idx) => (
               <div
-                key={s.label1}
+                key={idx}
                 className="rounded-2xl p-5 card flex items-center gap-3 sm:gap-4"
               >
                 <div className="display-font text-3xl sm:text-4xl text-ink whitespace-nowrap">

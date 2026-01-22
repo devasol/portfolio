@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import FadeIn from "../components/common/FadeIn";
-
+import { api } from "../api";
+import { useSettings } from "../context/SettingsContext";
 
 function Input({ label, type = "text", name, placeholder }) {
   return (
@@ -38,28 +39,20 @@ function Chip({ children }) {
   );
 }
 
-
 export default function ContactPage() {
+  const { settings, loading } = useSettings();
   const [status, setStatus] = useState("idle");
   const formRef = useRef(null);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    
+
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("http://localhost:5000/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
+      const result = await api.submitContact(data);
 
       if (result.success) {
         setStatus("sent");
@@ -73,6 +66,10 @@ export default function ContactPage() {
       console.error("Submission error:", err);
     }
   };
+
+  if (loading || !settings) return null;
+
+  const { contact } = settings;
 
   return (
     <div className="w-full">
@@ -150,27 +147,23 @@ export default function ContactPage() {
                   Capabilities
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {["Web Apps", "Design Systems", "APIs", "SEO", "E2E"].map(
-                    (c) => (
-                      <Chip key={c}>{c}</Chip>
-                    )
-                  )}
+                  {contact.capabilities.map((c) => (
+                    <Chip key={c}>{c}</Chip>
+                  ))}
                 </div>
                 <h2 className="mt-6 text-sm font-semibold tracking-widest uppercase text-ink/70 mb-3">
                   Preferred tools
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {["React", "TypeScript", "Tailwind", "Node", "GraphQL"].map(
-                    (t) => (
-                      <Chip key={t}>{t}</Chip>
-                    )
-                  )}
+                  {contact.tools.map((t) => (
+                    <Chip key={t}>{t}</Chip>
+                  ))}
                 </div>
                 <h2 className="mt-6 text-sm font-semibold tracking-widest uppercase text-ink/70 mb-3">
                   Availability
                 </h2>
                 <p className="text-sm text-ink/80">
-                  Taking new projects starting next month.
+                  {contact.availability}
                 </p>
               </div>
             </div>
@@ -180,5 +173,3 @@ export default function ContactPage() {
     </div>
   );
 }
-
-

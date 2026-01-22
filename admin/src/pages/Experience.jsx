@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
+import { api } from '../api';
 import { 
   PlusIcon, 
+  XMarkIcon, 
+  CalendarIcon, 
   PencilSquareIcon, 
-  TrashIcon, 
+  TrashIcon 
 } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
 
 const Experience = () => {
-  const [experience, setExperience] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentExp, setCurrentExp] = useState(null);
+  const [experiences, setExperiences] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingExperience, setEditingExperience] = useState(null);
   const [formData, setFormData] = useState({
     company: '',
     position: '',
@@ -18,127 +21,396 @@ const Experience = () => {
     endDate: '',
     current: false,
     description: '',
+    technologies: [],
     location: '',
     type: 'Full-time'
   });
 
-  const fetchExperience = async () => {
+  useEffect(() => {
+    fetchExperiences();
+  }, []);
+
+  const fetchExperiences = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/experience');
-      setExperience(res.data.data);
+      const data = await api.getExperience();
+      setExperiences(data);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching experiences:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchExperience();
-  }, []);
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    
+    if (type === 'checkbox') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: checked
+      }));
+    } else if (name === 'technologies') {
+      // Handle technologies as an array
+      setFormData(prev => ({
+        ...prev,
+        technologies: value.split(',').map(t => t.trim()).filter(t => t)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-        if (currentExp) {
-            await axios.put(`http://localhost:5000/api/experience/${currentExp._id}`, formData);
-        } else {
-            await axios.post('http://localhost:5000/api/experience', formData);
-        }
-        setIsModalOpen(false);
-        fetchExperience();
-        resetForm();
+      const experienceData = {
+        ...formData,
+        technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t),
+        startDate: new Date(formData.startDate),
+        endDate: formData.endDate ? new Date(formData.endDate) : null
+      };
+
+      if (editingExperience) {
+        // Update existing experience
+        const updatedExperience = await api.updateExperience(editingExperience._id, experienceData);
+        // Update the local state
+        const updatedExperiences = experiences.map(exp =>
+          exp._id === editingExperience._id ? updatedExperience.data : exp
+        );
+        setExperiences(updatedExperiences);
+      } else {
+        // Add new experience
+        const newExperience = await api.createExperience(experienceData);
+        setExperiences([...experiences, newExperience.data]);
+      }
+
+      resetForm();
     } catch (error) {
-        console.error(error);
+      console.error('Error saving experience:', error);
+      alert(`Error: ${error.message}`);
     }
   };
 
-  const handleDelete = async (id) => {
-      if (window.confirm('Delete this experience?')) {
-          await axios.delete(`http://localhost:5000/api/experience/${id}`);
-          fetchExperience();
-      }
+  const handleEdit = (experience) => {
+    setEditingExperience(experience);
+    setFormData({
+      company: experience.company || '',
+      position: experience.position || '',
+      startDate: experience.startDate ? new Date(experience.startDate).toISOString().split('T')[0] : '',
+      endDate: experience.endDate ? new Date(experience.endDate).toISOString().split('T')[0] : '',
+      current: experience.current || false,
+      description: experience.description || '',
+      technologies: Array.isArray(experience.technologies) ? experience.technologies.join(',') : '',
+      location: experience.location || '',
+      type: experience.type || 'Full-time'
+    });
+    setShowForm(true);
   };
 
-  const handleEdit = (exp) => {
-      setCurrentExp(exp);
-      setFormData({
-          ...exp,
-          startDate: exp.startDate ? exp.startDate.split('T')[0] : '',
-          endDate: exp.endDate ? exp.endDate.split('T')[0] : ''
-      });
-      setIsModalOpen(true);
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this experience?')) {
+      try {
+        await api.deleteExperience(id);
+        const updatedExperiences = experiences.filter(exp => exp._id !== id);
+        setExperiences(updatedExperiences);
+      } catch (error) {
+        console.error('Error deleting experience:', error);
+        alert(`Error: ${error.message}`);
+      }
+    }
   };
 
   const resetForm = () => {
-      setCurrentExp(null);
-      setFormData({
-        company: '',
-        position: '',
-        startDate: '',
-        endDate: '',
-        current: false,
-        description: '',
-        location: '',
-        type: 'Full-time'
-      });
+    setFormData({
+      company: '',
+      position: '',
+      startDate: '',
+      endDate: '',
+      current: false,
+      description: '',
+      technologies: [],
+      location: '',
+      type: 'Full-time'
+    });
+    setEditingExperience(null);
+    setShowForm(false);
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-        <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Experience</h1>
-            <button onClick={() => { resetForm(); setIsModalOpen(true); }} className="btn-primary flex items-center">
-                <PlusIcon className="w-5 h-5 mr-2" /> Add Experience
+    <div className="p-6 space-y-8">
+      <div className="flex justify-between items-center bg-white/50 dark:bg-gray-800/40 p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 backdrop-blur-md">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Professional Experience</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your career timeline and milestones</p>
+        </div>
+        <button
+          onClick={() => setShowForm(true)}
+          className="btn-primary flex items-center gap-2"
+        >
+          <PlusIcon className="h-5 w-5" />
+          Add Experience
+        </button>
+      </div>
+
+      {showForm && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="card shadow-2xl shadow-primary-500/10"
+        >
+          <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              {editingExperience ? 'Edit Milestone' : 'New Career Milestone'}
+            </h2>
+            <button onClick={resetForm} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <XMarkIcon className="h-6 w-6" />
             </button>
-        </div>
-
-        <div className="space-y-4">
-            {experience.map((exp) => (
-                <motion.div 
-                    key={exp._id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex justify-between group"
-                >
-                    <div>
-                        <h3 className="text-xl font-bold text-gray-900">{exp.position}</h3>
-                        <p className="text-primary-600 font-medium">{exp.company}</p>
-                        <p className="text-sm text-gray-500 mt-1">
-                            {new Date(exp.startDate).toLocaleDateString()} - {exp.current ? 'Present' : new Date(exp.endDate).toLocaleDateString()}
-                        </p>
-                    </div>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
-                        <button onClick={() => handleEdit(exp)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg"><PencilSquareIcon className="w-5 h-5"/></button>
-                        <button onClick={() => handleDelete(exp._id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg"><TrashIcon className="w-5 h-5"/></button>
-                    </div>
-                </motion.div>
-            ))}
-        </div>
-
-        {isModalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
-                <div className="bg-white rounded-2xl w-full max-w-lg z-10 p-6 max-h-[90vh] overflow-y-auto">
-                    <h2 className="text-xl font-bold mb-4">{currentExp ? 'Edit' : 'Add'} Experience</h2>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <input className="input-field" placeholder="Company" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} required />
-                        <input className="input-field" placeholder="Position" value={formData.position} onChange={e => setFormData({...formData, position: e.target.value})} required />
-                        <div className="grid grid-cols-2 gap-4">
-                            <input type="date" className="input-field" value={formData.startDate} onChange={e => setFormData({...formData, startDate: e.target.value})} required />
-                            <input type="date" className="input-field" value={formData.endDate} onChange={e => setFormData({...formData, endDate: e.target.value})} disabled={formData.current} />
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <input type="checkbox" checked={formData.current} onChange={e => setFormData({...formData, current: e.target.checked})} />
-                            <label>I currently work here</label>
-                        </div>
-                        <textarea className="input-field" rows="4" placeholder="Description" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
-                        <div className="flex justify-end gap-2 mt-4">
-                            <button type="button" onClick={() => setIsModalOpen(false)} className="btn-secondary">Cancel</button>
-                            <button type="submit" className="btn-primary">Save</button>
-                        </div>
-                    </form>
-                </div>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="e.g. Google, Apple, Freelance"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="input-field"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                  Designation / Role
+                </label>
+                <input
+                  type="text"
+                  name="position"
+                  placeholder="e.g. Senior Frontend Engineer"
+                  value={formData.position}
+                  onChange={handleChange}
+                  className="input-field"
+                  required
+                />
+              </div>
             </div>
-        )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={formData.startDate}
+                  onChange={handleChange}
+                  className="input-field"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  name="endDate"
+                  value={formData.endDate}
+                  onChange={handleChange}
+                  disabled={formData.current}
+                  className={`input-field ${formData.current ? 'opacity-50 cursor-not-allowed' : ''}`}
+                />
+              </div>
+
+              <div className="flex items-end pb-3">
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      name="current"
+                      checked={formData.current}
+                      onChange={handleChange}
+                      className="peer sr-only"
+                    />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full dark:bg-gray-700 peer-checked:bg-emerald-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-600 dark:text-gray-300 group-hover:text-emerald-500 transition-colors">
+                    Currently working here
+                  </span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                  Work Location
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="e.g. Remote, San Francisco"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="input-field"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                  Employment Type
+                </label>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className="input-field appearance-none"
+                >
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Freelance">Freelance</option>
+                  <option value="Internship">Internship</option>
+                </select>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                Job Description
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="4"
+                placeholder="Describe your responsibilities and achievements..."
+                className="input-field resize-none"
+                required
+              ></textarea>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">
+                Technologies (comma separated)
+              </label>
+              <input
+                type="text"
+                name="technologies"
+                placeholder="React, Node.js, AWS, TypeScript..."
+                value={Array.isArray(formData.technologies) ? formData.technologies.join(',') : formData.technologies}
+                onChange={handleChange}
+                className="input-field"
+              />
+            </div>
+            
+            <div className="flex gap-4 pt-4">
+              <button type="submit" className="btn-primary flex-1">
+                {editingExperience ? 'Update Milestone' : 'Save Milestone'}
+              </button>
+              <button
+                type="button"
+                onClick={resetForm}
+                className="btn-secondary px-8"
+              >
+                Discard
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      )}
+
+      <div className="card !p-0 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <thead>
+              <tr>
+                <th>Role & Company</th>
+                <th>Timeline</th>
+                <th>Status</th>
+                <th className="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {experiences.map((experience) => {
+                const startDate = new Date(experience.startDate);
+                const endDate = experience.endDate ? new Date(experience.endDate) : null;
+                
+                const formatDate = (date) => {
+                  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+                };
+                
+                const duration = experience.current 
+                  ? `${formatDate(startDate)} — Present`
+                  : `${formatDate(startDate)} — ${endDate ? formatDate(endDate) : 'Present'}`;
+                  
+                return (
+                  <tr key={experience._id}>
+                    <td>
+                      <div className="flex flex-col">
+                        <span className="font-bold text-gray-900 dark:text-white">{experience.position}</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{experience.company}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <CalendarIcon className="h-4 w-4" />
+                        {duration}
+                      </div>
+                    </td>
+                    <td>
+                      <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full ${
+                        experience.current 
+                        ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400' 
+                        : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500'
+                      }`}>
+                        {experience.current ? 'Current' : 'Previous'}
+                      </span>
+                    </td>
+                    <td className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <button
+                          onClick={() => handleEdit(experience)}
+                          className="p-2 text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all"
+                          title="Edit"
+                        >
+                          <PencilSquareIcon className="h-5 w-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(experience._id)}
+                          className="p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-all"
+                          title="Delete"
+                        >
+                          <TrashIcon className="h-5 w-5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
