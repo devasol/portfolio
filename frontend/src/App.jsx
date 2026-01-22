@@ -12,6 +12,7 @@ import ContactPage from "./pages/ContactPage";
 import ErrorPage from "./pages/ErrorPage";
 import PrintableResume from "./pages/PrintableResume";
 import { SettingsProvider } from "./context/SettingsContext";
+import Footer from "./components/common/Footer";
 import "./index.css";
 
 function AppContent() {
@@ -25,12 +26,15 @@ function AppContent() {
       {!isPrintPage && <NoiseBackground />}
       {!isPrintPage && <BackgroundGrid />}
       {!isPrintPage && <Navbar />}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* We can re-enable other specific page routes if needed, but keeping Home consolidated for now */}
-        <Route path="/resume-print" element={<PrintableResume />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+      <div className="w-full flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* We can re-enable other specific page routes if needed, but keeping Home consolidated for now */}
+          <Route path="/resume-print" element={<PrintableResume />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </div>
+      {!isPrintPage && <Footer />}
     </div>
   );
 }
