@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../api';
 import { 
   FolderIcon, 
-  Square3Stack3DIcon, 
+  AcademicCapIcon, 
   BriefcaseIcon, 
   UsersIcon,
   ArrowTrendingUpIcon,
@@ -62,7 +62,7 @@ const Dashboard = () => {
 
   const statCards = [
     { label: 'Total Projects', value: stats.totalProjects, icon: FolderIcon, color: 'emerald', trend: '+12%', up: true },
-    { label: 'Skills Mastered', value: stats.totalSkills, icon: Square3Stack3DIcon, color: 'blue', trend: '+5%', up: true },
+    { label: 'Skills Mastered', value: stats.totalSkills, icon: AcademicCapIcon, color: 'blue', trend: '+5%', up: true },
     { label: 'Work Experience', value: stats.totalExperience, icon: BriefcaseIcon, color: 'purple', trend: 'STABLE', up: true },
     { label: 'Unique Visitors', value: '1.2k', icon: UsersIcon, color: 'orange', trend: '+18%', up: true },
   ];
@@ -106,27 +106,43 @@ const Dashboard = () => {
       
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((stat, idx) => (
-          <motion.div key={idx} variants={item} className="stat-card group">
-            <div className="flex justify-between items-start">
-              <div className={`p-3 rounded-2xl bg-${stat.color}-50 dark:bg-${stat.color}-900/20 text-${stat.color}-600 dark:text-${stat.color}-400 group-hover:scale-110 transition-transform duration-300`}>
-                <stat.icon className="h-6 w-6" />
+        {statCards.map((stat, idx) => {
+          const colorClasses = {
+            emerald: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',
+            blue: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+            purple: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400',
+            orange: 'bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400',
+          };
+          
+          const sparklineClasses = {
+            emerald: 'bg-emerald-500',
+            blue: 'bg-blue-500',
+            purple: 'bg-purple-500',
+            orange: 'bg-orange-500',
+          };
+
+          return (
+            <motion.div key={idx} variants={item} className="stat-card group">
+              <div className="flex justify-between items-start">
+                <div className={`p-3 rounded-2xl transition-transform duration-300 group-hover:scale-110 ${colorClasses[stat.color]}`}>
+                  <stat.icon className="h-6 w-6" />
+                </div>
+                <div className={`flex items-center gap-1 text-xs font-bold ${stat.up ? 'text-emerald-500' : 'text-rose-500'}`}>
+                  {stat.up ? <ArrowTrendingUpIcon className="h-3 w-3" /> : <ArrowTrendingDownIcon className="h-3 w-3" />}
+                  {stat.trend}
+                </div>
               </div>
-              <div className={`flex items-center gap-1 text-xs font-bold ${stat.up ? 'text-emerald-500' : 'text-rose-500'}`}>
-                {stat.up ? <ArrowTrendingUpIcon className="h-3 w-3" /> : <ArrowTrendingDownIcon className="h-3 w-3" />}
-                {stat.trend}
+              <div className="mt-4">
+                <div className="text-3xl font-bold text-gray-900 dark:text-white tabular-nums">{stat.value}</div>
+                <div className="text-sm font-medium text-gray-400 dark:text-gray-500 mt-1">{stat.label}</div>
               </div>
-            </div>
-            <div className="mt-4">
-              <div className="text-3xl font-bold text-gray-900 dark:text-white tabular-nums">{stat.value}</div>
-              <div className="text-sm font-medium text-gray-400 dark:text-gray-500 mt-1">{stat.label}</div>
-            </div>
-            {/* Minimal Sparkline (SVG) */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden opacity-20 group-hover:opacity-100 transition-opacity">
-               <div className={`h-full w-full bg-${stat.color}-500 transform -translate-x-1/2 group-hover:translate-x-0 transition-transform duration-1000`}></div>
-            </div>
-          </motion.div>
-        ))}
+              {/* Minimal Sparkline (SVG) */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden opacity-20 group-hover:opacity-100 transition-opacity">
+                 <div className={`h-full w-full transform -translate-x-1/2 group-hover:translate-x-0 transition-transform duration-1000 ${sparklineClasses[stat.color]}`}></div>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -177,33 +193,42 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Activity Timeline */}
-        <motion.div variants={item} className="card">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-            <ClockIcon className="h-5 w-5 text-primary-500" />
-            Recent Activity
-          </h3>
-          <div className="space-y-6">
-            {[
-              { type: 'project', title: 'New Project Added', time: '2 hours ago', icon: CheckCircleIcon, color: 'emerald' },
-              { type: 'skill', title: 'Skill Proficiency Updated', time: '5 hours ago', icon: ArrowTrendingUpIcon, color: 'blue' },
-              { type: 'settings', title: 'Site Bio Modified', time: 'Yesterday', icon: FolderIcon, color: 'purple' },
-              { type: 'system', title: 'System Backup Complete', time: '2 days ago', icon: CheckCircleIcon, color: 'gray' },
-            ].map((activity, idx) => (
-              <div key={idx} className="flex gap-4 group cursor-default">
-                <div className="relative flex flex-col items-center">
-                  <div className={`h-8 w-8 rounded-full bg-${activity.color}-50 dark:bg-${activity.color}-900/20 flex items-center justify-center text-${activity.color}-600 dark:text-${activity.color}-400 z-10 border-2 border-white dark:border-gray-800 transition-transform group-hover:scale-110`}>
-                    <activity.icon className="h-4 w-4" />
-                  </div>
-                  {idx !== 3 && <div className="w-0.5 h-full bg-gray-100 dark:bg-gray-800 absolute top-8"></div>}
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-gray-800 dark:text-gray-200">{activity.title}</div>
-                  <div className="text-xs text-gray-400 mt-0.5">{activity.time}</div>
-                </div>
+            {/* Activity Timeline */}
+            <motion.div variants={item} className="card">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                <ClockIcon className="h-5 w-5 text-primary-500" />
+                Recent Activity
+              </h3>
+              <div className="space-y-6">
+                {[
+                  { type: 'project', title: 'New Project Added', time: '2 hours ago', icon: CheckCircleIcon, color: 'emerald' },
+                  { type: 'skill', title: 'Skill Proficiency Updated', time: '5 hours ago', icon: ArrowTrendingUpIcon, color: 'blue' },
+                  { type: 'settings', title: 'Site Bio Modified', time: 'Yesterday', icon: FolderIcon, color: 'purple' },
+                  { type: 'system', title: 'System Backup Complete', time: '2 days ago', icon: CheckCircleIcon, color: 'gray' },
+                ].map((activity, idx) => {
+                  const activityColors = {
+                    emerald: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',
+                    blue: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+                    purple: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400',
+                    gray: 'bg-gray-50 dark:bg-gray-900/20 text-gray-600 dark:text-gray-400',
+                  };
+
+                  return (
+                    <div key={idx} className="flex gap-4 group cursor-default">
+                      <div className="relative flex flex-col items-center">
+                        <div className={`h-8 w-8 rounded-full flex items-center justify-center z-10 border-2 border-white dark:border-gray-800 transition-transform group-hover:scale-110 ${activityColors[activity.color]}`}>
+                          <activity.icon className="h-4 w-4" />
+                        </div>
+                        {idx !== 3 && <div className="w-0.5 h-full bg-gray-100 dark:bg-gray-800 absolute top-8"></div>}
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold text-gray-800 dark:text-gray-200">{activity.title}</div>
+                        <div className="text-xs text-gray-400 mt-0.5">{activity.time}</div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
           <button className="w-full mt-8 py-2 text-xs font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 rounded-xl hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-colors">
             View All Logs
           </button>
