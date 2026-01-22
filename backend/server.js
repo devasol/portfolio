@@ -11,6 +11,7 @@ import skillRoutes from './routes/skills.js';
 import experienceRoutes from './routes/experience.js';
 import settingRoutes from './routes/settings.js';
 import serviceRoutes from './routes/services.js';
+import autoSeedData from './utils/autoSeed.js';
 
 // Load environment variables
 dotenv.config();
@@ -200,4 +201,7 @@ app.listen(PORT, async () => {
 
   // Create admin user if it doesn't exist
   await createAdminUser();
+  
+  // Auto-seed data if collections are empty (for live deployment)
+  await autoSeedData();
 });
