@@ -99,19 +99,19 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
 
 // Create nodemailer transporter
+// Configuration optimized based on successful stackoverflow solutions for cloud deployment
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '465'),
-  secure: parseInt(process.env.SMTP_PORT || '465') === 465,
+  host: "smtp.gmail.com", 
+  port: 465,
+  secure: true, // use SSL
   auth: {
     user: process.env.SMTP_EMAIL,
-    pass: process.env.SMTP_PASSWORD
+    pass: process.env.SMTP_PASSWORD?.trim() // Trim to remove accidental spaces
   },
   tls: {
     rejectUnauthorized: false
   },
-  // Force IPv4 to avoid IPv6 connection issues/timeouts on some cloud networks
-  family: 4 
+  family: 4 // Force IPv4 to avoid IPv6 connection timeouts on Render
 });
 
 // Verify transporter configuration
