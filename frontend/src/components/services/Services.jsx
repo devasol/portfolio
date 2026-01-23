@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { API_BASE_URL } from "../../config";
 import FadeIn from "../common/FadeIn";
 import { 
   CommandLineIcon, 
@@ -165,7 +166,7 @@ export default function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/services');
+        const response = await fetch(`${API_BASE_URL}/services`);
         const data = await response.json();
         if (data.success) {
           setServices(data.data);

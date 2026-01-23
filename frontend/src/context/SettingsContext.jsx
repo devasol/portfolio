@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const SettingsContext = createContext();
 
@@ -69,8 +70,7 @@ export const SettingsProvider = ({ children }) => {
 
   const fetchSettings = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
-      const response = await fetch(`${API_URL}/settings`);
+      const response = await fetch(`${API_BASE_URL}/settings`);
       const result = await response.json();
       if (result.success) {
         setSettings(result.data);
