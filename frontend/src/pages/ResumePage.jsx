@@ -228,26 +228,7 @@ export default function ResumePage() {
                 ))}
               </div>
 
-              {settings.certifications && settings.certifications.length > 0 && (
-                <>
-                  <h2 className="mt-8 text-sm font-semibold tracking-widest uppercase text-ink/70 mb-3">
-                    Certifications
-                  </h2>
-                  <div className="space-y-3">
-                    {settings.certifications.map((cert, idx) => (
-                      <div key={idx} className="rounded-xl border border-white/10 p-4">
-                        <div className="flex items-center justify-between gap-3">
-                          <div>
-                            <div className="text-ink font-medium">{cert.name}</div>
-                            <div className="text-ink/70 text-sm">{cert.issuer}</div>
-                          </div>
-                          <div className="text-ink/60 text-sm whitespace-nowrap">{cert.date}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
+
 
               <a
                 href={settings.site.resumeLink}

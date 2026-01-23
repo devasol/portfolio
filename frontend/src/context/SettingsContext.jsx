@@ -61,23 +61,7 @@ const defaultSettings = {
     tools: ["React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
     availability: "Available for freelance and strategic contract work."
   },
-  certifications: [
-    {
-      name: "The Ultimate React Course",
-      issuer: "Jonas Schmedtmann (Udemy)",
-      date: "2024"
-    },
-    {
-      name: "MERN Stack Development",
-      issuer: "Self-Directed Learning",
-      date: "2023"
-    },
-    {
-      name: "Modern JavaScript & TypeScript Mastery",
-      issuer: "Advanced Certification",
-      date: "2024"
-    }
-  ]
+
 };
 
 export const SettingsProvider = ({ children }) => {

@@ -167,15 +167,7 @@ export default function PrintableResume() {
           </div>
         </section>
 
-        {/* Certifications */}
-        <section className="mb-5">
-          <h2 className="text-xl font-bold mb-3 text-black border-b border-gray-300 pb-1">Certifications & Learning</h2>
-          <ul className="list-disc ml-5 text-[15px] space-y-1">
-            <li><strong>The Ultimate React Course</strong> – Jonas Schmedtmann (Udemy)</li>
-            <li><strong>MERN Stack Development</strong> – Specialized Self-Directed Learning</li>
-            <li><strong>Modern JavaScript & TypeScript Mastery</strong> – Advanced Certification</li>
-          </ul>
-        </section>
+
 
         {/* Education */}
         <section className="mb-2">
