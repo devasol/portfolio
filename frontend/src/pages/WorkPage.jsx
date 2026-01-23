@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import FadeIn from "../components/common/FadeIn";
+import OptimizedImage from "../components/common/OptimizedImage";
 import { api } from "../api";
 import { defaultProjects } from "../data/defaults";
 
@@ -47,56 +48,48 @@ function ProjectCard({ p, i, onOpen }) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(251,146,60,0.25),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.2),transparent_50%)]" />
         
-        {/* Image or Fallback */}
-        {!imageError ? (
-          <>
-            <img
-              src={p.image}
-              alt={p.title}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
-              className={`h-full w-full object-cover transition-all duration-700 ease-out z-10 relative drop-shadow-[0_20px_60px_rgba(0,0,0,0.4)] ${
-                hovered ? "scale-110" : "scale-100"
-              } ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-            />
-            {!imageLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center z-10">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-400"></div>
-              </div>
-            )}
-          </>
-        ) : (
-          /* Beautiful Fallback UI */
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-8">
-            <div className="relative">
-              {/* Animated Icon */}
+        {/* Optimized Image or Fallback */}
+        <OptimizedImage
+          src={p.image}
+          alt={p.title}
+          aspectRatio="16/10"
+          className={`absolute inset-0 z-10 transition-transform duration-700 ease-out ${
+            hovered ? "scale-110" : "scale-100"
+          }`}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageError(true)}
+          fallback={
+            /* Beautiful Fallback UI */
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-8">
               <div className="relative">
-                <svg 
-                  className="w-20 h-20 text-emerald-400/30 animate-pulse" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={1.5} 
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-emerald-400/10 animate-ping"></div>
+                <div className="relative">
+                  <svg 
+                    className="w-20 h-20 text-emerald-400/30 animate-pulse" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={1.5} 
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-emerald-400/10 animate-ping"></div>
+                  </div>
                 </div>
               </div>
+              <p className="mt-6 text-emerald-400/80 text-sm font-medium tracking-wide text-center">
+                Image Preview Unavailable
+              </p>
+              <p className="mt-2 text-ink/50 text-xs text-center max-w-[200px]">
+                View project details for more information
+              </p>
             </div>
-            <p className="mt-6 text-emerald-400/80 text-sm font-medium tracking-wide text-center">
-              Image Preview Unavailable
-            </p>
-            <p className="mt-2 text-ink/50 text-xs text-center max-w-[200px]">
-              View project details for more information
-            </p>
-          </div>
-        )}
+          }
+        />
         
         {/* Glass Overlay on Hover */}
         <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center`}>
@@ -245,53 +238,44 @@ function ProjectModal({ p, onClose }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(251,146,60,0.25),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.2),transparent_50%)]" />
           
-          {/* Image or Fallback */}
-          {!modalImageError ? (
-            <>
-              <img 
-                src={p.image} 
-                alt={p.title}
-                onLoad={() => setModalImageLoaded(true)}
-                onError={() => setModalImageError(true)}
-                className={`w-full h-full object-cover lg:object-contain transform scale-100 lg:scale-[0.85] hover:scale-[0.9] transition-all duration-1000 p-4 lg:p-0 relative z-10 drop-shadow-[0_30px_80px_rgba(0,0,0,0.5)] ${
-                  modalImageLoaded ? "opacity-100" : "opacity-0"
-                }`}
-              />
-              {!modalImageLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center z-10">
-                  <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-400"></div>
+          {/* Optimized Image or Fallback */}
+          <OptimizedImage
+            src={p.image}
+            alt={p.title}
+            priority={true}
+            className="w-full h-full p-4 lg:p-0 transform scale-100 lg:scale-[0.85] hover:scale-[0.9] transition-all duration-1000 relative z-10"
+            onLoad={() => setModalImageLoaded(true)}
+            onError={() => setModalImageError(true)}
+            fallback={
+              /* Beautiful Fallback UI for Modal */
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-12">
+                <div className="relative">
+                  <svg 
+                    className="w-32 h-32 text-emerald-400/20 animate-pulse" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={1.5} 
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-emerald-400/5 animate-ping"></div>
+                  </div>
                 </div>
-              )}
-            </>
-          ) : (
-            /* Beautiful Fallback UI for Modal */
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-12">
-              <div className="relative">
-                <svg 
-                  className="w-32 h-32 text-emerald-400/20 animate-pulse" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={1.5} 
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-emerald-400/5 animate-ping"></div>
-                </div>
+                <p className="mt-8 text-emerald-400/70 text-lg font-semibold tracking-wide text-center">
+                  Image Preview Unavailable
+                </p>
+                <p className="mt-3 text-ink/40 text-sm text-center max-w-xs leading-relaxed">
+                  The project image could not be loaded. Please check the project links below for more details.
+                </p>
               </div>
-              <p className="mt-8 text-emerald-400/70 text-lg font-semibold tracking-wide text-center">
-                Image Preview Unavailable
-              </p>
-              <p className="mt-3 text-ink/40 text-sm text-center max-w-xs leading-relaxed">
-                The project image could not be loaded. Please check the project links below for more details.
-              </p>
-            </div>
-          )}
+            }
+          />
         </div>
 
         {/* Project Intelligence Sidebar (Right) */}

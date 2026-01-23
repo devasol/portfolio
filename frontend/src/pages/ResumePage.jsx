@@ -116,24 +116,8 @@ export default function ResumePage() {
           api.getSkills()
         ]);
 
-        if (experiencesData.length > 0) {
-           setExperiences(formatExp(experiencesData));
-        } else {
-           // If backend returns empty, we might want to respect that, or fallback if user implies "not displayed" means default.
-           // User said: "when when admin add or remove something the data will be removed or added".
-           // This implies empty array from backend should result in empty array in frontend.
-           // However, if the user sees NOTHING now, maybe the backend is returning empty.
-           // But the user also said "make the current datas displayed in the frontend to be a default value".
-           // I will Stick to: Defaults only on ERROR. 
-           setExperiences(formatExp(experiencesData));
-        }
-        
-        if (skillsData.length > 0) {
-            setSkills(formatSkills(skillsData));
-        } else {
-            setSkills(formatSkills(skillsData));
-        }
-
+        setExperiences(formatExp(experiencesData));
+        setSkills(formatSkills(skillsData));
       } catch (error) {
         console.error('Error fetching resume data, using defaults:', error);
         setExperiences(formatExp(defaultExperiences));
@@ -145,7 +129,12 @@ export default function ResumePage() {
     fetchData();
   }, []);
 
-  if (loading || !settings) return null;
+  // Only show loading spinner, don't block rendering if settings fail
+  if (loading) return (
+    <div className="w-full flex justify-center items-center min-h-[400px]">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-400"></div>
+    </div>
+  );
 
   return (
     <div className="w-full">

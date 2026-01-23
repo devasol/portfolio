@@ -5,9 +5,14 @@ import { useSettings } from "../../context/SettingsContext";
 export default function About() {
   const { settings, loading } = useSettings();
 
-  if (loading || !settings) return null;
+  // Show loading state but don't block rendering
+  if (loading) return (
+    <div className="w-full flex justify-center items-center min-h-[400px]">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-400"></div>
+    </div>
+  );
 
-  const { about } = settings;
+  const { about } = settings || {};
 
   return (
     <div className="w-full">

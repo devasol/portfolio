@@ -5,12 +5,10 @@ const Footer = () => {
   const { settings } = useSettings();
   const currentYear = new Date().getFullYear();
 
-  if (!settings) return null;
-
-  const { hero, socials } = settings;
-  const name = hero.name || "Dawit Solomon";
-  const githubUrl = socials.github || "#";
-  const linkedinUrl = socials.linkedin || "#";
+  const { hero, socials } = settings || {};
+  const name = hero?.name || "Dawit Solomon";
+  const githubUrl = socials?.github || "https://github.com/devasol";
+  const linkedinUrl = socials?.linkedin || "https://www.linkedin.com/in/dawit-solomon-0450602a0/";
 
   return (
     <footer className="w-full mt-12 border-t border-white/5 pt-10 pb-12 relative z-10">

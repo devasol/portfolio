@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import FadeIn from "../common/FadeIn";
+import OptimizedImage from "../common/OptimizedImage";
 import profileImageDefault from "../../assets/profile-image/profile-image.png";
 import { useSettings } from "../../context/SettingsContext";
 
@@ -12,10 +13,15 @@ export default function Hero() {
     document.documentElement.style.scrollBehavior = "smooth";
   }, []);
 
-  if (loading || !settings) return <div className="min-h-[60vh]" />;
+  // Show loading state but don't block rendering
+  if (loading) return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-400"></div>
+    </div>
+  );
 
-  const { hero, site, socials } = settings;
-  const profileImg = site.profileImage.startsWith('/') ? site.profileImage : profileImageDefault;
+  const { hero, site, socials } = settings || {};
+  const profileImg = site?.profileImage?.startsWith('/') ? site.profileImage : profileImageDefault;
 
   const socialLinks = [
     { href: site.resumeLink, label: "Download CV" },
@@ -138,11 +144,19 @@ export default function Hero() {
                 }}
               >
                 <div className="relative w-[85%] h-[85%] modern-frame animate-blob-morph ring-1 ring-white/10">
-                  <img
+                  <OptimizedImage
                     src={profileImg}
-                    alt={hero.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = profileImageDefault; }}
+                    alt={hero?.name || "Profile"}
+                    priority={true}
+                    aspectRatio="1/1"
+                    className="w-full h-full"
+                    fallback={
+                      <img
+                        src={profileImageDefault}
+                        alt={hero?.name || "Profile"}
+                        className="w-full h-full object-cover"
+                      />
+                    }
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-emerald-400/10 to-transparent pointer-events-none" />
                 </div>
