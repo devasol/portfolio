@@ -9,7 +9,9 @@ import {
   LockClosedIcon, 
   RocketLaunchIcon, 
   WrenchScrewdriverIcon, 
-  ComputerDesktopIcon 
+  ComputerDesktopIcon,
+  DevicePhoneMobileIcon,
+  BeakerIcon
 } from "@heroicons/react/24/outline";
 
 const ICON_MAP = {
@@ -20,7 +22,9 @@ const ICON_MAP = {
   LockClosedIcon,
   RocketLaunchIcon,
   WrenchScrewdriverIcon,
-  ComputerDesktopIcon
+  ComputerDesktopIcon,
+  DevicePhoneMobileIcon,
+  BeakerIcon
 };
 
 function useInView(ref, options = { threshold: 0.2 }) {

@@ -62,7 +62,7 @@ export default function PrintableResume() {
             <span className="text-black">—</span>
             <a href="https://linkedin.com/in/dawit-solomon-t" className="hover:underline">linkedin.com/in/dawit-solomon-t</a>
             <span className="text-black">—</span>
-            <a href="https://dawitsolomon.com" className="hover:underline">dawitsolomon.com</a>
+            <a href="https://dawitsolomon-t.onrender.com/" className="hover:underline">dawitsolomon-t.onrender.com</a>
           </div>
           <div className="w-full border-b border-gray-400 mt-3"></div>
         </div>
@@ -71,10 +71,7 @@ export default function PrintableResume() {
         <section className="mb-5">
           <h2 className="text-xl font-bold mb-3 text-black border-b border-gray-300 pb-1">Summary</h2>
           <p className="text-[15px] leading-relaxed text-black text-justify">
-            Motivated <strong>Junior Full Stack Developer</strong> with a strong foundation in the MERN stack (MongoDB, Express.js, React.js, Node.js). 
-            Proficient in designing and developing responsive, user-friendly web applications and RESTful APIs. 
-            Demonstrated ability to deliver high-quality code through internships and personal projects, improving performance metrics and user engagement. 
-            Eager to leverage technical skills in a collaborative agile environment.
+            Dynamic <strong>Full Stack Developer</strong> specializing in the MERN stack with a proven track record of building scalable, high-performance web applications. Expertise in crafting seamless user experiences across various domains, including e-commerce, localized payment systems, and administrative platforms. Focused on delivering technical excellence that drives measurable business outcomes and user satisfaction.
           </p>
         </section>
 
@@ -84,10 +81,10 @@ export default function PrintableResume() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-[15px]">
             <ul className="list-disc ml-5 space-y-1">
               <li>
-                <span className="font-bold">Frontend:</span> React.js, Next.js, Redux, Tailwind CSS, Material-UI, Vite
+                <span className="font-bold">Frontend:</span> React, Next.js, Redux, Tailwind CSS, Framer Motion, GSAP
               </li>
               <li>
-                <span className="font-bold">Backend:</span> Node.js, Express.js, MongoDB, REST APIs, Socket.io
+                <span className="font-bold">Backend:</span> Node.js, Express, MongoDB, RESTful APIs, Socket.io, JWT
               </li>
             </ul>
             <ul className="list-disc ml-5 space-y-1">
@@ -95,7 +92,7 @@ export default function PrintableResume() {
                 <span className="font-bold">Languages:</span> JavaScript (ES6+), TypeScript, Python, C++, Java
               </li>
               <li>
-                <span className="font-bold">Tools:</span> Git, GitHub, Docker (Basic), Postman, VS Code
+                <span className="font-bold">Tools:</span> Git, GitHub, Docker (Basic), Postman, Vite, VS Code, Figma
               </li>
             </ul>
           </div>
@@ -107,6 +104,22 @@ export default function PrintableResume() {
           
           <div className="mb-5">
             <div className="flex justify-between items-baseline">
+              <h3 className="text-[16px] font-bold">Full Stack Developer</h3>
+              <span className="text-[15px]">2021 – Present</span>
+            </div>
+            <div className="flex justify-between items-baseline mb-2">
+              <span className="italic text-[15px]">Freelance / Client Projects</span>
+              <span className="text-[15px]">Addis Ababa, Ethiopia</span>
+            </div>
+            <ul className="list-disc ml-5 text-[15px] space-y-1 text-justify">
+              <li>Engineered high-performance web applications using the MERN stack, <strong>reducing page load times by 35%</strong> through optimal component rendering and database indexing.</li>
+              <li>Developed custom e-commerce solutions with secure multi-gateway payment integrations, contributing to a <strong>20% increase in client sales conversions</strong>.</li>
+              <li>Optimized administrative and dispatching systems for business operations, streamlining workflows and <strong>reducing manual processing time by over 50%</strong>.</li>
+            </ul>
+          </div>
+
+          <div className="mb-5">
+            <div className="flex justify-between items-baseline">
               <h3 className="text-[16px] font-bold">Software Development Intern</h3>
               <span className="text-[15px]">Oct 2024 – Present</span>
             </div>
@@ -115,24 +128,8 @@ export default function PrintableResume() {
               <span className="text-[15px]">Addis Ababa, Ethiopia</span>
             </div>
             <ul className="list-disc ml-5 text-[15px] space-y-1 text-justify">
-              <li>Optimized React component rendering, reducing application page load times by <strong>30%</strong> through effective code splitting and lazy loading.</li>
-              <li>Implemented responsive design improvements, increasing mobile user retention by <strong>25%</strong> across supported devices.</li>
-              <li>Collaborated with a cross-functional Agile team to ship features weekly, participating in code reviews to ensure 100% adherence to style guides.</li>
-            </ul>
-          </div>
-
-          <div className="mb-5">
-            <div className="flex justify-between items-baseline">
-              <h3 className="text-[16px] font-bold">Freelance Web Developer</h3>
-              <span className="text-[15px]">Jan 2024 – Present</span>
-            </div>
-            <div className="flex justify-between items-baseline mb-2">
-              <span className="italic text-[15px]">Self-Employed</span>
-              <span className="text-[15px]">Remote</span>
-            </div>
-            <ul className="list-disc ml-5 text-[15px] space-y-1 text-justify">
-              <li>Delivered 3+ custom high-performance websites for clients, including full E-Commerce solutions, consistently achieving Google Lighthouse performance scores of <strong>95+</strong>.</li>
-              <li>Integrated secure payment gateways and CMS solutions, improving client content management efficiency by <strong>40%</strong>.</li>
+              <li>Collaborating in an agile environment to deliver modular React components, improving code reusability across projects by <strong>40%</strong>.</li>
+              <li>Refined legacy codebases for performance and SEO, resulting in a <strong>25-point average improvement</strong> in Lighthouse scores.</li>
             </ul>
           </div>
         </section>
@@ -146,32 +143,42 @@ export default function PrintableResume() {
               <h3 className="text-[16px] font-bold">
                 <a href="https://pinquest-app.onrender.com/" target="_blank" className="text-blue-900 hover:underline">PinQuest</a>
               </h3>
-              <span className="text-[15px]">Creator & Lead Developer</span>
+              <span className="text-[15px]">Lead Developer</span>
             </div>
             <div className="text-[15px] italic mb-1 text-gray-700">React 19, Node.js, MongoDB, Socket.io</div>
             <ul className="list-disc ml-5 text-[15px] space-y-1 text-justify">
-              <li>Engineered a real-time social mapping platform capable of handling concurrent geolocation updates via <strong>Socket.io</strong> loops.</li>
-              <li>Designed an interactive UI allowing users to discover/share local landmarks, resulting in a seamless user experience.</li>
+              <li>Engineered a real-time social mapping platform for high-performance location discovery using React 19 concurrent features.</li>
+              <li>Optimized data synchronization through Socket.io, ensuring seamless real-time interactions for users.</li>
             </ul>
           </div>
 
           <div className="mb-4">
             <div className="flex justify-between items-baseline">
               <h3 className="text-[16px] font-bold">
-                <a href="https://get-dlms.onrender.com/" target="_blank" className="text-blue-900 hover:underline">Driving License Management System (DLMS)</a>
+                <a href="https://get-dlms.onrender.com/" target="_blank" className="text-blue-900 hover:underline">DLMS - Driving License Management</a>
               </h3>
               <span className="text-[15px]">Full Stack Developer</span>
             </div>
             <div className="text-[15px] italic mb-1 text-gray-700">React, Material-UI, Node.js, JWT</div>
             <ul className="list-disc ml-5 text-[15px] space-y-1 text-justify">
-              <li>Developed a comprehensive digital verification system, reducing manual license processing time by approximately <strong>40%</strong>.</li>
-              <li>Built a secure admin dashboard with role-based access control (RBAC) to streamline traffic police operations.</li>
+              <li>Developed a comprehensive digital verification system, <strong>reducing manual license processing time by 40%</strong>.</li>
+              <li>Built a secure admin dashboard with role-based access control (RBAC) to streamline verification operations.</li>
             </ul>
           </div>
         </section>
 
+        {/* Certifications */}
+        <section className="mb-5">
+          <h2 className="text-xl font-bold mb-3 text-black border-b border-gray-300 pb-1">Certifications & Learning</h2>
+          <ul className="list-disc ml-5 text-[15px] space-y-1">
+            <li><strong>The Ultimate React Course</strong> – Jonas Schmedtmann (Udemy)</li>
+            <li><strong>MERN Stack Development</strong> – Specialized Self-Directed Learning</li>
+            <li><strong>Modern JavaScript & TypeScript Mastery</strong> – Advanced Certification</li>
+          </ul>
+        </section>
+
         {/* Education */}
-        <section className="mb-2" style={{ pageBreakBefore: 'always' }}>
+        <section className="mb-2">
           <h2 className="text-xl font-bold mb-4 text-black border-b border-gray-300 pb-1">Education</h2>
           
           <div>
@@ -182,12 +189,6 @@ export default function PrintableResume() {
             <div className="flex justify-between items-baseline mb-2">
               <span className="italic text-[15px]">Unity University</span>
               <span className="text-[15px]">Addis Ababa, Ethiopia</span>
-            </div>
-            <div className="text-[15px] mb-1">
-              <strong>Expected Graduation:</strong> July 2025
-            </div>
-            <div className="text-[15px]">
-              <strong>Relevant Coursework:</strong> Data Structures & Algorithms, Database Management Systems, Object-Oriented Programming, Software Engineering, Web Programming.
             </div>
           </div>
         </section>

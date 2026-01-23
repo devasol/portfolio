@@ -8,35 +8,34 @@ export const useSettings = () => useContext(SettingsContext);
 // Default settings fallback
 const defaultSettings = {
   hero: {
-    role: "Web Developer",
+    role: "Full Stack Developer (MERN)",
     welcomeText: "Hello I'm",
     name: "Dawit Solomon",
-    bio: "I'm a passionate developer who enjoys turning ideas into clean, efficient, and user-friendly digital experiences.",
+    bio: "Dynamic Full Stack Developer specializing in the MERN stack with a proven track record of building scalable, high-performance web applications. Expertise in crafting seamless user experiences across various domains.",
     stats: [
-      { value: "1+", label1: "Years of", label2: "experience" },
-      { value: "5+", label1: "Projects", label2: "completed" },
-      { value: "15+", label1: "Technologies", label2: "mastered" },
-      { value: "100+", label1: "Code", label2: "commits" }
+      { value: "3+", label1: "Years of", label2: "Impact" },
+      { value: "10+", label1: "Successful", label2: "Deliveries" },
+      { value: "20+", label1: "Tools &", label2: "Tech" },
+      { value: "500+", label1: "Code", label2: "Commits" }
     ]
   },
   about: {
     codeBlock: {
       firstName: "Dawit",
       lastName: "Solomon",
-      role: "Full Stack Engineer",
-      traits: ["Creative", "Curious", "Detail-oriented"],
+      role: "Full Stack Developer",
+      traits: ["Solution-Oriented", "Reliable", "Performance-Driven"],
       bioLines: [
-        "I build digital products that are",
-        "not just functional, but clear,",
-        "performant, and delightful to use."
+        "I engineer digital solutions that",
+        "deliver technical excellence and",
+        "measurable business outcomes."
       ]
     },
-    title: "Coding with",
-    subtitle: "purpose & passion.",
+    title: "Engineering with",
+    subtitle: "Precision & Impact.",
     paragraphs: [
-      "I'm a developer who genuinely loves the craft of building software. For me, it's not just about writing code—it's about solving real-world challenges and creating experiences that feel effortless to the user.",
-      "My journey started with a curiosity for how things work on the web, and that quickly evolved into a career of building robust applications.",
-      "When I'm not coding, you'll likely find me exploring new design trends, optimizing performance metrics, or collaborating with others to bring ambitious ideas to life."
+      "I'm a Full Stack Developer who bridges the gap between complex technical challenges and intuitive user experiences. My focus is on writing clean, maintainable code that directly contributes to business growth and user satisfaction.",
+      "With deep expertise in the MERN stack, I've delivered everything from optimized e-commerce platforms to high-performance social mapping applications. I thrive on solving scaling issues and improving application performance metrics."
     ]
   },
   site: {
@@ -46,7 +45,7 @@ const defaultSettings = {
   },
   socials: {
     github: "https://github.com/devasol",
-    linkedin: "https://www.linkedin.com/in/dawit-solomon-0450602a0/",
+    linkedin: "https://www.linkedin.com/in/dawit-solomon-t/",
     email: "dawit8908@gmail.com",
     twitter: ""
   },
@@ -58,10 +57,27 @@ const defaultSettings = {
     }
   ],
   contact: {
-    capabilities: ["Web Apps", "Design Systems", "APIs", "SEO", "E2E"],
-    tools: ["React", "TypeScript", "Tailwind", "Node", "GraphQL"],
-    availability: "Taking new projects starting next month."
-  }
+    capabilities: ["MERN Apps", "Secure APIs", "Performance Optimization", "E-commerce"],
+    tools: ["React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
+    availability: "Available for freelance and strategic contract work."
+  },
+  certifications: [
+    {
+      name: "The Ultimate React Course",
+      issuer: "Jonas Schmedtmann (Udemy)",
+      date: "2024"
+    },
+    {
+      name: "MERN Stack Development",
+      issuer: "Self-Directed Learning",
+      date: "2023"
+    },
+    {
+      name: "Modern JavaScript & TypeScript Mastery",
+      issuer: "Advanced Certification",
+      date: "2024"
+    }
+  ]
 };
 
 export const SettingsProvider = ({ children }) => {

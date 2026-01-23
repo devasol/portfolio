@@ -23,8 +23,11 @@ const experienceSchema = new mongoose.Schema({
     default: false
   },
   description: {
-    type: String // Detailed description of responsibilities
+    type: String // Summary of the role
   },
+  responsibilities: [{
+    type: String // Bullet points
+  }],
   technologies: [{
     type: String
   }],

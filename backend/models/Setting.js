@@ -55,7 +55,14 @@ const settingSchema = new mongoose.Schema({
     capabilities: [{ type: String }],
     tools: [{ type: String }],
     availability: { type: String, default: 'Taking new projects starting next month.' }
-  }
+  },
+  certifications: [
+    {
+      name: { type: String },
+      issuer: { type: String },
+      date: { type: String }
+    }
+  ]
 }, {
   timestamps: true,
   capped: { size: 4096, max: 1 } // Only one document allowed
