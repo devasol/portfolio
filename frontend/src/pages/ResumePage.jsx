@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import FadeIn from "../components/common/FadeIn";
 import { api } from "../api";
 import { useSettings } from "../context/SettingsContext";
+import { defaultExperiences, defaultSkills } from "../data/defaults";
 
 function useInView(ref, options = { threshold: 0.12 }) {
   const [inView, setInView] = useState(false);
@@ -86,39 +87,57 @@ export default function ResumePage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const formatExp = (data) => data.map(exp => {
+        const startDate = new Date(exp.startDate);
+        const endDate = exp.endDate ? new Date(exp.endDate) : null;
+        const formatDate = (date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+        const period = exp.current
+          ? `${formatDate(startDate)} — Present`
+          : `${formatDate(startDate)} — ${endDate ? formatDate(endDate) : 'Present'}`;
+
+        return {
+          role: exp.position,
+          company: exp.company,
+          period,
+          summary: exp.description,
+          bullets: exp.responsibilities || []
+        };
+      });
+
+      const formatSkills = (data) => data.map(skill => ({
+        name: skill.name,
+        group: skill.category,
+        proficiency: skill.proficiency
+      }));
+
       try {
         const [experiencesData, skillsData] = await Promise.all([
           api.getExperience(),
           api.getSkills()
         ]);
 
-        const formattedExperiences = experiencesData.map(exp => {
-          const startDate = new Date(exp.startDate);
-          const endDate = exp.endDate ? new Date(exp.endDate) : null;
-          const formatDate = (date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-          const period = exp.current
-            ? `${formatDate(startDate)} — Present`
-            : `${formatDate(startDate)} — ${endDate ? formatDate(endDate) : 'Present'}`;
+        if (experiencesData.length > 0) {
+           setExperiences(formatExp(experiencesData));
+        } else {
+           // If backend returns empty, we might want to respect that, or fallback if user implies "not displayed" means default.
+           // User said: "when when admin add or remove something the data will be removed or added".
+           // This implies empty array from backend should result in empty array in frontend.
+           // However, if the user sees NOTHING now, maybe the backend is returning empty.
+           // But the user also said "make the current datas displayed in the frontend to be a default value".
+           // I will Stick to: Defaults only on ERROR. 
+           setExperiences(formatExp(experiencesData));
+        }
+        
+        if (skillsData.length > 0) {
+            setSkills(formatSkills(skillsData));
+        } else {
+            setSkills(formatSkills(skillsData));
+        }
 
-          return {
-            role: exp.position,
-            company: exp.company,
-            period,
-            summary: exp.description,
-            bullets: exp.responsibilities || []
-          };
-        });
-
-        const formattedSkills = skillsData.map(skill => ({
-          name: skill.name,
-          group: skill.category,
-          proficiency: skill.proficiency
-        }));
-
-        setExperiences(formattedExperiences);
-        setSkills(formattedSkills);
       } catch (error) {
-        console.error('Error fetching resume data:', error);
+        console.error('Error fetching resume data, using defaults:', error);
+        setExperiences(formatExp(defaultExperiences));
+        setSkills(formatSkills(defaultSkills));
       } finally {
         setLoading(false);
       }
