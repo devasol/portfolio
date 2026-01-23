@@ -99,18 +99,19 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
 
 // Create nodemailer transporter
-// Create nodemailer transporter
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_PORT == '465', // true for 465, false for other ports
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: parseInt(process.env.SMTP_PORT || '465') === 465,
   auth: {
     user: process.env.SMTP_EMAIL,
     pass: process.env.SMTP_PASSWORD
   },
   tls: {
-    rejectUnauthorized: false // Helps with some self-signed cert issues or strict firewalls
-  }
+    rejectUnauthorized: false
+  },
+  // Force IPv4 to avoid IPv6 connection issues/timeouts on some cloud networks
+  family: 4 
 });
 
 // Verify transporter configuration
@@ -233,6 +234,12 @@ app.get('/api/health', (req, res) => {
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📧 Email service configured for: ${process.env.SMTP_EMAIL}`);
+  
+  if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+    console.warn("\n⚠️  CRITICAL WARNING: SMTP_EMAIL or SMTP_PASSWORD is missing!");
+    console.warn("   Make sure you have added these into your Render/Production Environment Variables.");
+    console.warn("   Emails will FAIL until these are set.\n");
+  }
 
   // Create admin user if it doesn't exist
   await createAdminUser();
