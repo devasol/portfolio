@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import nodemailer from 'nodemailer';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -98,132 +97,15 @@ app.use('/api/experience', experienceRoutes);
 app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
 
-// Create nodemailer transporter
-// Configuration optimized based on successful stackoverflow solutions for cloud deployment
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '465'),
-  secure: parseInt(process.env.SMTP_PORT || '465') === 465, // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_EMAIL,
-    pass: process.env.SMTP_PASSWORD?.trim()
-  },
-  tls: {
-    rejectUnauthorized: false
-  },
-  family: 4 // Force IPv4 to avoid IPv6 connection timeouts on Render
-});
-
-// Verify transporter configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email transporter error:', error);
-  } else {
-    console.log('✅ Email server is ready to send messages');
-  }
-});
-
-// Contact form endpoint
+// Contact form endpoint (Legacy - Logic moved to Frontend EmailJS)
 app.post('/api/contact', async (req, res) => {
-  try {
-    const { name, email, company, budget, message } = req.body;
-
-    // Validation
-    if (!name || !email || !message) {
-      return res.status(400).json({
-        success: false,
-        message: 'Name, email, and message are required fields'
-      });
-    }
-
-    // Email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid email address'
-      });
-    }
-
-    // Email content
-    const mailOptions = {
-      from: `"${process.env.SMTP_FROM_EMAIL || 'Portfolio Contact'}" <${process.env.SMTP_EMAIL}>`,
-      to: process.env.SMTP_EMAIL, // Sending to yourself
-      replyTo: email,
-      subject: `New Message from ${name}${company ? ` (${company})` : ''}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1a1a1a; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 20px auto; padding: 0; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-            .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 40px 20px; text-align: center; }
-            .content { padding: 40px; background: white; }
-            .field { margin-bottom: 30px; }
-            .label { font-size: 12px; font-weight: 800; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-            .value { font-size: 16px; color: #1f2937; padding: 12px; background: #f9fafb; border-radius: 8px; border-left: 4px solid #10b981; }
-            .footer { text-align: center; padding: 20px; background: #f3f4f6; color: #6b7280; font-size: 12px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1 style="margin: 0; font-size: 24px;">New Project Inquiry</h1>
-              <p style="margin: 10px 0 0; opacity: 0.9; font-size: 16px;">Someone wants to work with you!</p>
-            </div>
-            <div class="content">
-              <div class="field">
-                <div class="label">Full Name</div>
-                <div class="value">${name}</div>
-              </div>
-              <div class="field">
-                <div class="label">Email Address</div>
-                <div class="value"><a href="mailto:${email}" style="color: #10b981; text-decoration: none;">${email}</a></div>
-              </div>
-              ${company ? `
-              <div class="field">
-                <div class="label">Company</div>
-                <div class="value">${company}</div>
-              </div>
-              ` : ''}
-              ${budget ? `
-              <div class="field">
-                <div class="label">Budget Range</div>
-                <div class="value">${budget}</div>
-              </div>
-              ` : ''}
-              <div class="field">
-                <div class="label">Message</div>
-                <div class="value" style="white-space: pre-wrap;">${message}</div>
-              </div>
-            </div>
-            <div class="footer">
-              <p>This inquiry was sent directly from your portfolio website.</p>
-              <p>&copy; ${new Date().getFullYear()} ${process.env.SMTP_FROM_EMAIL || 'Portfolio'}</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `
-    };
-
-    // Send email
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).json({
-      success: true,
-      message: 'Email sent successfully!'
-    });
-
-  } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to send email. Please try again later.'
-    });
-  }
+  res.status(200).json({
+    success: true,
+    message: 'Message received (Front-end bypass active)'
+  });
 });
+
+
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -233,13 +115,6 @@ app.get('/api/health', (req, res) => {
 // Start server
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📧 Email service configured for: ${process.env.SMTP_EMAIL}`);
-  
-  if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
-    console.warn("\n⚠️  CRITICAL WARNING: SMTP_EMAIL or SMTP_PASSWORD is missing!");
-    console.warn("   Make sure you have added these into your Render/Production Environment Variables.");
-    console.warn("   Emails will FAIL until these are set.\n");
-  }
 
   // Create admin user if it doesn't exist
   await createAdminUser();

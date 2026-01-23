@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import FadeIn from "../components/common/FadeIn";
 import { api } from "../api";
 import { useSettings } from "../context/SettingsContext";
@@ -48,18 +49,29 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus("sending");
 
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-
     try {
-      const result = await api.submitContact(data);
+      // Configuration from .env
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      if (result.success) {
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS configuration is missing. Please check your environment variables.");
+      }
+
+      const result = await emailjs.sendForm(
+        serviceId,
+        templateId,
+        formRef.current,
+        publicKey
+      );
+
+      if (result.status === 200) {
         setStatus("sent");
         formRef.current?.reset();
       } else {
         setStatus("error");
-        console.error("Error result:", result.message);
+        console.error("EmailJS Error:", result.text);
       }
     } catch (err) {
       setStatus("error");
