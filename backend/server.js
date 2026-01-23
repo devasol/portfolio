@@ -101,12 +101,12 @@ app.use('/api/services', serviceRoutes);
 // Create nodemailer transporter
 // Configuration optimized based on successful stackoverflow solutions for cloud deployment
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", 
-  port: 465,
-  secure: true, // use SSL
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: parseInt(process.env.SMTP_PORT || '465') === 465, // true for 465, false for other ports
   auth: {
     user: process.env.SMTP_EMAIL,
-    pass: process.env.SMTP_PASSWORD?.trim() // Trim to remove accidental spaces
+    pass: process.env.SMTP_PASSWORD?.trim()
   },
   tls: {
     rejectUnauthorized: false
