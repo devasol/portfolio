@@ -99,25 +99,19 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
 
 // Create nodemailer transporter
-const transporter = nodemailer.createTransport(
-  process.env.SMTP_HOST?.includes('gmail.com') 
-  ? {
-      service: 'gmail',
-      auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASSWORD
-      }
-    }
-  : {
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: process.env.SMTP_PORT || 587,
-      secure: process.env.SMTP_PORT == 465,
-      auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASSWORD
-      }
-    }
-);
+// Create nodemailer transporter
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: process.env.SMTP_PORT == '465', // true for 465, false for other ports
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: process.env.SMTP_PASSWORD
+  },
+  tls: {
+    rejectUnauthorized: false // Helps with some self-signed cert issues or strict firewalls
+  }
+});
 
 // Verify transporter configuration
 transporter.verify((error, success) => {
