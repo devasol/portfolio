@@ -23,6 +23,18 @@ export default function GlobalLoader() {
     };
   }, []);
 
+  // Disable scrolling when loader is active
+  useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [loading]);
+
   // Don't show loader on route changes - only handle initial load
   useEffect(() => {
     if (firstLoad.current) {
@@ -34,8 +46,8 @@ export default function GlobalLoader() {
   if (!loading) return null;
 
   return (
-    <div className="global-loader fixed inset-0 z-50 flex items-center justify-center">
-      <div className="loader-backdrop absolute inset-0 bg-[rgba(3,7,10,0.8)] backdrop-blur-sm" />
+    <div className="global-loader fixed inset-0 z-[9999] flex items-center justify-center">
+      <div className="loader-backdrop absolute inset-0 bg-[#03070a]" />
       <div className="relative z-10 flex flex-col items-center gap-4">
         <div className="loader-ring w-28 h-28 rounded-full flex items-center justify-center">
           <svg
