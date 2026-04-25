@@ -11,7 +11,8 @@ import {
   PlusIcon,
   TrashIcon,
   ArrowPathIcon,
-  EnvelopeIcon
+  EnvelopeIcon,
+  PhotoIcon
 } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -22,6 +23,7 @@ const Settings = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [activeTab, setActiveTab] = useState('hero');
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     fetchSettings();
@@ -53,6 +55,25 @@ const Settings = () => {
       setError(err.message || 'Failed to update settings');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const imageUrl = await api.uploadImage(file);
+      setSettings(prev => ({
+        ...prev,
+        site: { ...prev.site, profileImage: imageUrl }
+      }));
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert(`Upload failed: ${error.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -351,14 +372,24 @@ const Settings = () => {
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="label-style">Profile Image Link</label>
-                      <input
-                        type="text"
-                        className="input-field"
-                        value={settings.site.profileImage}
-                        onChange={(e) => setSettings({...settings, site: {...settings.site, profileImage: e.target.value}})}
-                      />
-                      <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-2">Recommended: Relative path like /assets/profile.png or full URL</p>
+                      <label className="label-style">Profile Image</label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <PhotoIcon className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                          <input
+                            type="text"
+                            className="input-field pl-10"
+                            value={settings.site.profileImage}
+                            onChange={(e) => setSettings({...settings, site: {...settings.site, profileImage: e.target.value}})}
+                          />
+                        </div>
+                        <label className="cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl flex items-center justify-center transition-all min-w-[44px]">
+                          <PlusIcon className="h-5 w-5" />
+                          <input type="file" className="hidden" onChange={handleFileUpload} accept="image/*" />
+                        </label>
+                      </div>
+                      {uploading && <p className="text-xs text-emerald-500 animate-pulse font-medium mt-2">Uploading asset...</p>}
+                      <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-2">Recommended: Upload a square photo for best results</p>
                     </div>
                   </div>
                 </div>

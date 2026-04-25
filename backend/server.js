@@ -14,7 +14,13 @@ import skillRoutes from './routes/skills.js';
 import experienceRoutes from './routes/experience.js';
 import settingRoutes from './routes/settings.js';
 import serviceRoutes from './routes/services.js';
+import uploadRoutes from './routes/upload.js';
 import autoSeedData from './utils/autoSeed.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables
 dotenv.config();
@@ -96,6 +102,10 @@ app.use('/api/skills', skillRoutes);
 app.use('/api/experience', experienceRoutes);
 app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/upload', uploadRoutes);
+
+// Static files
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Contact form endpoint (Legacy - Logic moved to Frontend EmailJS)
 app.post('/api/contact', async (req, res) => {

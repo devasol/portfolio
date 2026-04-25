@@ -8,4 +8,6 @@ export const API_BASE_URL = import.meta.env.VITE_API_URL || (isDevelopment
   ? 'http://localhost:5001/api' 
   : 'https://portfolio-hcjl.onrender.com/api');
 
+export const BACKEND_URL = API_BASE_URL.replace('/api', '');
+
 console.log(`🔌 API Configured: ${API_BASE_URL} (Mode: ${import.meta.env.MODE})`);

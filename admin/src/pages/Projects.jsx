@@ -12,11 +12,14 @@ import {
 } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const BACKEND_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001/api').replace('/api', '');
+
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -91,6 +94,22 @@ const Projects = () => {
     } catch (error) {
       console.error('Error saving project:', error);
       alert(`Error: ${error.message}`);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const imageUrl = await api.uploadImage(file);
+      setFormData(prev => ({ ...prev, image: imageUrl }));
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert(`Upload failed: ${error.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -183,7 +202,7 @@ const Projects = () => {
                 >
                   <div className="h-12 w-16 rounded-lg overflow-hidden flex-shrink-0 border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
                     <img 
-                      src={project.image} 
+                      src={project.image?.startsWith('/uploads') ? `${BACKEND_URL}${project.image}` : project.image} 
                       alt="" 
                       className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
                       onError={(e) => e.target.src = 'https://placehold.co/600x400?text=No+Image'}
@@ -286,19 +305,26 @@ const Projects = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="label-style">Preview Image URL</label>
-                      <div className="relative">
-                        <PhotoIcon className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
-                        <input
-                          type="text"
-                          name="image"
-                          placeholder="https://..."
-                          value={formData.image}
-                          onChange={handleChange}
-                          className="input-field pl-10"
-                          required
-                        />
+                      <label className="label-style">Preview Image</label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <PhotoIcon className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                          <input
+                            type="text"
+                            name="image"
+                            placeholder="URL or auto-filled on upload"
+                            value={formData.image}
+                            onChange={handleChange}
+                            className="input-field pl-10"
+                            required
+                          />
+                        </div>
+                        <label className="cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl flex items-center justify-center transition-colors min-w-[44px]">
+                          <PlusIcon className="h-5 w-5" />
+                          <input type="file" className="hidden" onChange={handleFileUpload} accept="image/*" />
+                        </label>
                       </div>
+                      {uploading && <p className="text-xs text-emerald-500 animate-pulse font-medium">Uploading to server...</p>}
                     </div>
                     
                     <div className="space-y-2">

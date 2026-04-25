@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { BACKEND_URL } from '../../config';
 
 /**
  * OptimizedImage Component
@@ -78,6 +79,9 @@ export default function OptimizedImage({
     return fallback;
   }
 
+  // Prefix uploads with BACKEND_URL
+  const finalSrc = src?.startsWith('/uploads') ? `${BACKEND_URL}${src}` : src;
+
   return (
     <div
       ref={imgRef}
@@ -92,7 +96,7 @@ export default function OptimizedImage({
       {/* Actual image - only load when in view */}
       {isInView && (
         <img
-          src={src}
+          src={finalSrc}
           alt={alt}
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
