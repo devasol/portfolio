@@ -70,7 +70,9 @@ const Experience = () => {
     try {
       const experienceData = {
         ...formData,
-        technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t),
+        technologies: typeof formData.technologies === 'string' 
+          ? formData.technologies.split(',').map(t => t.trim()).filter(t => t)
+          : formData.technologies,
         startDate: new Date(formData.startDate),
         endDate: formData.endDate ? new Date(formData.endDate) : null
       };

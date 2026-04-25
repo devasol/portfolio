@@ -60,8 +60,12 @@ const autoSeedData = async () => {
         if (settingsCount === 0) {
             console.log('🌱 Seeding default settings...');
             await Setting.create({
-                hero: { name: "Dawit Solomon", role: "Web Developer", bio: "Developer building purposeful experiences." },
-                site: { logoText: "Dawit" }
+                hero: { name: "Dawit Solomon", role: "Web Developer", bio: "Developer building purposeful experiences.", stats: [] },
+                about: { codeBlock: { traits: [], bioLines: [] }, paragraphs: [] },
+                site: { logoText: "Dawit" },
+                socials: { github: "https://github.com/devasol", linkedin: "", email: "dawit8908@gmail.com" },
+                education: [{ degree: "B.Sc. in Computer Science", school: "Unity University", period: "2021 — Present" }],
+                contact: { capabilities: [], tools: [], availability: "Available for new projects." }
             });
         }
 

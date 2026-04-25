@@ -491,7 +491,7 @@ const Settings = () => {
                       <input
                         type="text"
                         className="input-field"
-                        value={settings.contact.capabilities.join(', ')}
+                        value={(settings.contact?.capabilities || []).join(', ')}
                         onChange={(e) => setSettings({...settings, contact: {...settings.contact, capabilities: e.target.value.split(',').map(s => s.trim())}})}
                       />
                     </div>
@@ -500,7 +500,7 @@ const Settings = () => {
                       <input
                         type="text"
                         className="input-field"
-                        value={settings.contact.tools.join(', ')}
+                        value={(settings.contact?.tools || []).join(', ')}
                         onChange={(e) => setSettings({...settings, contact: {...settings.contact, tools: e.target.value.split(',').map(s => s.trim())}})}
                       />
                     </div>

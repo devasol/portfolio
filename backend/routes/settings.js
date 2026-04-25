@@ -45,6 +45,8 @@ router.put('/', protect, async (req, res) => {
       if (req.body.about) settings.about = { ...settings.about, ...req.body.about };
       if (req.body.site) settings.site = { ...settings.site, ...req.body.site };
       if (req.body.socials) settings.socials = { ...settings.socials, ...req.body.socials };
+      if (req.body.education) settings.education = req.body.education;
+      if (req.body.contact) settings.contact = { ...settings.contact, ...req.body.contact };
     }
     
     await settings.save();
