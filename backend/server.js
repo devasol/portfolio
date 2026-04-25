@@ -65,6 +65,8 @@ app.use(limiter);
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
+  "https://portfolio-58be.vercel.app",
+  "https://portfolio-admin-red.vercel.app",
   // Allow deployed URLs from env, split by comma if multiple
   ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : []),
   (process.env.FRONTEND_URL || '').trim(),
