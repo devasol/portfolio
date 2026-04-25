@@ -264,4 +264,45 @@ export const api = {
     if (!response.ok) throw new Error(data.message || 'Failed to upload image');
     return data.data; // Path like /uploads/filename.png
   },
+
+  // Messages
+  getMessages: async () => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/messages`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to fetch messages');
+    return data.data;
+  },
+
+  updateMessage: async (id, messageData) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/messages/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(messageData)
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to update message');
+    return data;
+  },
+
+  deleteMessage: async (id) => {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/messages/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to delete message');
+    return data;
+  },
 };

@@ -10,7 +10,8 @@ import {
   Cog6ToothIcon,
   Square3Stack3DIcon,
   RocketLaunchIcon,
-  XMarkIcon
+  XMarkIcon,
+  ChatBubbleLeftRightIcon
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 
@@ -34,6 +35,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const navItems = [
     { name: 'Dashboard', path: '/', icon: HomeIcon },
     { name: 'Projects', path: '/projects', icon: FolderIcon },
+    { name: 'Messages', path: '/messages', icon: ChatBubbleLeftRightIcon },
     { name: 'Services', path: '/services', icon: WrenchScrewdriverIcon },
     { name: 'Skills', path: '/skills', icon: Square3Stack3DIcon },
     { name: 'Experience', path: '/experience', icon: BriefcaseIcon },

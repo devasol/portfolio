@@ -15,6 +15,7 @@ import experienceRoutes from './routes/experience.js';
 import settingRoutes from './routes/settings.js';
 import serviceRoutes from './routes/services.js';
 import uploadRoutes from './routes/upload.js';
+import messageRoutes from './routes/messages.js';
 import autoSeedData from './utils/autoSeed.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -103,17 +104,11 @@ app.use('/api/experience', experienceRoutes);
 app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-// Contact form endpoint (Legacy - Logic moved to Frontend EmailJS)
-app.post('/api/contact', async (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Message received (Front-end bypass active)'
-  });
-});
 
 
 
