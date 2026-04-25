@@ -16,6 +16,7 @@ import settingRoutes from './routes/settings.js';
 import serviceRoutes from './routes/services.js';
 import uploadRoutes from './routes/upload.js';
 import messageRoutes from './routes/messages.js';
+import analyticsRoutes from './routes/analytics.js';
 import autoSeedData from './utils/autoSeed.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -107,6 +108,7 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

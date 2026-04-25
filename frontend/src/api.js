@@ -38,4 +38,15 @@ export const api = {
     if (!response.ok) throw new Error(data.message || 'Failed to send message');
     return data;
   },
+
+  // Analytics
+  logVisit: async () => {
+    try {
+      await fetch(`${API_BASE_URL}/analytics/log`, {
+        method: 'POST'
+      });
+    } catch (e) {
+      // Fail silently
+    }
+  }
 };

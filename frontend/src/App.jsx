@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { api } from "./api";
 import Navbar from "./components/home/Navbar";
 import NoiseBackground from "./components/home/NoiseBackground";
 import ScrollProgress from "./components/common/ScrollProgress";
@@ -18,6 +20,10 @@ import "./index.css";
 function AppContent() {
   const location = useLocation();
   const isPrintPage = location.pathname === "/resume-print";
+
+  useEffect(() => {
+    api.logVisit();
+  }, []);
 
   return (
     <div className="min-h-dvh antialiased flex flex-col items-center">
