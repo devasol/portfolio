@@ -40,7 +40,7 @@ const defaultSettings = {
   },
   site: {
     logoText: "Dawit",
-    resumeLink: "/resume/Dawit_Solomon_Resume.pdf",
+    resumeLink: "/Resume_Main/Dawit-Solomon__Resume.pdf",
     profileImage: "/assets/profile-image/profile-image.png"
   },
   socials: {

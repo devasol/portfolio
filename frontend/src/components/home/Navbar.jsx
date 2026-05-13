@@ -166,7 +166,7 @@ export default function Navbar() {
               <span className="relative z-10">HIRE ME</span>
             </a>
             <a
-              href={loading || !settings ? "/resume/Dawit_Solomon_Resume.pdf" : settings.site.resumeLink}
+              href={loading || !settings ? "/Resume_Main/Dawit-Solomon__Resume.pdf" : settings.site.resumeLink}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-premium-interactive inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-ink/5 px-5 py-2.5 text-xs font-bold text-ink backdrop-blur-md hover:bg-ink/10 transition-all shadow-sm"
