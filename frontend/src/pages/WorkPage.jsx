@@ -396,9 +396,9 @@ export default function WorkPage() {
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3 text-center sm:text-left">
               Work
             </p>
-            <h1 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink text-center sm:text-left">
+            <h2 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink text-center sm:text-left">
               Selected Projects
-            </h1>
+            </h2>
             <p className="mt-4 text-sm sm:text-base text-ink/80 max-w-xl text-center sm:text-left mx-auto sm:mx-0">
               High-performance builds with clean architecture and delightful UI/UX.
             </p>

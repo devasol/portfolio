@@ -144,9 +144,9 @@ export default function ResumePage() {
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
               Resume
             </p>
-            <h1 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink">
+            <h2 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink">
               Experience & Skills
-            </h1>
+            </h2>
             <p className="mt-4 text-sm sm:text-base text-ink/80 max-w-xl">
               A quick overview of my background, the tools I'm best with, and
               what I'm focusing on.

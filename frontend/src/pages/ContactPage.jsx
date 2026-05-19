@@ -74,9 +74,9 @@ export default function ContactPage() {
             <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-3">
               Contact
             </p>
-            <h1 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink">
+            <h2 className="display-font text-3xl sm:text-4xl lg:text-5xl text-ink">
               Let’s work together
-            </h1>
+            </h2>
             <p className="mt-4 text-sm sm:text-base text-ink/80 max-w-xl">
               Reach out for collaborations, freelance work, or just to say hi.
             </p>
