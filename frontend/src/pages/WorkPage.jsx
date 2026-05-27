@@ -41,58 +41,37 @@ function ProjectCard({ p, i, onOpen }) {
     >
       {/* Image Section */}
       <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-orange-400/20 via-amber-500/15 to-rose-500/10">
-        {/* Vibrant Gradient Background */}
+        {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-amber-600/20 to-pink-500/15 blur-2xl" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(251,146,60,0.25),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(245,158,11,0.2),transparent_50%)]" />
-        
-        {/* Optimized Image or Fallback */}
+
+        {/* Image */}
         <OptimizedImage
           src={p.image}
           alt={p.title}
           aspectRatio="16/10"
           objectFit="contain"
           className={`absolute inset-0 z-10 transition-transform duration-700 ease-out ${
-            hovered ? "scale-110" : "scale-100"
+            hovered ? "scale-105" : "scale-100"
           }`}
           fallback={
-            /* Beautiful Fallback UI */
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-8">
-              <div className="relative">
-                <div className="relative">
-                  <svg 
-                    className="w-20 h-20 text-emerald-400/30 animate-pulse" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={1.5} 
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-emerald-400/10 animate-ping"></div>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-6 text-emerald-400/80 text-sm font-medium tracking-wide text-center">
-                Image Preview Unavailable
-              </p>
-              <p className="mt-2 text-ink/50 text-xs text-center max-w-[200px]">
+              <svg className="w-16 h-16 text-emerald-400/30 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <p className="mt-4 text-ink/50 text-xs text-center max-w-[200px]">
                 View project details for more information
               </p>
             </div>
           }
         />
-        
+
         {/* Glass Overlay on Hover */}
-        <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center`}>
-           <div className="px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white text-xs font-bold tracking-widest uppercase transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-             View Details
-           </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center">
+          <div className="px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white text-xs font-bold tracking-widest uppercase transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            View Details
+          </div>
         </div>
 
         {/* Floating Tag */}
@@ -227,7 +206,7 @@ function ProjectModal({ p, onClose }) {
         </button>
 
         {/* Cinematic Preview Section (Left) */}
-        <div className="lg:w-[65%] h-64 sm:h-72 lg:h-auto relative bg-gradient-to-br from-orange-400/20 via-amber-500/15 to-rose-500/10 flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-ink/5">
+        <div className="lg:w-[65%] relative bg-gradient-to-br from-orange-400/20 via-amber-500/15 to-rose-500/10 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-ink/5">
            {/* Vibrant Gradient Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-amber-600/20 to-pink-500/15 blur-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(251,146,60,0.25),transparent_50%)]" />
