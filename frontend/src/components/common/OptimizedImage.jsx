@@ -20,6 +20,7 @@ export default function OptimizedImage({
   fallback = null,
   aspectRatio = '16/9',
   priority = false, // Set true for above-the-fold images
+  objectFit = 'cover', // Default is 'cover', can be 'contain' etc.
   onLoad,
   onError,
   ...props
@@ -103,7 +104,7 @@ export default function OptimizedImage({
           onLoad={handleLoad}
           onError={handleError}
           className={`
-            w-full h-full object-cover
+            w-full h-full object-${objectFit}
             transition-all duration-700 ease-out
             ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
           `}

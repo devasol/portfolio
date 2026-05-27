@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import FadeIn from "../components/common/FadeIn";
 import OptimizedImage from "../components/common/OptimizedImage";
 import { api } from "../api";
@@ -24,8 +24,6 @@ function ProjectCard({ p, i, onOpen }) {
   const ref = useRef(null);
   const inView = useInView(ref);
   const [hovered, setHovered] = useState(false);
-  const [imageError, setImageError] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <article
@@ -53,11 +51,10 @@ function ProjectCard({ p, i, onOpen }) {
           src={p.image}
           alt={p.title}
           aspectRatio="16/10"
+          objectFit="contain"
           className={`absolute inset-0 z-10 transition-transform duration-700 ease-out ${
             hovered ? "scale-110" : "scale-100"
           }`}
-          onLoad={() => setImageLoaded(true)}
-          onError={() => setImageError(true)}
           fallback={
             /* Beautiful Fallback UI */
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-8">
@@ -175,8 +172,6 @@ function ProjectCard({ p, i, onOpen }) {
 import { createPortal } from "react-dom";
 
 function ProjectModal({ p, onClose }) {
-  const [modalImageError, setModalImageError] = useState(false);
-  const [modalImageLoaded, setModalImageLoaded] = useState(false);
 
   useEffect(() => {
     if (!p) return;
@@ -243,9 +238,8 @@ function ProjectModal({ p, onClose }) {
             src={p.image}
             alt={p.title}
             priority={true}
+            objectFit="contain"
             className="w-full h-full p-4 lg:p-0 transform scale-100 lg:scale-[0.85] hover:scale-[0.9] transition-all duration-1000 relative z-10"
-            onLoad={() => setModalImageLoaded(true)}
-            onError={() => setModalImageError(true)}
             fallback={
               /* Beautiful Fallback UI for Modal */
               <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-12">
